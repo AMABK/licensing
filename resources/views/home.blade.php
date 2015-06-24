@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title')
-Users
+Home
 @stop
 @section('content')
 
