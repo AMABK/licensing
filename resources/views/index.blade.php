@@ -14,7 +14,6 @@
     </head>
     <body>
 
-
         <div id="container">
             <div id="logo">
                 <img src="/images/main_logo.png" alt="" style="border-radius: 10px"/>
@@ -34,16 +33,18 @@
             <div class="alert alert-warning" align="center">{{$errors->first('password')}}</div>
             @endif
             <div id="loginbox">            
-                <form action="" method="post" accept-charset="utf-8" class="form login-form" id="loginform" autocomplete="off">                    
-                    <p>Welcome to the FleetMan.<br> To continue, please login using your username and password below.</p>
+                <form method="post" action="/auth/login" accept-charset="utf-8" class="form login-form" id="loginform" >                    
+                    {!! csrf_field() !!}
+                    <p>Welcome to the FleetMan.<br> To continue, please login.</p>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                        <input type="text" name="email" id="username" class="form-control" placeholder="Username" size="20" required="" />                       
+                        <input type="email" name="email" value="{{ old('email') }}" id="username" class="form-control" placeholder="Username" size="20" required="" />                       
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                         <input type="password" name="password" id="password" class="form-control" placeholder="Password" size="20" required="" />
                     </div>
+                    <input type="checkbox" name="remember"> Remember Me
                     <hr />
                     <div class="form-actions">
                         <div class="pull-left">
@@ -54,7 +55,6 @@
                         </div>
                         <div class="pull-right"><input type="submit" class="btn btn-success" value="Login" /></div>
                     </div>
-                    {!!Form::token()!!}
                 </form>
 
             </div>
