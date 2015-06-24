@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateSaccosTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('saccos', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('reg_id');
+            $table->string('name');
+            $table->string('phone_no')->nullable();
+            $table->string('email')->nullable();
+            $table->string('address')->nullable();
+            $table->string('no_vehicle');
+            $table->integer('yr_of_license');
+            $table->date('expiry_date');
+            $table->integer('fee_paid');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('saccos');
+    }
+}
