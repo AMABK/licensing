@@ -24,7 +24,6 @@ class SaccoController extends Controller {
      */
     public function create() {
         return view('sacco.add-sacco');
-        ;
     }
 
     /**
@@ -35,7 +34,7 @@ class SaccoController extends Controller {
     public function store() {
 
         $validator = \Validator::make(\Request::all(), array(
-                    'reg_id' => 'required|max:10',
+                    'reg_id' => 'required|max:10|unique:saccos',
                     'name' => 'required|max:255',
                     'phone_no' => 'sometimes|digits_between:10,15',
                     'email' => 'sometimes|email',

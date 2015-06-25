@@ -8,7 +8,6 @@ Sacco
     table, td {
         border: 1px solid #086A87;
         background-color: #D8D8D8;
-        height: 10px;
     }
 
     thead, th {
@@ -22,7 +21,9 @@ Sacco
     .nav-tabs>li>a {
         background-color: rgb(239, 224, 224);
     }
-
+    .modal-content{
+        margin-top: 20%;
+    }
 
 </style>
 <div class="content-wrapper">
@@ -47,18 +48,18 @@ Sacco
         <!-- Main row -->
         <div class="row" style="margin: 3px">
             <!-- Left col -->
-            <h3>Registered saccos</h3>
+            <h3>Registered vehicles</h3>
             <table id="myTable" width="100%">
-                <thead><tr><th>Name</th><th>Reg No</th><th>#Vehicles</th><th>Yr of License</th><th>Expiry Date</th><th>Fees Paid</th><th>Phone</th><th>Email</th><th>Address</th><th>Add Vehicle</th></tr></thead>
+                <thead><tr><th>Reg No</th><th>Vehicle make</th><th>Category</th><th>Sacco</th><th>TLB NUmber</th><th>Number of seats</th><th>Add to sacco</th></tr></thead>
 
-                @foreach ($sacco as $saccos)
+                @foreach ($vehicle as $vehicles)
                 <tbody>
                     <tr>
-                        <td><a href="{{URL::to('sacco/edit-sacco/'.\Hashids::encode($saccos->id))}}"> {{$saccos->name}}</a></td><td>{{ $saccos->reg_id }}</td><td>{{ $saccos->no_vehicle }}</td><td>{{ $saccos->yr_of_license }}</td><td>{{ $saccos->expiry_date }}</td><td>{{ $saccos->fee_paid }}</td><td>{{ $saccos->phone_no }}</td><td>{{ $saccos->email }}</td><td>{{ $saccos->address }}</td><td><a href="{{URL::to('sacco/add-vehicle/'.\Hashids::encode($saccos->id))}}">Add</a></td>
+                        <td><a href="{{URL::to('vehicle/edit-vehicle/'.\Hashids::encode($vehicles->id))}}"> {{strtoupper($vehicles->reg_no)}}</a></td><td>{{ $vehicles->vehicle_make }}</td><td>{{ $vehicles->category }}</td><td>{{ $vehicles->sacco->name }}</td><td>{{ $vehicles->tlb_no }}</td><td>{{ $vehicles->no_of_seat }}</td><td><a href="{{URL::to('/vehicles/add-vehicle/'.\Hashids::encode($vehicles->id))}}">Add to sacco</a></td>
                     </tr>
                 </tbody>
                 @endforeach
-                <tfoot><tr><th>Name</th><th>Reg No</th><th>#Vehicles</th><th>Yr of License</th><th>Expiry Date</th><th>Fees Paid</th><th>Phone</th><th>Email</th><th>Address</th><th>Add Vehicle</th></tr></thead>
+                <tfoot><tr><th>Reg No</th><th>Vehicle make</th><th>Category</th><th>Sacco</th><th>TLB Number</th><th>Number of seats</th><th>Add to sacco</th></tr></thead>
             </table>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
 
@@ -71,10 +72,9 @@ Sacco
 @section('scripts')
 @parent
 <script src="/datatables/jquery.dataTables.min.js" type="text/javascript" ></script>
-
 <script>
 $(document).ready(function () {
-    $('#myTable').dataTable();
+    $('#myTable').DataTable();
 });
 </script>   
 @stop

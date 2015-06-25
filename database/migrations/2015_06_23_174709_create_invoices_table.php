@@ -17,6 +17,8 @@ class CreateInvoicesTable extends Migration
             $table->string('invoice_no');
             $table->string('invoice_date');
             $table->integer('amount');
+            $table->integer('sacco_id')->nullable();
+            $table->integer('vehicle_id')->nullable();
             $table->string('invoice_from');
             $table->mediumText('description');
             $table->timestamps();

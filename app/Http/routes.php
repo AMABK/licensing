@@ -76,4 +76,33 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'add-vehicle',
         'uses' => 'SaccoController@addVehicle'
     ));
+    //Vehicle controller
+    Route::get('/vehicle', array(
+        'as' => 'vehicle',
+        'uses' => 'VehicleController@index'
+    ));
+    Route::get('/vehicle/add-vehicle', array(
+        'as' => 'add-vehicle',
+        'uses' => 'VehicleController@create'
+    ));
+    Route::post('/post/add-vehicle', array(
+        'as' => 'add-vehicle',
+        'uses' => 'VehicleController@store'
+    ));
+    Route::get('/vehicle/view-vehicles', array(
+        'as' => 'view-vehicles',
+        'uses' => 'VehicleController@show'
+    ));
+    Route::get('/vehicle/edit-vehicle/{id}', array(
+        'as' => 'edit-vehicle',
+        'uses' => 'VehicleController@edit'
+    ));
+    Route::post('/post/edit-vehicle', array(
+        'as' => 'edit-vehicle',
+        'uses' => 'VehicleController@update'
+    ));
+    Route::get('/sacco/add-vehicle/{id}', array(
+        'as' => 'add-vehicle',
+        'uses' => 'VehicleController@addVehicle'
+    ));
 });

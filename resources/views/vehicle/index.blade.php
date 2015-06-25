@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title')
-Add Sacco
+Vehicle
 @stop
 @section('content')
 
@@ -26,36 +26,36 @@ Add Sacco
                 <div class="small-box bg-aqua">
                     <div class="inner">
                         <h3>150</h3>
-                        <p>New Orders</p>
+                        <p>Saccos</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-bag"></i>
+                        <i class="fa fa-plus"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{URL::to('/vehicle/add-vehicle')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3>53<sup style="font-size: 20px">%</sup></h3>
-                        <p>Bounce Rate</p>
+                        <h3>53</h3>
+                        <p>Total Vehicles</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
+                        <i class="fa fa-bus"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="#" class="small-box-footer">Add a vehicle <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3>44</h3>
-                        <p>User Registrations</p>
+                        <h3>57<sup style="font-size: 20px">%</sup></h3>
+                        <p>Belong to saccos</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-person-add"></i>
+                        <i class="fa fa-group"></i>
                     </div>
                     <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
@@ -64,33 +64,33 @@ Add Sacco
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3>65</h3>
-                        <p>Unique Visitors</p>
+                        <h3>65<sup style="font-size: 20px">%</sup></h3>
+                        <p>Are company vehicles</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
+                        <i class="fa fa-car"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{URL::to('/vehicle/add-vehicle')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
         </div><!-- /.row -->
         @if(Session::has('global'))
-        <p>{!!Session::get('global')!!}</p>
+        <center><p>{!!Session::get('global')!!}</p></center>
         @endif
         <!-- Main row -->
-        <div class="row" style="width: 70%; margin-left: 10%">
+        <div class="row" style="width: 70%; margin-left: 15%;margin-top: 5%">
             <!-- Left col -->
             <h3>Register a new sacco</h3>
-            <form method="POST" action="/post/add-sacco">
+            <form method="POST" action="/vehicle/add-vehicle">
                 {!! csrf_field() !!}
-                
+
                 <div class="form-group">
-                    <label for="name">Sacco Name</label>
-                    <input type="text" name="name" class="form-control" value="{{ old('name') }}" required="" placeholder="Name">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" class="form-control" value="{{ old('name') }}" required="" placeholder=Name">
                 </div>
                 <div class="form-group">
                     <label for="reg_id">Registration Number</label>
-                    <input type="text" style="text-transform:uppercase" name="reg_id" class="form-control" value="{{ old('reg_id') }}" required="" placeholder="Registration Number">
+                    <input type="text" name="reg_id" class="form-control" value="{{ old('reg_id') }}" required="" placeholder="Registration Number">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -110,11 +110,11 @@ Add Sacco
                 </div>
                 <div class="form-group">
                     <label for="yr_of_license">Year of license</label>
-                    <input type="text" name="yr_of_license" class="form-control" value="{{ old('yr_of_license') }}" required="" placeholder="Year of license">
+                    <input type="date" name="yr_of_license" class="form-control" value="{{ old('yr_of_license') }}" required="" placeholder="Year of license">
                 </div>
                 <div class="form-group">
                     <label for="expiry_date">Expiry date</label>
-                    <input type="date" name="expiry_date" class="form-control" value="{{ old('expiry_date') }}" required="" placeholder="MM/DD/YYYY [Expiry date]">
+                    <input type="text" name="expiry_date" class="form-control" value="{{ old('expiry_date') }}" required="" placeholder="MM/DD/YYYY [Expiry date]">
                 </div>
                 <div class="form-group">
                     <label for="fee_paid">Fee paid</label>
@@ -136,7 +136,7 @@ Add Sacco
 @parent
 <script>
     $(document).ready(function () {
-        $('#myTable').dataTable();
+        $('#myTable').DataTable();
     });
 </script>   
 @stop

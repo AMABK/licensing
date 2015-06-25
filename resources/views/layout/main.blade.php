@@ -18,7 +18,7 @@
     <!-- iCheck -->
     <link href="/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
     <!-- Morris chart -->
-    <link href="/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
+<!--    <link href="/plugins/morris/morris.css" rel="stylesheet" type="text/css" />-->
     <!-- jvectormap -->
     <link href="/plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
     <!-- Date Picker -->
@@ -47,17 +47,17 @@
 
       @include('layout.footer');
       
-      <!-- Control Sidebar -->      
+<!--       Control Sidebar       
       <aside class="control-sidebar control-sidebar-dark">                
-        <!-- Create the tabs -->
+         Create the tabs 
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
           <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
           
           <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
         </ul>
-        <!-- Tab panes -->
+         Tab panes 
         <div class="tab-content">
-          <!-- Home tab content -->
+           Home tab content 
           <div class="tab-pane" id="control-sidebar-home-tab">
             <h3 class="control-sidebar-heading">Recent Activity</h3>
             <ul class='control-sidebar-menu'>
@@ -97,7 +97,7 @@
                   </div>
                 </a>
               </li>
-            </ul><!-- /.control-sidebar-menu -->
+            </ul> /.control-sidebar-menu 
 
             <h3 class="control-sidebar-heading">Tasks Progress</h3> 
             <ul class='control-sidebar-menu'>
@@ -145,12 +145,12 @@
                   </div>                                    
                 </a>
               </li>               
-            </ul><!-- /.control-sidebar-menu -->         
+            </ul> /.control-sidebar-menu          
 
-          </div><!-- /.tab-pane -->
-          <!-- Stats tab content -->
-          <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div><!-- /.tab-pane -->
-          <!-- Settings tab content -->
+          </div> /.tab-pane 
+           Stats tab content 
+          <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div> /.tab-pane 
+           Settings tab content 
           <div class="tab-pane" id="control-sidebar-settings-tab">            
             <form method="post">
               <h3 class="control-sidebar-heading">General Settings</h3>
@@ -162,7 +162,7 @@
                 <p>
                   Some information about this general settings option
                 </p>
-              </div><!-- /.form-group -->
+              </div> /.form-group 
 
               <div class="form-group">
                 <label class="control-sidebar-subheading">
@@ -172,7 +172,7 @@
                 <p>
                   Other sets of options are available
                 </p>
-              </div><!-- /.form-group -->
+              </div> /.form-group 
 
               <div class="form-group">
                 <label class="control-sidebar-subheading">
@@ -182,7 +182,7 @@
                 <p>
                   Allow the user to show his name in blog posts
                 </p>
-              </div><!-- /.form-group -->
+              </div> /.form-group 
 
               <h3 class="control-sidebar-heading">Chat Settings</h3>
 
@@ -191,25 +191,25 @@
                   Show me as online
                   <input type="checkbox" class="pull-right" checked />
                 </label>                
-              </div><!-- /.form-group -->
+              </div> /.form-group 
 
               <div class="form-group">
                 <label class="control-sidebar-subheading">
                   Turn off notifications
                   <input type="checkbox" class="pull-right" />
                 </label>                
-              </div><!-- /.form-group -->
+              </div> /.form-group 
 
               <div class="form-group">
                 <label class="control-sidebar-subheading">
                   Delete chat history
                   <a href="javascript::;" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
                 </label>                
-              </div><!-- /.form-group -->
+              </div> /.form-group 
             </form>
-          </div><!-- /.tab-pane -->
+          </div> /.tab-pane 
         </div>
-      </aside><!-- /.control-sidebar -->
+      </aside> /.control-sidebar -->
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
       <div class='control-sidebar-bg'></div>
@@ -236,7 +236,7 @@
     <!-- jQuery Knob Chart -->
     <script src="/plugins/knob/jquery.knob.js" type="text/javascript"></script>
     <!-- daterangepicker -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" type="text/javascript"></script>
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" type="text/javascript"></script>-->
     <script src="/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
     <!-- datepicker -->
     <script src="/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
@@ -250,7 +250,7 @@
     <script src="/dist/js/app.min.js" type="text/javascript"></script>    
     
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="/dist/js/pages/dashboard.js" type="text/javascript"></script>    
+<!--   <script src="/dist/js/pages/dashboard.js" type="text/javascript"></script>    -->
     
     <!-- AdminLTE for demo purposes -->
     <script src="/dist/js/demo.js" type="text/javascript"></script>

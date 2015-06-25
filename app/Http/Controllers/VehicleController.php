@@ -16,7 +16,7 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        //
+        return view('vehicle.index');
     }
 
     /**
@@ -26,7 +26,8 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        //
+        $saccos = \App\Sacco::all();
+        return view('vehicle.add-vehicle',array('sacco' => $saccos));
     }
 
     /**
@@ -36,7 +37,29 @@ class VehicleController extends Controller
      */
     public function store()
     {
-        //
+        $validator = \Validator::make(\Request::all(), array(
+                    'reg_no' => 'required|max:10|unique:vehicles',
+                    'category' => 'required|max:255',
+                    'sacco_id' => 'sometimes|integer',
+                    'vehicle_make' => 'required',
+                    'no_of_seat' => 'required|integer'
+                        )
+        );
+        //dd(\Request::all());
+        if ($validator->fails()) {
+            return redirect('/vehicle/add-vehicle')
+                            ->withErrors($validator)
+                            ->withInput();
+        } else {
+            $vehicle= \App\Vehicle::create(\Request::all());
+            if ($vehicle) {
+                return redirect('vehicle/view-vehicle/' . \Hashids::encode(\Request::input('reg_id')))
+                                ->with('global', '<div class="alert alert-success">Vehicle successfullly saved in the database</div>');
+            } else {
+                return redirect('vehicle/add-vehicle')
+                                ->with('global', '<div class="alert alert-danger">Whoooops, your input could not be saved. Please contact administrator!</div>');
+            }
+        }
     }
 
     /**
@@ -45,9 +68,10 @@ class VehicleController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $vehicles = \App\Vehicle::all();
+        return view('vehicle.view-vehicles', array('vehicle' => $vehicles));
     }
 
     /**
