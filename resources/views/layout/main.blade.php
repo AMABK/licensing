@@ -237,7 +237,7 @@
     <script src="/plugins/knob/jquery.knob.js" type="text/javascript"></script>
     <!-- daterangepicker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" type="text/javascript"></script>
-    <script src="plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+    <script src="/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
     <!-- datepicker -->
     <script src="/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
     <!-- Bootstrap WYSIHTML5 -->
@@ -254,5 +254,6 @@
     
     <!-- AdminLTE for demo purposes -->
     <script src="/dist/js/demo.js" type="text/javascript"></script>
+    @yield('scripts')
   </body>
 </html>

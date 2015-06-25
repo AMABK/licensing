@@ -4,7 +4,7 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+              <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
               <p>Alexander Pierce</p>
@@ -51,6 +51,20 @@
               <a href="pages/widgets.html">
                 <i class="fa fa-th"></i> <span>Widgets</span> <small class="label pull-right bg-green">new</small>
               </a>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-group"></i>
+                <span>Saccos</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{URL::to('/sacco')}}"><i class="fa fa-home"></i> Sacco home</a></li>
+                <li><a href="{{URL::to('/sacco/add-sacco')}}"><i class="fa fa-plus-circle"></i> Add new sacco</a></li>
+                <li><a href="{{URL::to('/sacco/view-saccos')}}"><i class="fa fa-eye"></i> View saccos</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Flot</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+              </ul>
             </li>
             <li class="treeview">
               <a href="#">

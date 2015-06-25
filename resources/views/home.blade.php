@@ -26,10 +26,10 @@ Home
               <div class="small-box bg-aqua">
                 <div class="inner">
                   <h3>150</h3>
-                  <p>New Orders</p>
+                  <p>Saccos</p>
                 </div>
                 <div class="icon">
-                  <i class="ion ion-bag"></i>
+                  <i class="ion ion-clipboard"></i>
                 </div>
                 <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
               </div>
@@ -74,6 +74,9 @@ Home
               </div>
             </div><!-- ./col -->
           </div><!-- /.row -->
+        @if(Session::has('global'))
+        <p>{!!Session::get('global')!!}</p>
+        @endif
           <!-- Main row -->
           <div class="row">
             <!-- Left col -->

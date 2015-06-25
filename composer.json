@@ -8,7 +8,8 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
         "barryvdh/laravel-ide-helper": "~2.0",
-        "laravelcollective/html": "5.1.*"
+        "laravelcollective/html": "5.1.*",
+        "vinkla/hashids": "^1.1@dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

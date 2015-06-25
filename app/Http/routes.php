@@ -43,4 +43,37 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'logout',
         'uses' => 'Auth\AuthController@getLogout'
     ));
+    //Sacco controller
+    Route::get('/sacco', array(
+        'as' => 'sacco',
+        'uses' => 'SaccoController@index'
+    ));
+    Route::get('/sacco', array(
+        'as' => 'sacco',
+        'uses' => 'SaccoController@index'
+    ));
+    Route::get('/sacco/add-sacco', array(
+        'as' => 'add-sacco',
+        'uses' => 'SaccoController@create'
+    ));
+    Route::post('/post/add-sacco', array(
+        'as' => 'add-sacco',
+        'uses' => 'SaccoController@store'
+    ));
+    Route::get('/sacco/view-saccos', array(
+        'as' => 'view-sacco',
+        'uses' => 'SaccoController@show'
+    ));
+    Route::get('/sacco/edit-sacco/{id}', array(
+        'as' => 'edit-sacco',
+        'uses' => 'SaccoController@edit'
+    ));
+    Route::post('/post/edit-sacco', array(
+        'as' => 'edit-sacco',
+        'uses' => 'SaccoController@update'
+    ));
+    Route::get('/sacco/add-vehicle/{id}', array(
+        'as' => 'add-vehicle',
+        'uses' => 'SaccoController@addVehicle'
+    ));
 });
