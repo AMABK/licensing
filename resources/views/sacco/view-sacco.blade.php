@@ -48,17 +48,18 @@ View Vehicles
         <!-- Main row -->
         <div class="row" style="margin: 3px">
             <!-- Left col -->
-            <h3>Registered vehicles</h3>
+            <h3>Registered vehicles under {{$sacco[0]->name}} Sacco [Reg No: {{$sacco[0]->reg_id}}]</h3>
             <table id="myTable" width="100%">
-                <thead><tr><th>Reg No</th><th>Vehicle make</th><th>Category</th><th>Sacco</th><th>TLB NUmber</th><th>Number of seats</th><th>Add to sacco</th></tr></thead>
-                @foreach ($vehicle as $vehicles)
+                <thead><tr><th>Reg No</th><th>Vehicle make</th><th>TLB NUmber</th><th>Number of seats</th><th>Remove from sacco</th></tr></thead>
+
+                @foreach ($sacco as $saccos)
                 <tbody>
                     <tr>
-                        <td><a href="{{URL::to('vehicle/edit-vehicle/'.\Hashids::encode($vehicles->id))}}"> {{strtoupper($vehicles->reg_no)}}</a></td><td>{{ $vehicles->vehicle_make }}</td><td>{{ $vehicles->category }}</td><td><?php if($vehicles->sacco == null){ echo 'No Sacco';}else{ ?><a href="{{URL::to('sacco/view-sacco/'.\Hashids::encode($vehicles->sacco->id))}}">{{ $vehicles->sacco->name }}</a><?php } ?></td><td>{{ strtoupper($vehicles->tlb_no) }}</td><td>{{ $vehicles->no_of_seat }}</td><td><a href="{{URL::to('/vehicles/add-vehicle/'.\Hashids::encode($vehicles->id))}}">Add to sacco</a></td>
+                        <td><a href="{{URL::to('vehicle/edit-vehicle/'.\Hashids::encode($saccos->id))}}"> {{strtoupper($saccos->reg_no)}}</a></td><td>{{ $saccos->vehicle_make }}</td><td>{{ strtoupper($saccos->tlb_no) }}</td><td>{{ $saccos->no_of_seat }}</td><td><a href="{{URL::to('/vehicle/remove-sacco/'.\Hashids::encode($saccos->sacco_id).'/'.$saccos->reg_no)}}">Remove</a></td>
                     </tr>
                 </tbody>
                 @endforeach
-                <tfoot><tr><th>Reg No</th><th>Vehicle make</th><th>Category</th><th>Sacco</th><th>TLB Number</th><th>Number of seats</th><th>Add to sacco</th></tr></thead>
+                <tfoot><tr><th>Reg No</th><th>Vehicle make</th><th>TLB Number</th><th>Number of seats</th><th>Remove from sacco</th></tr></thead>
             </table>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
 

@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title')
-Sacco
+Add Vehicles
 @stop
 @section('content')
 

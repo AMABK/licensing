@@ -90,9 +90,9 @@ class SaccoController extends Controller {
      * @return Response
      */
     public function update() {
-        if (isset($_POST['delete'])){
+        if (isset($_POST['delete'])) {
             return redirect('sacco/view-saccos')
-                                ->with('global', '<div class="alert alert-warning">Whoooops, this functionality is not yet available!</div>');
+                            ->with('global', '<div class="alert alert-warning">Whoooops, this functionality is not yet available!</div>');
         }
         $validator = \Validator::make(\Request::all(), array(
                     'name' => 'required|max:255',
@@ -112,7 +112,7 @@ class SaccoController extends Controller {
             $sacco = \DB::table('saccos')
                     ->where('id', \Request::input('id'))
                     ->update(array(
-                        'name' => \Request::input('name'),
+                'name' => \Request::input('name'),
                 'phone_no' => \Request::input('phone_no'),
                 'email' => \Request::input('email'),
                 'no_vehicle' => \Request::input('no_vehicle'),
@@ -140,11 +140,31 @@ class SaccoController extends Controller {
     public function destroy($id) {
         //
     }
+
     /**
      * Add vehicle to sacco
      */
     public function addVehicle() {
         
+    }
+
+    /*
+     * Show all vehicles under a particular Sacco
+     */
+
+    public function showSacco($sid) {
+        $id = \Hashids::decode($sid);
+        $sacco = \DB::table('saccos')
+        ->join('vehicles', function ($join) {
+            $join->on('saccos.id', '=', 'vehicles.sacco_id');
+        })
+        ->where('saccos.id','=', $id)
+        ->get();
+        if($sacco == null){
+            return redirect()->back()
+                    ->with('global', '<div class="alert alert-warning">The sacco you selected does not have any registered vehicles</div>');
+        }
+        return view('sacco.view-sacco', array('sacco' => $sacco));
     }
 
 }

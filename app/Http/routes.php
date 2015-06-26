@@ -64,6 +64,10 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'view-sacco',
         'uses' => 'SaccoController@show'
     ));
+    Route::get('/sacco/view-sacco/{id}', array(
+        'as' => 'view-sacco',
+        'uses' => 'SaccoController@showSacco'
+    ));
     Route::get('/sacco/edit-sacco/{id}', array(
         'as' => 'edit-sacco',
         'uses' => 'SaccoController@edit'
@@ -71,6 +75,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/post/edit-sacco', array(
         'as' => 'edit-sacco',
         'uses' => 'SaccoController@update'
+    ));
+    Route::get('/sacco/add-vehicle/{id}', array(
+        'as' => 'add-vehicle',
+        'uses' => 'SaccoController@addVehicle'
     ));
     Route::get('/sacco/add-vehicle/{id}', array(
         'as' => 'add-vehicle',
@@ -101,8 +109,8 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'edit-vehicle',
         'uses' => 'VehicleController@update'
     ));
-    Route::get('/sacco/add-vehicle/{id}', array(
-        'as' => 'add-vehicle',
-        'uses' => 'VehicleController@addVehicle'
+    Route::get('/vehicle/remove-sacco/{sid}/{reg_no}', array(
+        'as' => 'remove-sacco',
+        'uses' => 'VehicleController@removeSacco'
     ));
 });
