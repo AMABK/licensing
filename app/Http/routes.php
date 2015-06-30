@@ -10,12 +10,11 @@
   | and give it the controller to call when that URI is requested.
   |
  */
-
 Route::get('/', function () {
     return view('index');
 });
 // Authentication routes...
-Route::get('/auth/login', array(
+Route::get('/', array(
     'as' => 'login',
     'uses' => 'Auth\AuthController@getLogin'
 ));
@@ -80,9 +79,13 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'add-vehicle',
         'uses' => 'SaccoController@addVehicle'
     ));
-    Route::get('/sacco/add-vehicle/{id}', array(
-        'as' => 'add-vehicle',
-        'uses' => 'SaccoController@addVehicle'
+    Route::get('/sacco/autocomplete', array(
+        'as' => '/saccos-autocomplete',
+        'uses' => 'SaccoController@getSaccos'
+    ));
+    Route::get('/sacco/add-new-vehicle/{id}', array(
+        'as' => 'add-new-vehicle',
+        'uses' => 'SaccoController@addNewVehicle'
     ));
     //Vehicle controller
     Route::get('/vehicle', array(
@@ -109,8 +112,46 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'edit-vehicle',
         'uses' => 'VehicleController@update'
     ));
-    Route::get('/vehicle/remove-sacco/{sid}/{reg_no}', array(
+    Route::get('/vehicle/add-sacco/{id}', array(
+        'as' => 'add-sacco',
+        'uses' => 'VehicleController@addSacco'
+    ));
+    Route::get('/vehicle/remove-sacco/{id}', array(
         'as' => 'remove-sacco',
         'uses' => 'VehicleController@removeSacco'
+    ));
+    //Invoices Controller
+    Route::get('/invoice', array(
+        'as' => 'invoice',
+        'uses' => 'InvoiceController@index'
+    ));
+    Route::get('/invoice/add-sacco-invoice', array(
+        'as' => 'add-sacco-invoice',
+        'uses' => 'InvoiceController@create'
+    ));
+    Route::get('/invoice/edit-sacco-invoice', array(
+        'as' => 'edit-sacco-invoice',
+        'uses' => 'InvoiceController@create'
+    ));
+    Route::get('/invoice/add-vehicle-invoice', array(
+        'as' => 'add-sacco-invoice',
+        'uses' => 'InvoiceController@create'
+    ));
+    Route::get('/invoice/edit-vehicle-invoice', array(
+        'as' => 'edit-sacco-invoice',
+        'uses' => 'InvoiceController@create'
+    ));
+    Route::get('/invoice/view-invoices', array(
+        'as' => 'view-invoices',
+        'uses' => 'InvoiceController@show'
+    ));
+    //Admin controller
+    Route::get('/admin', array(
+        'as' => 'admin',
+        'uses' => 'AdminController@index'
+    ));
+    Route::get('/admin/add-user', array(
+        'as' => 'add-user',
+        'uses' => 'AdminController@create'
     ));
 });

@@ -23,6 +23,7 @@ class CreateSaccosTable extends Migration
             $table->integer('yr_of_license');
             $table->date('expiry_date');
             $table->integer('fee_paid');
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
     }

@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class InvoiceController extends Controller {
-
+class AdminController extends Controller
+{
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index() {
-        return view('invoice.index');
+    public function index()
+    {
+        return view('admin.index');
     }
 
     /**
@@ -22,10 +24,9 @@ class InvoiceController extends Controller {
      *
      * @return Response
      */
-    public function create() {
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML('<h1>Test</h1>');
-        return $pdf->stream();
+    public function create()
+    {
+        return view('admin.add-user');
     }
 
     /**
@@ -33,7 +34,8 @@ class InvoiceController extends Controller {
      *
      * @return Response
      */
-    public function store() {
+    public function store()
+    {
         //
     }
 
@@ -43,7 +45,8 @@ class InvoiceController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         //
     }
 
@@ -53,7 +56,8 @@ class InvoiceController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         //
     }
 
@@ -63,7 +67,8 @@ class InvoiceController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function update($id) {
+    public function update($id)
+    {
         //
     }
 
@@ -73,8 +78,8 @@ class InvoiceController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         //
     }
-
 }

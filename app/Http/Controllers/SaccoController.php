@@ -118,7 +118,8 @@ class SaccoController extends Controller {
                 'no_vehicle' => \Request::input('no_vehicle'),
                 'yr_of_license' => \Request::input('yr_of_license'),
                 'expiry_date' => \Request::input('expiry_date'),
-                'fee_paid' => \Request::input('fee_paid')
+                'fee_paid' => \Request::input('fee_paid'),
+                'user_id' => \Auth::user()->id
                     )
             );
             if ($sacco) {
@@ -141,13 +142,6 @@ class SaccoController extends Controller {
         //
     }
 
-    /**
-     * Add vehicle to sacco
-     */
-    public function addVehicle() {
-        
-    }
-
     /*
      * Show all vehicles under a particular Sacco
      */
@@ -155,16 +149,38 @@ class SaccoController extends Controller {
     public function showSacco($sid) {
         $id = \Hashids::decode($sid);
         $sacco = \DB::table('saccos')
-        ->join('vehicles', function ($join) {
-            $join->on('saccos.id', '=', 'vehicles.sacco_id');
-        })
-        ->where('saccos.id','=', $id)
-        ->get();
-        if($sacco == null){
+                ->join('vehicles', function ($join) {
+                    $join->on('saccos.id', '=', 'vehicles.sacco_id');
+                })
+                ->where('saccos.id', '=', $id)
+                ->get();
+        if ($sacco == null) {
             return redirect()->back()
-                    ->with('global', '<div class="alert alert-warning">The sacco you selected does not have any registered vehicles</div>');
+                            ->with('global', '<div class="alert alert-warning">The sacco you selected does not have any registered vehicles</div>');
         }
         return view('sacco.view-sacco', array('sacco' => $sacco));
+    }
+
+    public function getSaccos() {
+        $sacco = \App\Sacco::all();
+        //dd($saccos);
+        if ($_GET['type'] == 'reg_id') {
+            $reg_id = $_GET['name_startsWith'];
+            //$data = mysql_query("SELECT name FROM country where name LIKE '".strtoupper($_GET['name_startsWith'])."%'");	
+            $data = \DB::table('saccos')
+                ->where('reg_id', 'like', '%'.$reg_id.'%')
+                ->get();
+            // $data = array();
+//	while ($row = mysql_fetch_array($result)) {
+//		array_push($data, $row['name']);	
+//	}	
+            echo json_encode($data);
+        }
+    }
+    public function addNewVehicle($id) {
+            $sacco = \DB::table('saccos')
+                            ->where('id', \Hashids::decode($id)[0])->first();
+            return view('sacco.add-new-vehicle',array('sacco' => $sacco));
     }
 
 }

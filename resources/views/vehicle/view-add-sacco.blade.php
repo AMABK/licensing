@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title')
-View Vehicles
+Sacco
 @stop
 @section('content')
 <link rel="stylesheet" type="text/css" href="/datatables/jquery.dataTables.min.css" title="yellow" media="screen" />
@@ -8,6 +8,7 @@ View Vehicles
     table, td {
         border: 1px solid #086A87;
         background-color: #D8D8D8;
+        height: 10px;
     }
 
     thead, th {
@@ -21,9 +22,7 @@ View Vehicles
     .nav-tabs>li>a {
         background-color: rgb(239, 224, 224);
     }
-    .modal-content{
-        margin-top: 20%;
-    }
+
 
 </style>
 <div class="content-wrapper">
@@ -48,21 +47,17 @@ View Vehicles
         <!-- Main row -->
         <div class="row" style="margin: 3px">
             <!-- Left col -->
-            <h3>Registered vehicles</h3>
+            <h3>Add vehicle Reg No [{{strtoupper($vehicle->reg_no)}}], {{$vehicle->no_of_seat}} seator, to a sacco</h3>
             <table id="myTable" width="100%">
-                <thead><tr><th>Reg No</th><th>Vehicle make</th><th>Category</th><th>Sacco</th><th>TLB NUmber</th><th>Number of seats</th><th></th></tr></thead>
+                <thead><tr><th>Name</th><th>Reg No</th><th>#Vehicles</th><th>Yr of License</th><th>Expiry Date</th><th>Fees Paid</th><th>Phone</th><th>Email</th><th>Address</th><th>Add Vehicle</th></tr></thead>
                 <tbody>
-                    @foreach ($vehicle as $vehicles)
+                    @foreach ($sacco as $saccos)
                     <tr>
-                        <td><a href="{{URL::to('vehicle/edit-vehicle/'.\Hashids::encode($vehicles->id))}}"> {{strtoupper($vehicles->reg_no)}}</a></td><td>{{ $vehicles->vehicle_make }}</td><td>{{ $vehicles->category }}</td><td><?php
-                            if ($vehicles->sacco == null) {
-                                echo 'No Sacco';
-                            } else {
-                                ?><a href="{{URL::to('sacco/view-sacco/'.\Hashids::encode($vehicles->sacco->id))}}">{{ $vehicles->sacco->name }}</a><?php } ?></td><td>{{ strtoupper($vehicles->tlb_no) }}</td><td>{{ $vehicles->no_of_seat }}</td><td><?php if ($vehicles->sacco_id == null) { ?><a href="{{URL::to('/vehicle/add-sacco/'.\Hashids::encode($vehicles->id))}}">add to sacco</a><?php } else { ?> <a href="{{URL::to('/vehicle/remove-sacco/'.\Hashids::encode($vehicles->sacco_id,$vehicles->id))}}">remove from sacco</a><?php } ?></td>
+                        <td><a href="{{URL::to('sacco/edit-sacco/'.\Hashids::encode($saccos->id))}}"> {{$saccos->name}}</a></td><td>{{ $saccos->reg_id }}</td><td>{{ $saccos->no_vehicle }}</td><td>{{ $saccos->yr_of_license }}</td><td>{{ $saccos->expiry_date }}</td><td>{{ $saccos->fee_paid }}</td><td>{{ $saccos->phone_no }}</td><td>{{ $saccos->email }}</td><td>{{ $saccos->address }}</td><td><a href="{{URL::to('vehicle/add-sacco/'.\Hashids::encode($saccos->id,$vehicle->id))}}">Add</a></td>
                     </tr>
                     @endforeach
                 </tbody>
-                <tfoot><tr><th>Reg No</th><th>Vehicle make</th><th>Category</th><th>Sacco</th><th>TLB Number</th><th>Number of seats</th><th></th></tr></thead>
+                <tfoot><tr><th>Name</th><th>Reg No</th><th>#Vehicles</th><th>Yr of License</th><th>Expiry Date</th><th>Fees Paid</th><th>Phone</th><th>Email</th><th>Address</th><th>Add Vehicle</th></tr></thead>
             </table>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
 
@@ -75,9 +70,10 @@ View Vehicles
 @section('scripts')
 @parent
 <script src="/datatables/jquery.dataTables.min.js" type="text/javascript" ></script>
+
 <script>
 $(document).ready(function () {
-    $('#myTable').DataTable();
+    $('#myTable').dataTable();
 });
 </script>   
 @stop

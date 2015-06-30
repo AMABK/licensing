@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title')
-Add Vehicles
+Invoice
 @stop
 @section('content')
 
@@ -79,41 +79,33 @@ Add Vehicles
         @endif
         <!-- Main row -->
         <div class="row" style="width: 70%; margin-left: 15%;margin-top: 5%">
-            <!-- Left col -->
-            <h3>Register a new vehicle</h3>
-            <form method="POST" action="/vehicle/add-vehicle">
-                {!! csrf_field() !!}
+            <center><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Create a new invoice</button></center>
 
-                <div class="form-group">
-                    <label for="reg_no">Registration Number</label>
-                    <input type="text" name="reg_no" class="form-control" value="{{ old('reg_no') }}" required="" placeholder="Registration Number">
-                </div>
-                <div class="form-group">
-                    <label for="vehicle_make">Vehicle Make</label>
-                    <input type="text" name="vehicle_make" class="form-control" value="{{ old('vehicle_make') }}" placeholder="Vehicle make">
-                </div>
-                <div class="form-group">
-                    <label for="category">Category</label>
-                    <input type="text" name="category" class="form-control" value="{{ old('category') }}" required="" placeholder="Category">
-                </div>
-                <div class="form-group">
-                    <label for="sacco_id">Sacco</label>
-                    <input type="text" name="sacco_id" class="form-control" value="{{ old('sacco_id') }}" placeholder="Address">
-                </div>
-                <div class="form-group">
-                    <label for="tlb_no">TLB Number</label>
-                    <input type="text" name="tlb_no" class="form-control" value="{{ old('tlb_no') }}" required=""  placeholder="TLB No.">
-                </div>
-                <div class="form-group">
-                    <label for="no_of_seat">Number of seats</label>
-                    <input type="text" name="no_of_seat" class="form-control" value="{{ old('no_of_seat') }}" required="" placeholder="Number of seats">
-                </div>
-                    <button type="submit">Register</button>
-                </div>
-            </form>
-            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
 
-        </div><!-- /.row (main row) -->
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Select type of invoice</h4>
+                        </div>
+                        <div class="modal-body">
+                            <center><a href="{{URL::to('/invoice/add-sacco-invoice')}}">CREATE A SACCO INVOICE </a></center>
+                        </div>
+                        <div class="modal-body">
+                            <center><a href="{{URL::to('/invoice/add-vehicle-invoice')}}">CREATE A VEHICLE INVOICE </a></center>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
 
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
@@ -123,7 +115,7 @@ Add Vehicles
 @parent
 <script>
     $(document).ready(function () {
-        $('#myTable').DataTable();
+        $('#myTable').dataTable();
     });
 </script>   
 @stop

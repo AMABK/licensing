@@ -20,6 +20,7 @@ class CreateVehiclesTable extends Migration
             $table->integer('sacco_id')->nullable();
             $table->string('tlb_no');
             $table->string('no_of_seat');
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
     }

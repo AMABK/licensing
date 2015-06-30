@@ -43,17 +43,39 @@ class VehicleController extends Controller {
         );
         //dd(\Request::all());
         if ($validator->fails()) {
-            return redirect('/vehicle/add-vehicle')
+            return redirect()->back()
                             ->withErrors($validator)
                             ->withInput();
         } else {
-            $vehicle = \App\Vehicle::create(\Request::all());
-            if ($vehicle) {
-                return redirect('vehicle/view-vehicle/' . \Hashids::encode(\Request::input('reg_id')))
-                                ->with('global', '<div class="alert alert-success">Vehicle successfullly saved in the database</div>');
+            $sacco_id = \DB::table('saccos')
+                            ->where('reg_id', \Request::get('reg_id'))->first();
+            $vehicle = \App\Vehicle::create(array(
+                        'reg_no' => \Request::get('reg_no'),
+                        'vehicle_make' => \Request::get('vehicle_make'),
+                        'category' => \Request::get('category'),
+                        'sacco_id' => $sacco_id->id,
+                        'tbl_no' => \Request::get('tlb_no'),
+                        'no_of_seat' => \Request::get('no_of_seat'),
+                        'user_id' => \Auth::user()->id
+                            )
+            );
+            if (\Request::get('under_sacco') == 'Yes') {
+                if ($vehicle) {
+                    return redirect('sacco/add-new-vehicle/' . \Hashids::encode($sacco_id->id))
+                                    ->with('global', '<div class="alert alert-success">Vehicle successfullly saved in the database</div>');
+                } else {
+                    return redirect('sacco/add-new-vehicle/' . \Hashids::encode($sacco_id->id))
+                                    ->with('global', '<div class="alert alert-danger">Whoooops, your input could not be saved. Please contact administrator!</div>');
+                }
             } else {
-                return redirect('vehicle/add-vehicle')
-                                ->with('global', '<div class="alert alert-danger">Whoooops, your input could not be saved. Please contact administrator!</div>');
+
+                if ($vehicle) {
+                    return redirect('vehicle/view-vehicle/' . \Hashids::encode($vehicle->id))
+                                    ->with('global', '<div class="alert alert-success">Vehicle successfullly saved in the database</div>');
+                } else {
+                    return redirect('vehicle/add-vehicle')
+                                    ->with('global', '<div class="alert alert-danger">Whoooops, your input could not be saved. Please contact administrator!</div>');
+                }
             }
         }
     }
@@ -77,7 +99,7 @@ class VehicleController extends Controller {
      */
     public function edit($id) {
         $saccos = \App\Sacco::all();
-        $vehicle = \App\Vehicle::find(\Hashids::decode($id));
+        $vehicle = \App\Vehicle::find(\Hashids::decode($id)[0]);
         return view('vehicle.edit-vehicle', array('vehicles' => $vehicle, 'sacco' => $saccos));
     }
 
@@ -100,7 +122,7 @@ class VehicleController extends Controller {
                         )
         );
         if ($validator->fails()) {
-            return redirect('/vehicle/edit-vehicle/' . \Hashids::encode(\Request::input('id')))
+            return redirect('/vehicle/edit-vehicle/' . \Hashids::encode(\Request::input('id')[0]))
                             ->withErrors($validator)
                             ->withInput();
         } else {
@@ -111,7 +133,8 @@ class VehicleController extends Controller {
                 'vehicle_make' => \Request::input('vehicle_make'),
                 'sacco_id' => \Request::input('sacco_id'),
                 'tlb_no' => \Request::input('tlb_no'),
-                'no_of_seat' => \Request::input('no_of_seat')
+                'no_of_seat' => \Request::input('no_of_seat'),
+                'user_id' => \Auth::user()->id
                     )
             );
             if ($vehicle) {
@@ -134,29 +157,63 @@ class VehicleController extends Controller {
         //
     }
 
-    public function removeSacco($sid, $reg_no) {
-        $s_id = \Hashids::decode($sid);
-        $remove = \DB::table('vehicles')
-                ->where('reg_no', $reg_no)
-                ->where('sacco_id', $s_id[0])
+    /**
+     * Add vehicle to sacco
+     */
+    public function addSacco($ids) {
+        if (sizeof(\Hashids::decode($ids)) == 1) {
+            $saccos = \App\Sacco::all();
+            $vehicle = \App\Vehicle::find(\Hashids::decode($ids)[0]);
+            return view('vehicle.view-add-sacco', array('sacco' => $saccos, 'vehicle' => $vehicle));
+        }
+        //dd(\Hashids::decode($ids)[1]);
+        $check = \App\Vehicle::find(\Hashids::decode($ids)[1]);
+        if ($check->sacco_id != null) {
+            return redirect('/vehicle/view-vehicles')
+                            ->with('global', '<div class="alert alert-warning">Vehicle already belongs to a sacco!.</div>');
+        }
+
+        $add = \DB::table('vehicles')
+                ->where('id', \Hashids::decode($ids)[1])
+                ->where('sacco_id', null)
                 ->update(array(
-            'sacco_id' => null,
-            'category' => 'Other'
+            'sacco_id' => \Hashids::decode($ids)[0],
+            'category' => 'Sacco Vehicle',
+            'user_id' => \Auth::user()->id
                 )
         );
+        if ($add) {
+            return redirect('/vehicle/view-vehicles')
+                            ->with('global', '<div class="alert alert-success">Vehicle successfully added to the circle</div>');
+        } else {
+            return redirect('/vehicle/view-vehicles')
+                            ->with('global', '<div class="alert alert-warning">Vehicle could not be added to the sacco, please contact admin.</div>');
+        }
+    }
+
+    public function removeSacco($ids) {
+        $id = \Hashids::decode($ids);
         $check = \DB::table('vehicles')
-                ->where('sacco_id', '!=', null)
-                ->where('sacco_id', '!=', '')
+                ->where('sacco_id', '=', $id[0])
                 ->count();
         if ($check < 1) {
             return redirect('/sacco')
-                            ->with('global', '<div class="alert alert-warning">There are no vehicle registered in the circle</div>');
+                            ->with('global', '<div class="alert alert-warning">There are no vehicle registered in the sacco</div>');
         }
+        $remove = \DB::table('vehicles')
+                ->where('id', $id[1])
+                ->where('sacco_id', $id[0])
+                ->update(array(
+            'sacco_id' => null,
+            'category' => 'Other',
+            'user_id' => \Auth::user()->id
+                )
+        );
         if ($remove) {
-            return redirect()->back()
+            return redirect('/vehicle/view-vehicles')
                             ->with('global', '<div class="alert alert-success">Vehicle successfullly removed from sacco</div>');
         } else {
-            return redirect()->back()
+            return redirect('/vehicle/view-vehicles')
                             ->with('global', '<div class="alert alert-warning">Vehicle could not be removed from sacco. Please contact admin!</div>');
         }
     }

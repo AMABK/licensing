@@ -79,8 +79,7 @@ Add Vehicle
         @endif
         <!-- Main row -->
         <div class="row" style="width: 70%; margin-left: 15%;margin-top: 5%">
-            <!-- Left col -->
-            <h3>Register a new vehicle</h3>
+            <h3>Register a new vehicle under sacco Reg No[{{$sacco->reg_id}}], {{$sacco->name}}</h3>
             <form method="POST" action="/post/add-vehicle">
                 {!! csrf_field() !!}
 
@@ -93,23 +92,12 @@ Add Vehicle
                     <input type="text" class="form-control" name="vehicle_make" class="form-control" value="{{ old('vehicle_make') }}" placeholder="Vehicle make">
                 </div>
                 <div class="form-group">
-                    <input name="under_sacco" value="No" hidden="" readonly=""/>
-                    <label for="category" >Category</label>
-                    <select type="text" name="category" id="category" class="form-control" required="">
-                        <option  value="Bus" class="no_sacco" >Bus</option>
-                        <option  value="Taxi" class="no_sacco" >Taxi</option>
-                        <option  value="Company Vehicle" class="no_sacco" >Company Vehicle</option>
-                        <option value="Sacco Vehicle"  class="reg_id" >Sacco Vehicle</option>
-                        <option  value="Other"  class="no_sacco" >Other</option>
-                    </select>
+                    <input name="category" value="Sacco Vehicle" hidden="" readonly=""/>
                 </div>
-                <div id="sacco" style="display:none;">
-                    <div class="form-group">
-                        <label for="sacco_id" >Sacco</label>
-                        <input name="reg_id" placeholder="Please select a valid Sacco Reg No" id="reg_id" class="form-control txt-auto"/>
-                    </div>
+                <div class="form-group">
+                    <input name="sacco_id" value="{{$sacco->id}}" hidden="" readonly=""/>
+                    <input name="under_sacco" value="Yes" hidden="" readonly=""/>
                 </div>
-
                 <div class="form-group">
                     <label for="tlb_no">TLB Number</label>
                     <input type="text" style="text-transform:uppercase" name="tlb_no" class="form-control" value="{{ old('tlb_no') }}" required=""  placeholder="TLB No.">
@@ -118,12 +106,10 @@ Add Vehicle
                     <label for="no_of_seat">Number of seats</label>
                     <input type="text" name="no_of_seat" class="form-control" value="{{ old('no_of_seat') }}" required="" placeholder="Number of seats">
                 </div>
-                <button type="submit">Register</button>
-        </div>
-        </form>
-        <script>
+                <button type="submit" >Register</button>
 
-        </script>
+            </form>
+        </div>
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
 
 </div><!-- /.row (main row) -->
@@ -134,46 +120,5 @@ Add Vehicle
 @stop
 @section('scripts')
 @parent
-<script>
-$('#category').on('change',function(){
-    if( $(this).val()==="Sacco Vehicle"){
-    $("#sacco").show()
-    }
-    else{
-    $("#sacco").hide()
-    }
-});
 
-</script>  
-<script>$('#reg_id').autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                url: '/sacco/autocomplete',
-                dataType: "json",
-                data: {
-                    name_startsWith: request.term,
-                    type: 'reg_id'
-                },
-                success: function (data) {
-                    var saccoArray = data;
-                    //console.log(saccoArray.reg_id);
-                    var arr = new Array;
-                    for (var i = 0; i < saccoArray.length; i++) {
-                        arr[i] = saccoArray[i].reg_id;
-                        // console.log(arr);
-                    }
-                    response($.map(arr, function (item) {
-                        return {
-                            label: item,
-                            value: item
-
-                        }
-                    }));
-                }
-            });
-        },
-        autoFocus: true,
-        minLength: 0
-    });
-</script>
 @stop

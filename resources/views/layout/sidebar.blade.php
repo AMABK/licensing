@@ -54,6 +54,19 @@
             </li>
             <li class="treeview">
               <a href="#">
+                <i class="fa fa-cogs"></i>
+                <span>Administrator</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{URL::to('/admin')}}"><i class="fa fa-home"></i> Admin home</a></li>
+                <li><a href="{{URL::to('/admin/add-user')}}"><i class="fa fa-user-plus"></i> Add new user</a></li>
+                <li><a href="{{URL::to('/admin/view-users')}}"><i class="fa fa-eye"></i> View user</a></li>
+                <li><a href="{{URL::to('/admin/manage-user')}}"><i class="fa fa-cog"></i> Manage user</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
                 <i class="fa fa-group"></i>
                 <span>Saccos</span>
                 <i class="fa fa-angle-left pull-right"></i>
@@ -68,7 +81,7 @@
             </li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-group"></i>
+                <i class="fa fa-automobile"></i>
                 <span>Vehicles</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
@@ -76,8 +89,31 @@
                 <li><a href="{{URL::to('/vehicle')}}"><i class="fa fa-home"></i> Vehicle home</a></li>
                 <li><a href="{{URL::to('/vehicle/add-vehicle')}}"><i class="fa fa-plus-circle"></i> Add new vehicle</a></li>
                 <li><a href="{{URL::to('/vehicle/view-vehicles')}}"><i class="fa fa-eye"></i> View vehicles</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Flot</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-book"></i>
+                <span>Invoices</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{URL::to('/invoice')}}"><i class="fa fa-home"></i> Invoices home</a></li>
+                <li><a href="{{URL::to('/invoice/add-sacco-invoice')}}"><i class="fa fa-plus-circle"></i> Add sacco invoice</a></li>
+                <li><a href="{{URL::to('/invoice/add-vehicle-invoice')}}"><i class="fa fa-plus-circle"></i> Add vehicle invoice</a></li>
+                <li><a href="{{URL::to('/invoice/view-invoices')}}"><i class="fa fa-eye"></i> View invoices</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-money"></i>
+                <span>Finance</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{URL::to('/vehicle')}}"><i class="fa fa-home"></i> Invoices home</a></li>
+                <li><a href="{{URL::to('/vehicle/add-vehicle')}}"><i class="fa fa-plus-circle"></i> Add new vehicle</a></li>
+                <li><a href="{{URL::to('/vehicle/view-vehicles')}}"><i class="fa fa-eye"></i> View vehicles</a></li>
               </ul>
             </li>
             <li class="treeview">
