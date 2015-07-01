@@ -93,6 +93,10 @@ Add Sacco
                     <input type="text" style="text-transform:uppercase" name="reg_id" class="form-control" value="{{ old('reg_id') }}" required="" placeholder="Registration Number">
                 </div>
                 <div class="form-group">
+                    <label for="type">Type</label>
+                    <input type="type" name="type" class="form-control" value="{{ old('type') }}" placeholder="Type">
+                </div>
+                <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Email">
                 </div>

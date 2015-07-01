@@ -49,20 +49,19 @@ Sacco
             <!-- Left col -->
             <h3>Registered saccos</h3>
             <table id="myTable" width="100%">
-                <thead><tr><th>Name</th><th>Reg No</th><th>#Vehicles</th><th>Yr of License</th><th>Expiry Date</th><th>Fees Paid</th><th>Phone</th><th>Email</th><th>Address</th><th>Add Vehicles</th></tr></thead>
+                <thead><tr><th>Name</th><th>Reg No</th><th>#Vehicles</th><th>Type</th><th>Expiry Date</th><th>Fees Paid</th><th>Phone</th><th>Email</th><th>Address</th><th>Add Vehicles</th></tr></thead>
                 <tbody>
                     @foreach ($sacco as $saccos)
                     <tr>
-                        <td><a href="{{URL::to('sacco/edit-sacco/'.\Hashids::encode($saccos->id))}}"> {{$saccos->name}}</a></td><td>{{ $saccos->reg_id }}</td><td>{{ $saccos->no_vehicle }}</td><td>{{ $saccos->yr_of_license }}</td><td>{{ $saccos->expiry_date }}</td><td>{{ $saccos->fee_paid }}</td><td>{{ $saccos->phone_no }}</td><td>{{ $saccos->email }}</td><td>{{ $saccos->address }}</td><td><a href="{{URL::to('sacco/add-new-vehicle/'.\Hashids::encode($saccos->id))}}">Add</a></td>
+                        <td><a href="{{URL::to('sacco/edit-sacco/'.\Hashids::encode($saccos->id))}}"> {{$saccos->name}}</a></td><td>{{ $saccos->reg_id }}</td><td>{{ $saccos->no_vehicle }}</td><td>{{ $saccos->type }}</td><td>{{ $saccos->expiry_date }}</td><td>{{ $saccos->fee_paid }}</td><td>{{ $saccos->phone_no }}</td><td>{{ $saccos->email }}</td><td>{{ $saccos->address }}</td><td><a href="{{URL::to('sacco/add-new-vehicle/'.\Hashids::encode($saccos->id))}}">Add</a></td>
                     </tr>
                     @endforeach
                 </tbody>
-                <tfoot><tr><th>Name</th><th>Reg No</th><th>#Vehicles</th><th>Yr of License</th><th>Expiry Date</th><th>Fees Paid</th><th>Phone</th><th>Email</th><th>Address</th><th>Add Vehicles</th></tr></thead>
+                <tfoot><tr><th>Name</th><th>Reg No</th><th>#Vehicles</th><th>Type</th><th>Expiry Date</th><th>Fees Paid</th><th>Phone</th><th>Email</th><th>Address</th><th>Add Vehicles</th></tr></thead>
             </table>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
 
         </div><!-- /.row (main row) -->
-
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 

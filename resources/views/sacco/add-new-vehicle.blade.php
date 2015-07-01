@@ -79,7 +79,7 @@ Add Vehicle
         @endif
         <!-- Main row -->
         <div class="row" style="width: 70%; margin-left: 15%;margin-top: 5%">
-            <h3>Register a new vehicle under sacco Reg No[{{$sacco->reg_id}}], {{$sacco->name}}</h3>
+            <h3>Register a new vehicle under sacco/company Reg No[{{$sacco->reg_id}}], {{$sacco->name}}</h3>
             <form method="POST" action="/post/add-vehicle">
                 {!! csrf_field() !!}
 

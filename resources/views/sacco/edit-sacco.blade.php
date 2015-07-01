@@ -43,6 +43,10 @@ Edit Sacco
                     <input type="email" name="email" class="form-control" value="{{  $sacco->email }}" placeholder="Email">
                 </div>
                 <div class="form-group">
+                    <label for="type">Type</label>
+                    <input type="type" name="type" class="form-control" value="{{  $sacco->type }}" placeholder="Type">
+                </div>
+                <div class="form-group">
                     <label for="address">Address</label>
                     <input type="text" name="address" class="form-control" value="{{  $sacco->address }}" placeholder="Address">
                 </div>

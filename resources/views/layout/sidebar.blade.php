@@ -81,6 +81,20 @@
             </li>
             <li class="treeview">
               <a href="#">
+                <i class="fa fa-simplybuilt"></i>
+                <span>Companies</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="{{URL::to('/company')}}"><i class="fa fa-home"></i> Company home</a></li>
+                <li><a href="{{URL::to('/company/add-company')}}"><i class="fa fa-plus-circle"></i> Add new company</a></li>
+                <li><a href="{{URL::to('/company/view-company')}}"><i class="fa fa-eye"></i> View companies</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Flot</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
                 <i class="fa fa-automobile"></i>
                 <span>Vehicles</span>
                 <i class="fa fa-angle-left pull-right"></i>

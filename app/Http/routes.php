@@ -87,6 +87,47 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'add-new-vehicle',
         'uses' => 'SaccoController@addNewVehicle'
     ));
+    //Company controller
+    Route::get('/company', array(
+        'as' => 'company',
+        'uses' => 'SaccoController@index'
+    ));
+    Route::get('/company/add-company', array(
+        'as' => 'add-company',
+        'uses' => 'SaccoController@create'
+    ));
+    Route::post('/post/add-company', array(
+        'as' => 'add-company',
+        'uses' => 'SaccoController@store'
+    ));
+    Route::get('/company/view-companies', array(
+        'as' => 'view-companies',
+        'uses' => 'SaccoController@show'
+    ));
+    Route::get('/company/view-company/{id}', array(
+        'as' => 'view-company',
+        'uses' => 'SaccoController@showCompany'
+    ));
+    Route::get('/company/edit-company/{id}', array(
+        'as' => 'edit-company',
+        'uses' => 'SaccoController@edit'
+    ));
+    Route::post('/post/edit-company', array(
+        'as' => 'edit-company',
+        'uses' => 'SaccoController@update'
+    ));
+    Route::get('/company/add-vehicle/{id}', array(
+        'as' => 'add-vehicle',
+        'uses' => 'SaccoController@addVehicle'
+    ));
+    Route::get('/company/autocomplete', array(
+        'as' => '/company-autocomplete',
+        'uses' => 'SaccoController@getSaccos'
+    ));
+    Route::get('/company/add-new-vehicle/{id}', array(
+        'as' => 'add-new-vehicle',
+        'uses' => 'SaccoController@addNewVehicle'
+    ));
     //Vehicle controller
     Route::get('/vehicle', array(
         'as' => 'vehicle',

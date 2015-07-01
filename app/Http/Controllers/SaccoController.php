@@ -36,6 +36,7 @@ class SaccoController extends Controller {
         $validator = \Validator::make(\Request::all(), array(
                     'reg_id' => 'required|max:10|unique:saccos',
                     'name' => 'required|max:255',
+                    'type' => 'required|max:255',
                     'phone_no' => 'sometimes|digits_between:10,15',
                     'email' => 'sometimes|email',
                     'no_vehicle' => 'required|integer',
@@ -96,6 +97,7 @@ class SaccoController extends Controller {
         }
         $validator = \Validator::make(\Request::all(), array(
                     'name' => 'required|max:255',
+                    'type' => 'required|max:255',
                     'phone_no' => 'sometimes|digits_between:10,15',
                     'email' => 'sometimes|email',
                     'no_vehicle' => 'required|integer',

@@ -3,18 +3,18 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSaccosTable extends Migration
-{
+class CreateSaccosTable extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::create('saccos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('reg_id');
+            $table->string('type');
             $table->string('name');
             $table->string('phone_no')->nullable();
             $table->string('email')->nullable();
@@ -33,8 +33,8 @@ class CreateSaccosTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::drop('saccos');
     }
+
 }

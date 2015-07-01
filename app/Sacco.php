@@ -17,7 +17,7 @@ class Sacco extends Model {
      *
      * @var array
      */
-    protected $fillable = ['reg_id', 'name', 'phone_no', 'email', 'address', 'no_vehicle', 'yr_of_license', 'expiry_date', 'fee_paid'];
+    protected $fillable = ['reg_id', 'name','type', 'phone_no', 'email', 'address', 'no_vehicle', 'yr_of_license', 'expiry_date', 'fee_paid'];
     public function vehicles()
     {
         return $this->hasMany('App\Vehicle');
