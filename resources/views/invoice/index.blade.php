@@ -70,7 +70,7 @@ Invoice
                     <div class="icon">
                         <i class="fa fa-car"></i>
                     </div>
-                    <a href="{{URL::to('/sacco/add-sacco')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add group <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
         </div><!-- /.row -->
@@ -92,7 +92,7 @@ Invoice
                             <h4 class="modal-title">Select type of invoice</h4>
                         </div>
                         <div class="modal-body">
-                            <center><a href="{{URL::to('/invoice/add-sacco-invoice')}}">CREATE A SACCO INVOICE </a></center>
+                            <center><a href="{{URL::to('/invoice/add-group-invoice')}}">CREATE A GROUP INVOICE </a></center>
                         </div>
                         <div class="modal-body">
                             <center><a href="{{URL::to('/invoice/add-vehicle-invoice')}}">CREATE A VEHICLE INVOICE </a></center>

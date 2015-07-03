@@ -82,7 +82,7 @@ Sacco
         <div class="row" style="width: 70%; margin-left: 15%;margin-top: 5%">
             <!-- Left col -->
             <h3>Register a new user</h3>
-            <form method="POST" action="/sacco/add-sacco">
+            <form method="POST" action="/post/add-user">
                 {!! csrf_field() !!}
 
                 <div class="form-group">
@@ -95,37 +95,24 @@ Sacco
                 </div>
                 <div class="form-group">
                     <label for="job_id">Job Id</label>
-                    <input type="text" name="reg_id" class="form-control" value="{{ old('job_id') }}" required="" placeholder="Job Id">
+                    <input type="text" name="job_id" class="form-control" value="{{ old('job_id') }}" required="" placeholder="Job Id">
+                </div>
+                <div class="form-group">
+                    <label for="job_id">National Id</label>
+                    <input type="text" name="national_id" class="form-control" value="{{ old('national_id') }}" required="" placeholder="Job Id">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Email">
                 </div>
                 <div class="form-group">
-                    <label for="designation">Address</label>
-                    <input type="text" name="address" class="form-control" value="{{ old('address') }}" placeholder="Address">
+                    <label for="designation">Designation</label>
+                    <input type="text" name="designation" class="form-control" value="{{ old('designation') }}" placeholder="Address">
                 </div>
                 <div class="form-group">
                     <label for="phone_no">Phone No</label>
                     <input type="text" name="phone_no" class="form-control" value="{{ old('phone_no') }}" required="" placeholder="Phone number">
                 </div>
-                <div class="form-group">
-                    <label for="no_vehicle">Number of vehicles</label>
-                    <input type="text" name="no_vehicle" class="form-control" value="{{ old('no_vehicle') }}" required=""  placeholder="No of vehicles">
-                </div>
-                <div class="form-group">
-                    <label for="yr_of_license">Year of license</label>
-                    <input type="date" name="yr_of_license" class="form-control" value="{{ old('yr_of_license') }}" required="" placeholder="Year of license">
-                </div>
-                <div class="form-group">
-                    <label for="expiry_date">Expiry date</label>
-                    <input type="text" name="expiry_date" class="form-control" value="{{ old('expiry_date') }}" required="" placeholder="MM/DD/YYYY [Expiry date]">
-                </div>
-                <div class="form-group">
-                    <label for="fee_paid">Fee paid</label>
-                    <input type="text" name="fee_paid" class="form-control" value="{{ old('fee_paid') }}" required="" placeholder="Fees paid">
-                </div>
-                <div>
                     <button type="submit">Register</button>
                 </div>
             </form>

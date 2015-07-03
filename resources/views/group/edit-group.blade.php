@@ -25,50 +25,59 @@ Edit Sacco
         <!-- Main row -->
         <div class="row" style="width: 70%; margin-left: 10%">
             <!-- Left col -->
-            <h3>Edit sacco details</h3>
-            <form method="POST" action="/post/edit-sacco">
+            <h3>Edit group details</h3>
+            <form method="POST" action="/post/edit-group">
                 {!! csrf_field() !!}
-                @foreach($saccos as $sacco)
+                @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+                @foreach($groups as $group)
                 <div class="form-group">
                     <label for="name">Sacco Name</label>
-                    <input type="text" name="name" class="form-control" value="{{ $sacco->name }}" required="" placeholder="Name">
+                    <input type="text" name="name" class="form-control" value="{{ $group->name }}" required="" placeholder="Name">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="id" value="{{ $sacco->id }}" hidden="">
+                    <input type="text" name="id" value="{{ $group->id }}" hidden="">
                     <label for="reg_id">Registration Number</label>
-                    <input type="text" style="text-transform:uppercase" class="form-control" value="{{ $sacco->reg_id }}" readonly="" placeholder="Registration Number">
+                    <input type="text" style="text-transform:uppercase" class="form-control" value="{{ $group->reg_id }}" readonly="" placeholder="Registration Number">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" name="email" class="form-control" value="{{  $sacco->email }}" placeholder="Email">
+                    <input type="email" name="email" class="form-control" value="{{  $group->email }}" placeholder="Email">
                 </div>
                 <div class="form-group">
-                    <label for="type">Type</label>
-                    <input type="type" name="type" class="form-control" value="{{  $sacco->type }}" placeholder="Type">
+                    <label for="type">Group Type</label>
+                    <input type="type" name="type" class="form-control" value="{{  $group->group_type }}" readonly="">
                 </div>
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input type="text" name="address" class="form-control" value="{{  $sacco->address }}" placeholder="Address">
+                    <input type="text" name="address" class="form-control" value="{{  $group->address }}" placeholder="Address">
                 </div>
                 <div class="form-group">
                     <label for="phone_no">Phone No</label>
-                    <input type="text" name="phone_no" class="form-control" value="{{  $sacco->phone_no }}" required="" placeholder="Phone number">
+                    <input type="text" name="phone_no" class="form-control" value="{{  $group->phone_no }}" required="" placeholder="Phone number">
                 </div>
                 <div class="form-group">
                     <label for="no_vehicle">Number of vehicles</label>
-                    <input type="text" name="no_vehicle" class="form-control" value="{{  $sacco->no_vehicle }}" required=""  placeholder="No of vehicles">
+                    <input type="text" name="no_vehicle" class="form-control" value="{{  $group->no_vehicle }}" required=""  placeholder="No of vehicles">
                 </div>
                 <div class="form-group">
                     <label for="yr_of_license">Year of license</label>
-                    <input type="text" name="yr_of_license" class="form-control" value="{{  $sacco->yr_of_license }}" required="" placeholder="Year of license">
+                    <input type="text" name="yr_of_license" class="form-control" value="{{  $group->yr_of_license }}" required="" placeholder="Year of license">
                 </div>
                 <div class="form-group">
                     <label for="expiry_date">Expiry date</label>
-                    <input type="date" name="expiry_date" class="form-control" value="{{  $sacco->expiry_date }}" required="" placeholder="MM/DD/YYYY [Expiry date]">
+                    <input type="date" name="expiry_date" class="form-control" value="{{  $group->expiry_date }}" required="" placeholder="MM/DD/YYYY [Expiry date]">
                 </div>
                 <div class="form-group">
                     <label for="fee_paid">Fee paid</label>
-                    <input type="text" name="fee_paid" class="form-control" value="{{  $sacco->fee_paid }}" required="" placeholder="Fees paid">
+                    <input type="text" name="fee_paid" class="form-control" value="{{  $group->fee_paid }}" required="" placeholder="Fees paid">
                 </div>
                 @endforeach
                 <div style="float: left">

@@ -19,7 +19,9 @@ class CreateInvoicesTable extends Migration {
             $table->integer('sacco_id')->nullable();
             $table->integer('vehicle_id')->nullable();
             $table->string('invoice_from');
+            $table->longText('licensed_vehicle');
             $table->mediumText('description');
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
         });
     }

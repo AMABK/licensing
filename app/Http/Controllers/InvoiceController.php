@@ -23,9 +23,10 @@ class InvoiceController extends Controller {
      * @return Response
      */
     public function create() {
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML('<h1>Test</h1>');
-        return $pdf->stream();
+//        $pdf = \App::make('dompdf.wrapper');
+//        $pdf->loadHTML('<h1>Test</h1>');
+//        return $pdf->stream();
+        return view('invoice.add-group-invoice');
     }
 
     /**
@@ -75,6 +76,29 @@ class InvoiceController extends Controller {
      */
     public function destroy($id) {
         //
+    }
+
+    public function getGroupDetails() {
+        $reg_id = trim(strip_tags($_GET['term']));
+        //$term = 'KEHFIK';
+        $data = \DB::table('groups')
+                ->where('reg_id', 'like', '%' . $reg_id . '%')
+                ->get(['reg_id', 'name', 'group_type']);
+        //dd($data[0]->email);
+        //print json_encode($data);
+//        $matches = array();
+        foreach ($data as $data) {
+            
+            $det['reg_id'] = $data->reg_id;
+            $det['name'] = $data->name;
+            $det['fee'] = $data->name;
+            $det['group_type'] = $data->group_type;
+            $det['no_vehicle'] = $data->group_type;
+            $det['value'] = $data->reg_id;
+            $det['label'] = "{$data->reg_id}, {$data->name}";
+            $matches[] = $det;
+        }
+        print json_encode($matches);
     }
 
 }

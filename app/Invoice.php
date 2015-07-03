@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model {
 
     //
-    public function sacco() {
+    public function group() {
         return $this->belongsTo('App\Sacco');
     }
 

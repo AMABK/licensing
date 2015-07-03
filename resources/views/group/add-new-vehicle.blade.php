@@ -26,7 +26,7 @@ Add Vehicle
                 <div class="small-box bg-aqua">
                     <div class="inner">
                         <h3>150</h3>
-                        <p>Groups</p>
+                        <p>Saccos</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-plus"></i>
@@ -79,8 +79,7 @@ Add Vehicle
         @endif
         <!-- Main row -->
         <div class="row" style="width: 70%; margin-left: 15%;margin-top: 5%">
-            <!-- Left col -->
-            <h3>Register a new vehicle</h3>
+            <h3>Register a new vehicle under group/company Reg No[{{$group->reg_id}}], {{$group->name}}</h3>
             <form method="POST" action="/post/add-vehicle">
                 {!! csrf_field() !!}
                 @if (count($errors) > 0)
@@ -101,22 +100,12 @@ Add Vehicle
                     <input type="text" class="form-control" name="vehicle_make" class="form-control" value="{{ old('vehicle_make') }}" placeholder="Vehicle make">
                 </div>
                 <div class="form-group">
-                    <input name="under_group" value="No" hidden="" readonly=""/>
-                    <label for="category" >Category</label>
-                    <select type="text" name="category" id="category" class="form-control" required="">
-                        <option  value="Bus Company" class="no_group" >Bus Company</option>
-                        <option  value="Taxi Company" class="no_group" >Taxi Company</option>
-                        <option  value="Company Vehicle" class="no_group" >Company Vehicle</option>
-                        <option value="Matatu Sacco"  class="reg_id" >Matatu Sacco</option>
-                    </select>
+                    <input name="group_type" value="{{$group->group_type}}" hidden="" readonly=""/>
                 </div>
-                <div id="group" style="display:none;">
-                    <div class="form-group">
-                        <label for="group_id" >Group Reg No</label>
-                        <input name="reg_id" placeholder="Please select a valid Sacco Reg No" id="reg_id" class="form-control txt-auto" required=""/>
-                    </div>
+                <div class="form-group">
+                    <input name="group_id" value="{{$group->id}}" hidden="" readonly=""/>
+                    <input name="under_group" value="Yes" hidden="" readonly=""/>
                 </div>
-
                 <div class="form-group">
                     <label for="tlb_no">TLB Number</label>
                     <input type="text" style="text-transform:uppercase" name="tlb_no" class="form-control" value="{{ old('tlb_no') }}" required=""  placeholder="TLB No.">
@@ -125,12 +114,10 @@ Add Vehicle
                     <label for="no_of_seat">Number of seats</label>
                     <input type="text" name="no_of_seat" class="form-control" value="{{ old('no_of_seat') }}" required="" placeholder="Number of seats">
                 </div>
-                <button type="submit">Register</button>
-        </div>
-        </form>
-        <script>
+                <button type="submit" >Register</button>
 
-        </script>
+            </form>
+        </div>
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
 
 </div><!-- /.row (main row) -->
@@ -141,46 +128,5 @@ Add Vehicle
 @stop
 @section('scripts')
 @parent
-<script>
-    $('#category').on('change', function () {
-        if ($(this).val() === "Matatu Sacco") {
-            $("#group").show()
-        }
-        else {
-            $("#group").hide()
-        }
-    });
 
-</script>  
-<script>$('#reg_id').autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                url: '/group/autocomplete',
-                dataType: "json",
-                data: {
-                    name_has: request.term,
-                    type: 'reg_id'
-                },
-                success: function (data) {
-                    var groupArray = data;
-                    //console.log(groupArray.reg_id);
-                    var arr = new Array;
-                    for (var i = 0; i < groupArray.length; i++) {
-                        arr[i] = groupArray[i].reg_id;
-                        // console.log(arr);
-                    }
-                    response($.map(arr, function (item) {
-                        return {
-                            label: item,
-                            value: item
-
-                        }
-                    }));
-                }
-            });
-        },
-        autoFocus: true,
-        minLength: 3
-    });
-</script>
 @stop

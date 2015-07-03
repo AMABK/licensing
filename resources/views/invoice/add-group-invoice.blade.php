@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title')
-Add Sacco
+Add Group Invoice
 @stop
 @section('content')
 
@@ -80,49 +80,53 @@ Add Sacco
         <!-- Main row -->
         <div class="row" style="width: 70%; margin-left: 10%">
             <!-- Left col -->
-            <h3>Register a new sacco</h3>
-            <form method="POST" action="/post/add-sacco">
+            <h3>Register a new group</h3>
+            <form method="POST" action="/post/add-group">
                 {!! csrf_field() !!}
-                
-                <div class="form-group">
-                    <label for="name">Sacco Name</label>
-                    <input type="text" name="name" class="form-control" value="{{ old('name') }}" required="" placeholder="Name">
+                @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
+                @endif
                 <div class="form-group">
                     <label for="reg_id">Registration Number</label>
-                    <input type="text" style="text-transform:uppercase" name="reg_id" class="form-control" value="{{ old('reg_id') }}" required="" placeholder="Registration Number">
+                    <input type="text" style="text-transform:uppercase" name="reg_id" class="form-control txt-auto" id="reg_id" required="" placeholder="Registration Number">
                 </div>
                 <div class="form-group">
-                    <label for="type">Type</label>
-                    <input type="type" name="type" class="form-control" value="{{ old('type') }}" placeholder="Type">
+                    <label for="name">Group Name</label>
+                    <input type="text" name="name" class="form-control" id="name" value="" readonly="" required="" placeholder="Name">
                 </div>
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Email">
+                    <label for="type">Group Type</label>
+                    <input type="text" name="group_type" class="form-control" id="group_type" value="" readonly="" required="" placeholder="Group Type">
                 </div>
                 <div class="form-group">
-                    <label for="address">Address</label>
-                    <input type="text" name="address" class="form-control" value="{{ old('address') }}" placeholder="Address">
+                    <label for="text">Number of Vehicles</label>
+                    <input type="text" class="form-control" id="no_vehicle" readonly="" placeholder="Number of vehicle in the group">
                 </div>
                 <div class="form-group">
-                    <label for="phone_no">Phone No</label>
-                    <input type="text" name="phone_no" class="form-control" value="{{ old('phone_no') }}" required="" placeholder="Phone number">
+                    <label for="text">Charges</label>
+                    <input type="text" class="form-control" id="charges" readonly="" placeholder="Charges">
                 </div>
                 <div class="form-group">
-                    <label for="no_vehicle">Number of vehicles</label>
-                    <input type="text" name="no_vehicle" class="form-control" value="{{ old('no_vehicle') }}" required=""  placeholder="No of vehicles">
+                    <label for="fees">Fees</label>
+                    <input type="text" id="fees" class="form-control" readonly=""placeholder="Fees">
                 </div>
                 <div class="form-group">
-                    <label for="yr_of_license">Year of license</label>
-                    <input type="text" name="yr_of_license" class="form-control" value="{{ old('yr_of_license') }}" required="" placeholder="Year of license">
+                    <label for="Discount">Discount</label>
+                    <input type="text" name="discount" class="form-control" value="0" required="" placeholder="Discount">
                 </div>
                 <div class="form-group">
-                    <label for="expiry_date">Expiry date</label>
-                    <input type="date" name="expiry_date" class="form-control" value="{{ old('expiry_date') }}" required="" placeholder="MM/DD/YYYY [Expiry date]">
+                    <label for="no_vehicle">Total Fees</label>
+                    <input type="text" name="total_fee" class="form-control" readonly="" value="{{ old('total_fee') }}" required="" id="total_fee"  placeholder="Total Fees">
                 </div>
                 <div class="form-group">
-                    <label for="fee_paid">Fee paid</label>
-                    <input type="text" name="fee_paid" class="form-control" value="{{ old('fee_paid') }}" required="" placeholder="Fees paid">
+                    <label for="expiry_date">Expiry date [MM/DD/YYYY]</label>
+                    <input type="text" name="expiry_date" class="form-control" value="12-31-{{ date('Y') }}" required="" readonly="" placeholder="MM/DD/YYYY [Expiry date]">
                 </div>
                 <div>
                     <button type="submit">Register</button>
@@ -140,7 +144,19 @@ Add Sacco
 @parent
 <script>
     $(document).ready(function () {
-        $('#myTable').dataTable();
+        var sacco_details = {
+            source: "/invoice/sacco-autocomplete",
+            select: function (event, group) {
+                +
+                        $("#reg_id").val(group.item.reg_id);
+                        $("#name").val(group.item.name);
+                        $("#email").val(group.item.email);
+
+            },
+            minLength: 1
+        };
+        console.log(sacco_details);
+        $("#reg_id").autocomplete(sacco_details);
     });
 </script>   
 @stop

@@ -15,7 +15,7 @@ class Vehicle extends Model {
     
     protected $fillable = ['reg_no', 'vehicle_make', 'category', 'sacco_id', 'tlb_no', 'no_of_seat'];
     
-        public function sacco() {
+        public function group() {
         return $this->belongsTo('App\Sacco');
     }
 

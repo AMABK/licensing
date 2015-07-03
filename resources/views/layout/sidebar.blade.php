@@ -68,13 +68,13 @@
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-group"></i>
-                <span>Saccos</span>
+                <span>Vehicle Groups</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="{{URL::to('/sacco')}}"><i class="fa fa-home"></i> Sacco home</a></li>
-                <li><a href="{{URL::to('/sacco/add-sacco')}}"><i class="fa fa-plus-circle"></i> Add new sacco</a></li>
-                <li><a href="{{URL::to('/sacco/view-saccos')}}"><i class="fa fa-eye"></i> View saccos</a></li>
+                <li><a href="{{URL::to('/group')}}"><i class="fa fa-home"></i> Group home</a></li>
+                <li><a href="{{URL::to('/group/add-group')}}"><i class="fa fa-plus-circle"></i> Add new group</a></li>
+                <li><a href="{{URL::to('/group/view-groups')}}"><i class="fa fa-eye"></i> View groups</a></li>
                 <li><a href="#"><i class="fa fa-circle-o"></i> Flot</a></li>
                 <li><a href="#"><i class="fa fa-circle-o"></i> Inline charts</a></li>
               </ul>
@@ -113,7 +113,7 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{URL::to('/invoice')}}"><i class="fa fa-home"></i> Invoices home</a></li>
-                <li><a href="{{URL::to('/invoice/add-sacco-invoice')}}"><i class="fa fa-plus-circle"></i> Add sacco invoice</a></li>
+                <li><a href="{{URL::to('/invoice/add-group-invoice')}}"><i class="fa fa-plus-circle"></i> Add group invoice</a></li>
                 <li><a href="{{URL::to('/invoice/add-vehicle-invoice')}}"><i class="fa fa-plus-circle"></i> Add vehicle invoice</a></li>
                 <li><a href="{{URL::to('/invoice/view-invoices')}}"><i class="fa fa-eye"></i> View invoices</a></li>
               </ul>

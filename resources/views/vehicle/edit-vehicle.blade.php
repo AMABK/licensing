@@ -31,7 +31,7 @@ Update Vehicle
                     <div class="icon">
                         <i class="fa fa-plus"></i>
                     </div>
-                    <a href="{{URL::to('/sacco/add-sacco')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add group <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
@@ -52,7 +52,7 @@ Update Vehicle
                 <div class="small-box bg-yellow">
                     <div class="inner">
                         <h3>57<sup style="font-size: 20px">%</sup></h3>
-                        <p>Belong to saccos</p>
+                        <p>Belong to groups</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-group"></i>
@@ -70,7 +70,7 @@ Update Vehicle
                     <div class="icon">
                         <i class="fa fa-car"></i>
                     </div>
-                    <a href="{{URL::to('/sacco/add-sacco')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add group <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
         </div><!-- /.row -->
@@ -83,6 +83,15 @@ Update Vehicle
             <h3>Update vehicle details</h3>
             <form method="POST" action="/post/edit-vehicle">
                 {!! csrf_field() !!}
+                @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
                 @foreach($vehicles as $vehicle)
                 <div class="form-group">
                     <input type="text" name="id" value="{{$vehicle->id}}" hidden="">
@@ -95,49 +104,46 @@ Update Vehicle
                 </div>
                 <div class="form-group">
                     <label for="category" >Category</label>
-                    <select type="text" name="category" id="category" class="form-control" required="">
-                        
-                        
-                        
+                    <select type="text" name="category" id="category" class="form-control" required="">                        
                         <?php
                         if ($vehicle->category == 'Bus') {
-                            echo '<option  value="Bus" class="no_sacco" selected >Bus</option>';
+                            echo '<option  value="Bus" class="no_group" selected >Bus</option>';
                         } else {
-                            echo '<option  value="Bus" class="no_sacco" >Bus</option>';
+                            echo '<option  value="Bus" class="no_group" >Bus</option>';
                         }
                         if ($vehicle->category == 'Taxi') {
-                            echo '<option  value="Taxi" selected class="no_sacco" >Taxi</option>';
+                            echo '<option  value="Taxi" selected class="no_group" >Taxi</option>';
                         } else {
-                            echo '<option value="Taxi"  class="sacco_id" >Taxi</option>';
+                            echo '<option value="Taxi"  class="group_id" >Taxi</option>';
                         }
                         if ($vehicle->category == 'Company Vehicle') {
-                            echo '<option  value="Company Vehicle" selected class="no_sacco" >Company Vehicle</option>';
+                            echo '<option  value="Company Vehicle" selected class="no_group" >Company Vehicle</option>';
                         } else {
-                            echo '<option value="Company Vehicle"  class="sacco_id" >Company Vehicle</option>';
+                            echo '<option value="Company Vehicle"  class="group_id" >Company Vehicle</option>';
                         }
                         if ($vehicle->category == 'Sacco Vehicle') {
-                            echo '<option value="Sacco Vehicle" selected  class="sacco_id" >Sacco Vehicle</option>';
+                            echo '<option value="Sacco Vehicle" selected  class="group_id" >Sacco Vehicle</option>';
                         } else {
-                            echo '<option value="Sacco Vehicle"  class="sacco_id" >Sacco Vehicle</option>';
+                            echo '<option value="Sacco Vehicle"  class="group_id" >Sacco Vehicle</option>';
                         }
                         if ($vehicle->category == 'Other') {
-                            echo '<option  value="Other" selected class="no_sacco" >Other</option>';
+                            echo '<option  value="Other" selected class="no_group" >Other</option>';
                         } else {
-                            echo '<option  value="Other"  class="no_sacco" >Other</option>';
+                            echo '<option  value="Other"  class="no_group" >Other</option>';
                         }
                         ?> 
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="sacco_id" >Sacco</label>
-                    <select type="text" name="sacco_id" class="form-control" id="sacco_id" required="">
-                        @if($vehicle->sacco_id != NULL)
-                        <option value="{{$vehicle->sacco->id}}"  class="Sacco Vehicle" >{{$vehicle->sacco->name}}</option>
+                    <label for="group_id" >Sacco</label>
+                    <select type="text" name="group_id" class="form-control" id="group_id" required="">
+                        @if($vehicle->group_id != NULL)
+                        <option value="{{$vehicle->group->id}}"  class="Sacco Vehicle" >{{$vehicle->group->name}}</option>
                         @else
                         <option value="" >Active only when Sacco Vehicle is selected</option>
                         @endif
-                        @foreach($sacco as $saccos)
-                        <option value="{{$saccos->id}}"  class="Sacco Vehicle" >{{$saccos->name}}</option>
+                        @foreach($group as $groups)
+                        <option value="{{$groups->id}}"  class="Sacco Vehicle" >{{$groups->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -210,7 +216,7 @@ Update Vehicle
         };
         $.fn.chainedTo = $.fn.chained;
     })(jQuery);
-    $("#sacco_id").chained("#category");
+    $("#group_id").chained("#category");
 </script>
 <script>
     $(document).ready(function () {

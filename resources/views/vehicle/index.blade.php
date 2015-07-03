@@ -31,7 +31,7 @@ Vehicle
                     <div class="icon">
                         <i class="fa fa-plus"></i>
                     </div>
-                    <a href="{{URL::to('/vehicle/add-vehicle')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{URL::to('/vehicle/add-vehicle')}}" class="small-box-footer">Add group <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
@@ -52,7 +52,7 @@ Vehicle
                 <div class="small-box bg-yellow">
                     <div class="inner">
                         <h3>57<sup style="font-size: 20px">%</sup></h3>
-                        <p>Belong to saccos</p>
+                        <p>Belong to groups</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-group"></i>
@@ -70,7 +70,7 @@ Vehicle
                     <div class="icon">
                         <i class="fa fa-car"></i>
                     </div>
-                    <a href="{{URL::to('/vehicle/add-vehicle')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{URL::to('/vehicle/add-vehicle')}}" class="small-box-footer">Add group <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
         </div><!-- /.row -->
@@ -80,7 +80,7 @@ Vehicle
         <!-- Main row -->
         <div class="row" style="width: 70%; margin-left: 15%;margin-top: 5%">
             <!-- Left col -->
-            <h3>Register a new sacco</h3>
+            <h3>Register a new group</h3>
             <form method="POST" action="/vehicle/add-vehicle">
                 {!! csrf_field() !!}
 

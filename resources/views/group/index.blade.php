@@ -1,9 +1,9 @@
 @extends('layout.main')
 @section('title')
-Add Vehicle
+Sacco
 @stop
 @section('content')
-<link href="/dist/css/jquery-ui.css" rel="stylesheet" type="text/css" />
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -31,7 +31,7 @@ Add Vehicle
                     <div class="icon">
                         <i class="fa fa-plus"></i>
                     </div>
-                    <a href="{{URL::to('/sacco/add-sacco')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add group <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
@@ -52,7 +52,7 @@ Add Vehicle
                 <div class="small-box bg-yellow">
                     <div class="inner">
                         <h3>57<sup style="font-size: 20px">%</sup></h3>
-                        <p>Belong to saccos</p>
+                        <p>Belong to groups</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-group"></i>
@@ -70,7 +70,7 @@ Add Vehicle
                     <div class="icon">
                         <i class="fa fa-car"></i>
                     </div>
-                    <a href="{{URL::to('/sacco/add-sacco')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add group <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
         </div><!-- /.row -->
@@ -79,46 +79,64 @@ Add Vehicle
         @endif
         <!-- Main row -->
         <div class="row" style="width: 70%; margin-left: 15%;margin-top: 5%">
-            <h3>Register a new vehicle under sacco/company Reg No[{{$sacco->reg_id}}], {{$sacco->name}}</h3>
-            <form method="POST" action="/post/add-vehicle">
+            <!-- Left col -->
+            <h3>Register a new group</h3>
+            <form method="POST" action="/group/add-group">
                 {!! csrf_field() !!}
 
                 <div class="form-group">
-                    <label for="reg_no">Registration Number</label>
-                    <input type="text" name="reg_no" style="text-transform:uppercase" class="form-control" value="{{ old('reg_no') }}" required="" placeholder="Registration Number">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" class="form-control" value="{{ old('name') }}" required="" placeholder=Name">
                 </div>
                 <div class="form-group">
-                    <label for="vehicle_make">Vehicle Make</label>
-                    <input type="text" class="form-control" name="vehicle_make" class="form-control" value="{{ old('vehicle_make') }}" placeholder="Vehicle make">
+                    <label for="reg_id">Registration Number</label>
+                    <input type="text" name="reg_id" class="form-control" value="{{ old('reg_id') }}" required="" placeholder="Registration Number">
                 </div>
                 <div class="form-group">
-                    <input name="category" value="Sacco Vehicle" hidden="" readonly=""/>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Email">
                 </div>
                 <div class="form-group">
-                    <input name="sacco_id" value="{{$sacco->id}}" hidden="" readonly=""/>
-                    <input name="under_sacco" value="Yes" hidden="" readonly=""/>
+                    <label for="address">Address</label>
+                    <input type="text" name="address" class="form-control" value="{{ old('address') }}" placeholder="Address">
                 </div>
                 <div class="form-group">
-                    <label for="tlb_no">TLB Number</label>
-                    <input type="text" style="text-transform:uppercase" name="tlb_no" class="form-control" value="{{ old('tlb_no') }}" required=""  placeholder="TLB No.">
+                    <label for="phone_no">Phone No</label>
+                    <input type="text" name="phone_no" class="form-control" value="{{ old('phone_no') }}" required="" placeholder="Phone number">
                 </div>
                 <div class="form-group">
-                    <label for="no_of_seat">Number of seats</label>
-                    <input type="text" name="no_of_seat" class="form-control" value="{{ old('no_of_seat') }}" required="" placeholder="Number of seats">
+                    <label for="no_vehicle">Number of vehicles</label>
+                    <input type="text" name="no_vehicle" class="form-control" value="{{ old('no_vehicle') }}" required=""  placeholder="No of vehicles">
                 </div>
-                <button type="submit" >Register</button>
-
+                <div class="form-group">
+                    <label for="yr_of_license">Year of license</label>
+                    <input type="date" name="yr_of_license" class="form-control" value="{{ old('yr_of_license') }}" required="" placeholder="Year of license">
+                </div>
+                <div class="form-group">
+                    <label for="expiry_date">Expiry date</label>
+                    <input type="text" name="expiry_date" class="form-control" value="{{ old('expiry_date') }}" required="" placeholder="MM/DD/YYYY [Expiry date]">
+                </div>
+                <div class="form-group">
+                    <label for="fee_paid">Fee paid</label>
+                    <input type="text" name="fee_paid" class="form-control" value="{{ old('fee_paid') }}" required="" placeholder="Fees paid">
+                </div>
+                <div>
+                    <button type="submit">Register</button>
+                </div>
             </form>
-        </div>
-        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
 
-</div><!-- /.row (main row) -->
+        </div><!-- /.row (main row) -->
 
-</section><!-- /.content -->
+    </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
 @stop
 @section('scripts')
 @parent
-
+<script>
+    $(document).ready(function () {
+        $('#myTable').dataTable();
+    });
+</script>   
 @stop

@@ -11,10 +11,10 @@ class CreateSaccosTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('saccos', function (Blueprint $table) {
+        Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
             $table->string('reg_id');
-            $table->string('type');
+            $table->string('group_type');
             $table->string('name');
             $table->string('phone_no')->nullable();
             $table->string('email')->nullable();

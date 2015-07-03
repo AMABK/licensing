@@ -23,6 +23,7 @@
 
                 <h3>Press login to continue</h3>
             </div>
+            <center>
             @if(Session::has('global'))
             <p>{!!Session::get('global')!!}</p>
             @endif 
@@ -32,6 +33,7 @@
             @if($errors->has('password'))
             <div class="alert alert-warning" align="center">{{$errors->first('password')}}</div>
             @endif
+            </center>
             <div id="loginbox">            
                 <form method="post" action="/auth/login" accept-charset="utf-8" class="form login-form" id="loginform" >                    
                     {!! csrf_field() !!}

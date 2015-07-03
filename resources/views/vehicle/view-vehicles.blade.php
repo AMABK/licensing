@@ -55,10 +55,10 @@ View Vehicles
                     @foreach ($vehicle as $vehicles)
                     <tr>
                         <td><a href="{{URL::to('vehicle/edit-vehicle/'.\Hashids::encode($vehicles->id))}}"> {{strtoupper($vehicles->reg_no)}}</a></td><td>{{ $vehicles->vehicle_make }}</td><td>{{ $vehicles->category }}</td><td><?php
-                            if ($vehicles->sacco == null) {
+                            if ($vehicles->group == null) {
                                 echo 'No Sacco';
                             } else {
-                                ?><a href="{{URL::to('sacco/view-sacco/'.\Hashids::encode($vehicles->sacco->id))}}">{{ $vehicles->sacco->name }}</a><?php } ?></td><td>{{ strtoupper($vehicles->tlb_no) }}</td><td>{{ $vehicles->no_of_seat }}</td><td><?php if ($vehicles->sacco_id == null) { ?><a href="{{URL::to('/vehicle/add-sacco/'.\Hashids::encode($vehicles->id))}}">add to sacco</a><?php } else { ?> <a href="{{URL::to('/vehicle/remove-sacco/'.\Hashids::encode($vehicles->sacco_id,$vehicles->id))}}">remove from sacco</a><?php } ?></td>
+                                ?><a href="{{URL::to('group/view-group/'.\Hashids::encode($vehicles->group->id))}}">{{ $vehicles->group->name }}</a><?php } ?></td><td>{{ strtoupper($vehicles->tlb_no) }}</td><td>{{ $vehicles->no_of_seat }}</td><td><?php if ($vehicles->group_id == null) { ?><a href="{{URL::to('/vehicle/add-group/'.\Hashids::encode($vehicles->id))}}">add to group</a><?php } else { ?> <a href="{{URL::to('/vehicle/remove-group/'.\Hashids::encode($vehicles->group_id,$vehicles->id))}}">remove from group</a><?php } ?></td>
                     </tr>
                     @endforeach
                 </tbody>

@@ -41,7 +41,11 @@ class Authenticate
                 return redirect()->guest('/');
             }
         }
-
+        if(\Auth::user()->status == 0){
+            \Auth::logout();
+            return redirect()->guest('/')
+                    ->with('global','<div class="alert alert-warning">This user has been suspended. Please contact administrator!</div>');
+        }
         return $next($request);
     }
 }

@@ -23,8 +23,8 @@ class VehicleController extends Controller {
      * @return Response
      */
     public function create() {
-        $saccos = \App\Sacco::all();
-        return view('vehicle.add-vehicle', array('sacco' => $saccos));
+        $groups = \App\Group::all();
+        return view('vehicle.add-vehicle', array('group' => $groups));
     }
 
     /**
@@ -36,7 +36,7 @@ class VehicleController extends Controller {
         $validator = \Validator::make(\Request::all(), array(
                     'reg_no' => 'required|max:10|unique:vehicles',
                     'category' => 'required|max:255',
-                    'sacco_id' => 'sometimes|integer',
+                    'group_id' => 'sometimes|integer',
                     'vehicle_make' => 'required',
                     'no_of_seat' => 'required|integer'
                         )
@@ -47,24 +47,25 @@ class VehicleController extends Controller {
                             ->withErrors($validator)
                             ->withInput();
         } else {
-            $sacco_id = \DB::table('saccos')
+            $group_id = \DB::table('groups')
                             ->where('reg_id', \Request::get('reg_id'))->first();
+            dd(\Request::all());
             $vehicle = \App\Vehicle::create(array(
                         'reg_no' => \Request::get('reg_no'),
                         'vehicle_make' => \Request::get('vehicle_make'),
                         'category' => \Request::get('category'),
-                        'sacco_id' => $sacco_id->id,
+                        'group_id' => $group_id->id,
                         'tbl_no' => \Request::get('tlb_no'),
                         'no_of_seat' => \Request::get('no_of_seat'),
                         'user_id' => \Auth::user()->id
                             )
             );
-            if (\Request::get('under_sacco') == 'Yes') {
+            if (\Request::get('under_group') == 'Yes') {
                 if ($vehicle) {
-                    return redirect('sacco/add-new-vehicle/' . \Hashids::encode($sacco_id->id))
+                    return redirect('group/add-new-vehicle/' . \Hashids::encode($group_id->id))
                                     ->with('global', '<div class="alert alert-success">Vehicle successfullly saved in the database</div>');
                 } else {
-                    return redirect('sacco/add-new-vehicle/' . \Hashids::encode($sacco_id->id))
+                    return redirect('group/add-new-vehicle/' . \Hashids::encode($group_id->id))
                                     ->with('global', '<div class="alert alert-danger">Whoooops, your input could not be saved. Please contact administrator!</div>');
                 }
             } else {
@@ -98,9 +99,9 @@ class VehicleController extends Controller {
      * @return Response
      */
     public function edit($id) {
-        $saccos = \App\Sacco::all();
+        $groups = \App\Group::all();
         $vehicle = \App\Vehicle::find(\Hashids::decode($id)[0]);
-        return view('vehicle.edit-vehicle', array('vehicles' => $vehicle, 'sacco' => $saccos));
+        return view('vehicle.edit-vehicle', array('vehicles' => $vehicle, 'group' => $groups));
     }
 
     /**
@@ -116,7 +117,7 @@ class VehicleController extends Controller {
         }
         $validator = \Validator::make(\Request::all(), array(
                     'category' => 'required|max:255',
-                    'sacco_id' => 'sometimes|integer',
+                    'group_id' => 'sometimes|integer',
                     'vehicle_make' => 'required',
                     'no_of_seat' => 'required|integer'
                         )
@@ -131,7 +132,7 @@ class VehicleController extends Controller {
                     ->update(array(
                 'category' => \Request::input('category'),
                 'vehicle_make' => \Request::input('vehicle_make'),
-                'sacco_id' => \Request::input('sacco_id'),
+                'group_id' => \Request::input('group_id'),
                 'tlb_no' => \Request::input('tlb_no'),
                 'no_of_seat' => \Request::input('no_of_seat'),
                 'user_id' => \Auth::user()->id
@@ -158,27 +159,27 @@ class VehicleController extends Controller {
     }
 
     /**
-     * Add vehicle to sacco
+     * Add vehicle to group
      */
-    public function addSacco($ids) {
+    public function addGroup($ids) {
         if (sizeof(\Hashids::decode($ids)) == 1) {
-            $saccos = \App\Sacco::all();
+            $groups = \App\Group::all();
             $vehicle = \App\Vehicle::find(\Hashids::decode($ids)[0]);
-            return view('vehicle.view-add-sacco', array('sacco' => $saccos, 'vehicle' => $vehicle));
+            return view('vehicle.view-add-group', array('group' => $groups, 'vehicle' => $vehicle));
         }
         //dd(\Hashids::decode($ids)[1]);
         $check = \App\Vehicle::find(\Hashids::decode($ids)[1]);
-        if ($check->sacco_id != null) {
+        if ($check->group_id != null) {
             return redirect('/vehicle/view-vehicles')
-                            ->with('global', '<div class="alert alert-warning">Vehicle already belongs to a sacco!.</div>');
+                            ->with('global', '<div class="alert alert-warning">Vehicle already belongs to a group!.</div>');
         }
 
         $add = \DB::table('vehicles')
                 ->where('id', \Hashids::decode($ids)[1])
-                ->where('sacco_id', null)
+                ->where('group_id', null)
                 ->update(array(
-            'sacco_id' => \Hashids::decode($ids)[0],
-            'category' => 'Sacco Vehicle',
+            'group_id' => \Hashids::decode($ids)[0],
+            'category' => 'Group Vehicle',
             'user_id' => \Auth::user()->id
                 )
         );
@@ -187,34 +188,34 @@ class VehicleController extends Controller {
                             ->with('global', '<div class="alert alert-success">Vehicle successfully added to the circle</div>');
         } else {
             return redirect('/vehicle/view-vehicles')
-                            ->with('global', '<div class="alert alert-warning">Vehicle could not be added to the sacco, please contact admin.</div>');
+                            ->with('global', '<div class="alert alert-warning">Vehicle could not be added to the group, please contact admin.</div>');
         }
     }
 
-    public function removeSacco($ids) {
+    public function removeGroup($ids) {
         $id = \Hashids::decode($ids);
         $check = \DB::table('vehicles')
-                ->where('sacco_id', '=', $id[0])
+                ->where('group_id', '=', $id[0])
                 ->count();
         if ($check < 1) {
-            return redirect('/sacco')
-                            ->with('global', '<div class="alert alert-warning">There are no vehicle registered in the sacco</div>');
+            return redirect('/group')
+                            ->with('global', '<div class="alert alert-warning">There are no vehicle registered in the group</div>');
         }
         $remove = \DB::table('vehicles')
                 ->where('id', $id[1])
-                ->where('sacco_id', $id[0])
+                ->where('group_id', $id[0])
                 ->update(array(
-            'sacco_id' => null,
+            'group_id' => null,
             'category' => 'Other',
             'user_id' => \Auth::user()->id
                 )
         );
         if ($remove) {
             return redirect('/vehicle/view-vehicles')
-                            ->with('global', '<div class="alert alert-success">Vehicle successfullly removed from sacco</div>');
+                            ->with('global', '<div class="alert alert-success">Vehicle successfullly removed from group</div>');
         } else {
             return redirect('/vehicle/view-vehicles')
-                            ->with('global', '<div class="alert alert-warning">Vehicle could not be removed from sacco. Please contact admin!</div>');
+                            ->with('global', '<div class="alert alert-warning">Vehicle could not be removed from group. Please contact admin!</div>');
         }
     }
 
