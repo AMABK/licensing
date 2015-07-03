@@ -150,7 +150,11 @@ Add Group Invoice
                 +
                         $("#reg_id").val(group.item.reg_id);
                         $("#name").val(group.item.name);
-                        $("#email").val(group.item.email);
+                        $("#no_vehicle").val(group.item.no_vehicle);
+                        $("#fee").val(group.item.fee);
+                        $("#group_type").val(group.item.group_type);
+                       // document.getElementById("dicount").innerHTML = "";
+                        //$("#total_fee").total_fee;
 
             },
             minLength: 1

@@ -14,10 +14,9 @@ class CreateInvoicesTable extends Migration {
         Schema::create('invoices', function (Blueprint $table) {
             $table->increments('id');
             $table->string('invoice_no');
-            $table->string('invoice_date');
+            $table->integer('no_vehicle');
             $table->integer('amount');
-            $table->integer('sacco_id')->nullable();
-            $table->integer('vehicle_id')->nullable();
+            $table->integer('payer_id')->unsigned();
             $table->string('invoice_from');
             $table->longText('licensed_vehicle');
             $table->mediumText('description');

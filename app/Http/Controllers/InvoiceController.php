@@ -81,19 +81,59 @@ class InvoiceController extends Controller {
     public function getGroupDetails() {
         $reg_id = trim(strip_tags($_GET['term']));
         //$term = 'KEHFIK';
-        $data = \DB::table('groups')
+        $group_data = \DB::table('groups')
                 ->where('reg_id', 'like', '%' . $reg_id . '%')
                 ->get(['reg_id', 'name', 'group_type']);
         //dd($data[0]->email);
         //print json_encode($data);
 //        $matches = array();
-        foreach ($data as $data) {
-            
+        foreach ($group_data as $data) {
+            $vehicle_type = $data->group_type;
+            $vehicle_fee = \App\Charge::find($vehicle_type);
+            $vehicles = \App\Vehicle::where('sacco_id', $data->id);
+            switch ($vehicle_type) {
+                case 1:
+                    /*
+                     * Taxi charges
+                     * Each taxi pays an annual fee of amount x
+                     */
+                    $fee = $vehicle_fee->standard_fee * $vehicles->count();
+                    break;
+                case 2:
+                    /*
+                     * Matatu charges
+                     * Each matatu pays annual fee of amount y
+                     */
+                    $fee = $vehicle_fee * $vehicles->count();
+                    break;
+                case 3:
+                    /*
+                     * Company vehicles
+                     * Each vehicle pays an annual fee of amount z
+                     */
+                    $fee = $vehicle_fee * $vehicles->count();
+                    break;
+                case 4:
+                    /*
+                     * Tour firms
+                     * Tour vans(14 seater) pay annual fee of amount k and amount h for every extra seat
+                     */
+                    $fee = 0;
+                    foreach ($vehicles as $vehicle) {
+                        if ($vehicle->no_of_seat > 14) {
+                            $fee += ($vehicle_fee * $vehicles->count()) + ($vehicle->no_of_seat - 14) * ($vehicle_fee->extra_fee);
+                        }
+                    }
+                    break;
+                default :
+                    return redirect('invoice.index')
+                                    ->with('global', '<div class="alert alert-danger">The system could not generate invoice due to invalid data provided. Please try again and contact the system administrator if this message persists</div>');
+            }
             $det['reg_id'] = $data->reg_id;
             $det['name'] = $data->name;
-            $det['fee'] = $data->name;
+            $det['fee'] = $fee;
             $det['group_type'] = $data->group_type;
-            $det['no_vehicle'] = $data->group_type;
+            $det['no_vehicle'] = $vehicles->count();
             $det['value'] = $data->reg_id;
             $det['label'] = "{$data->reg_id}, {$data->name}";
             $matches[] = $det;
