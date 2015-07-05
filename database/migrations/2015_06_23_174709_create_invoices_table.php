@@ -15,10 +15,12 @@ class CreateInvoicesTable extends Migration {
             $table->increments('id');
             $table->string('invoice_no');
             $table->integer('no_vehicle');
-            $table->integer('amount');
+            $table->integer('discount');
+            $table->integer('total_fee');
             $table->integer('payer_id')->unsigned();
             $table->string('invoice_from');
-            $table->longText('licensed_vehicle');
+            $table->date('expiry_date');
+            $table->longText('licensed_vehicles');
             $table->mediumText('description');
             $table->integer('user_id')->unsigned();
             $table->timestamps();

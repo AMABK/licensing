@@ -49,7 +49,7 @@ class VehicleController extends Controller {
         } else {
             $group_id = \DB::table('groups')
                             ->where('reg_id', \Request::get('reg_id'))->first();
-            dd(\Request::all());
+            //dd(\Request::all());
             $vehicle = \App\Vehicle::create(array(
                         'reg_no' => \Request::get('reg_no'),
                         'vehicle_make' => \Request::get('vehicle_make'),

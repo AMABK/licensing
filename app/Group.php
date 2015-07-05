@@ -26,4 +26,7 @@ class Group extends Model {
         return $this->hasMany('App\Invoice');
     }
 
+    public function vehicle_type() {
+        return $this->belongsTo('App\Vehicle_type','group_type','id');
+    }
 }

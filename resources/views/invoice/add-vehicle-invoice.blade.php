@@ -93,13 +93,8 @@ Add Group Invoice
                 </div>
                 @endif
                 <div class="form-group">
-                    <label for="invoice_no">Invoice Number</label>
-                    <input type="text" style="text-transform:uppercase" name="invoice_no" class="form-control txt-auto" required="" placeholder="Invoice Number">
-                </div>
-                <div class="form-group">
                     <label for="reg_id">Registration Number</label>
-                    <input type="text" style="text-transform:uppercase" class="form-control txt-auto" id="reg_id" required="" placeholder="Registration Number">
-                    <input type="text" hidden="" name="id" id="id">
+                    <input type="text" style="text-transform:uppercase" name="reg_id" class="form-control txt-auto" id="reg_id" required="" placeholder="Registration Number">
                 </div>
                 <div class="form-group">
                     <label for="name">Group Name</label>
@@ -119,20 +114,16 @@ Add Group Invoice
                 </div>
                 <div class="form-group">
                     <label for="Discount">Discount</label>
-                    <input type="number" name="discount" class="form-control" id="discount" value="0" min="0" required="" onkeyup="sum();">
+                    <input type="text" name="discount" class="form-control" id="discount" value="0" pattern="[0-9]" required="" onkeyup="sum();">
                 </div>
                 <div class="form-group">
                     <label for="no_vehicle">Total Fees</label>
                     <input type="text" name="total_fee"  class="form-control" readonly="" required="" id="total_fee"  placeholder="Total Fees">
-                    <input type="text" hidden="" required="" name="licensed_vehicles" id="licenced_vehicles" readonly="">
+                    <input type="text" hidden=""name="all_vehicles" id="all_vehicles" readonly="">
                 </div>
                 <div class="form-group">
                     <label for="expiry_date">Expiry date [MM/DD/YYYY]</label>
-                    <input type="date" name="expiry_date" class="form-control" value="12/31/{{ date('Y') }}" required="" readonly="" placeholder="MM/DD/YYYY [Expiry date]">
-                </div>
-                <div class="form-group">
-                    <label for="expiry_date">Description</label>
-                    <textarea type="text" name="description" required="" class="form-control" placeholder="Description"></textarea>
+                    <input type="text" name="expiry_date" class="form-control" value="12-31-{{ date('Y') }}" required="" readonly="" placeholder="MM/DD/YYYY [Expiry date]">
                 </div>
                 <div>
                     <button type="submit">Register</button>
@@ -157,12 +148,10 @@ Add Group Invoice
                         $("#reg_id").val(group.item.reg_id);
                 $("#name").val(group.item.name);
                 $("#no_vehicle").val(group.item.no_vehicle);
-                $("#licenced_vehicles").val(group.item.licensed_vehicles);
+                $("#all_vehicles").val(group.item.all_vehicles);
                 $("#fee").val(group.item.fee);
                 $("#total_fee").val(group.item.fee);
-                $("#discount").val(0);
                 $("#group_type").val(group.item.group_type);
-                $("#id").val(group.item.id);
 
 
             },

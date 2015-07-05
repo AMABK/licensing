@@ -44,7 +44,7 @@ Invoice
                     <div class="icon">
                         <i class="fa fa-bus"></i>
                     </div>
-                    <a href="#" class="small-box-footer">Add a vehicle <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{URL::to('/vehicle/add-vehicle')}}" class="small-box-footer">Add a vehicle <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">

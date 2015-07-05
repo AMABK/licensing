@@ -14,7 +14,7 @@ class CreateSaccosTable extends Migration {
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
             $table->string('reg_id');
-            $table->string('group_type');
+            $table->integer('group_type')->unsigned();
             $table->string('name');
             $table->string('phone_no')->nullable();
             $table->string('email')->nullable();

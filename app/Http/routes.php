@@ -42,7 +42,7 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'logout',
         'uses' => 'Auth\AuthController@getLogout'
     ));
-    //Sacco controller
+    //Group controller
     Route::get('/group', array(
         'as' => 'group',
         'uses' => 'GroupController@index'
@@ -65,7 +65,7 @@ Route::group(['middleware' => 'auth'], function() {
     ));
     Route::get('/group/view-group/{id}', array(
         'as' => 'view-group',
-        'uses' => 'GroupController@showSacco'
+        'uses' => 'GroupController@showGroup'
     ));
     Route::get('/group/edit-group/{id}', array(
         'as' => 'edit-group',
@@ -122,7 +122,7 @@ Route::group(['middleware' => 'auth'], function() {
     ));
     Route::get('/company/autocomplete', array(
         'as' => '/company-autocomplete',
-        'uses' => 'GroupController@getSaccos'
+        'uses' => 'GroupController@getGroups'
     ));
     Route::get('/company/add-new-vehicle/{id}', array(
         'as' => 'add-new-vehicle',
@@ -155,11 +155,11 @@ Route::group(['middleware' => 'auth'], function() {
     ));
     Route::get('/vehicle/add-group/{id}', array(
         'as' => 'add-group',
-        'uses' => 'VehicleController@addSacco'
+        'uses' => 'VehicleController@addGroup'
     ));
     Route::get('/vehicle/remove-group/{id}', array(
         'as' => 'remove-group',
-        'uses' => 'VehicleController@removeSacco'
+        'uses' => 'VehicleController@removeGroup'
     ));
     //Invoices Controller
     Route::get('/invoice', array(
@@ -168,7 +168,19 @@ Route::group(['middleware' => 'auth'], function() {
     ));
     Route::get('/invoice/add-group-invoice', array(
         'as' => 'add-group-invoice',
-        'uses' => 'InvoiceController@create'
+        'uses' => 'InvoiceController@createGroupInvoice'
+    ));
+    Route::post('/post/add-group-invoice', array(
+        'as' => 'add-group-invoice',
+        'uses' => 'InvoiceController@storeGroupInvoice'
+    ));
+    Route::get('/invoice/add-vehicle-invoice', array(
+        'as' => 'add-vehicle-invoice',
+        'uses' => 'InvoiceController@createVehicleInvoice'
+    ));
+    Route::post('/post/add-vehicle-invoice', array(
+        'as' => 'add-vehicle-invoice',
+        'uses' => 'InvoiceController@storeVehicleInvoice'
     ));
     Route::get('/invoice/edit-group-invoice', array(
         'as' => 'edit-group-invoice',
@@ -186,8 +198,8 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'view-invoices',
         'uses' => 'InvoiceController@show'
     ));
-    Route::get('/invoice/sacco-autocomplete', array(
-        'as' => 'sacco-autocomplete',
+    Route::get('/invoice/group-autocomplete', array(
+        'as' => 'group-autocomplete',
         'uses' => 'InvoiceController@getGroupDetails'
     ));
     //Admin controller

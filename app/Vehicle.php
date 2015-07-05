@@ -13,7 +13,7 @@ class Vehicle extends Model {
      * @var array
      */
     
-    protected $fillable = ['reg_no', 'vehicle_make', 'category', 'sacco_id', 'tlb_no', 'no_of_seat'];
+    protected $fillable = ['reg_no', 'vehicle_make', 'category', 'group_id', 'tlb_no', 'no_of_seat'];
     
         public function group() {
         return $this->belongsTo('App\Sacco');

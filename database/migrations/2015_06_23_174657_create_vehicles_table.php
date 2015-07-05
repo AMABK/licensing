@@ -17,7 +17,7 @@ class CreateVehiclesTable extends Migration
             $table->string('reg_no');
             $table->string('vehicle_make');
             $table->string('category');
-            $table->integer('sacco_id')->nullable();
+            $table->integer('group_id')->nullable();
             $table->string('tlb_no');
             $table->string('no_of_seat');
             $table->integer('user_id')->unsigned();
