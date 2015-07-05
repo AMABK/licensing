@@ -80,8 +80,8 @@ Add Group Invoice
         <!-- Main row -->
         <div class="row" style="width: 70%; margin-left: 10%">
             <!-- Left col -->
-            <h3>Register a new group</h3>
-            <form method="POST" action="/post/add-group-invoice">
+            <h3>Register a new vehicle invoice</h3>
+            <form method="POST" action="/post/add-vehicle-invoice">
                 {!! csrf_field() !!}
                 @if (count($errors) > 0)
                 <div class="alert alert-danger">
@@ -93,8 +93,13 @@ Add Group Invoice
                 </div>
                 @endif
                 <div class="form-group">
-                    <label for="reg_id">Registration Number</label>
-                    <input type="text" style="text-transform:uppercase" name="reg_id" class="form-control txt-auto" id="reg_id" required="" placeholder="Registration Number">
+                    <label for="invoice_no">Invoice Number</label>
+                    <input type="text" style="text-transform:uppercase" name="invoice_no" class="form-control txt-auto" required="" placeholder="Invoice Number">
+                </div>
+                <div class="form-group">
+                    <label for="reg_no">Registration Number</label>
+                    <input type="text" style="text-transform:uppercase" class="form-control txt-auto" id="reg_id" required="" placeholder="Registration Number">
+                    <input type="text" hidden="" name="id" id="id">
                 </div>
                 <div class="form-group">
                     <label for="name">Group Name</label>
@@ -105,25 +110,25 @@ Add Group Invoice
                     <input type="text" name="group_type" class="form-control" id="group_type" value="" readonly="" required="" placeholder="Group Type">
                 </div>
                 <div class="form-group">
-                    <label for="text">Number of Vehicles</label>
-                    <input type="text" name="no_vehicle" class="form-control" id="no_vehicle" readonly="" placeholder="Number of vehicle in the group">
-                </div>
-                <div class="form-group">
                     <label for="fees">Fees (KSH)</label>
                     <input type="text" id="fee" class="form-control" onkeyup="sum();" readonly=""placeholder="Fees">
                 </div>
                 <div class="form-group">
                     <label for="Discount">Discount</label>
-                    <input type="text" name="discount" class="form-control" id="discount" value="0" pattern="[0-9]" required="" onkeyup="sum();">
+                    <input type="number" name="discount" class="form-control" id="discount" value="0" min="0" required="" onkeyup="sum();">
                 </div>
                 <div class="form-group">
                     <label for="no_vehicle">Total Fees</label>
                     <input type="text" name="total_fee"  class="form-control" readonly="" required="" id="total_fee"  placeholder="Total Fees">
-                    <input type="text" hidden=""name="all_vehicles" id="all_vehicles" readonly="">
+                    <input type="text" hidden="" required="" name="licensed_vehicles" id="licenced_vehicles" readonly="">
                 </div>
                 <div class="form-group">
                     <label for="expiry_date">Expiry date [MM/DD/YYYY]</label>
-                    <input type="text" name="expiry_date" class="form-control" value="12-31-{{ date('Y') }}" required="" readonly="" placeholder="MM/DD/YYYY [Expiry date]">
+                    <input type="date" name="expiry_date" class="form-control" value="12/31/{{ date('Y') }}" required="" readonly="" placeholder="MM/DD/YYYY [Expiry date]">
+                </div>
+                <div class="form-group">
+                    <label for="expiry_date">Description</label>
+                    <textarea type="text" name="description" required="" class="form-control" placeholder="Description"></textarea>
                 </div>
                 <div>
                     <button type="submit">Register</button>
@@ -141,23 +146,23 @@ Add Group Invoice
 @parent
 <script>
     $(document).ready(function () {
-        var sacco_details = {
-            source: "/invoice/group-autocomplete",
-            select: function (event, group) {
+        var vehicle_details = {
+            source: "/invoice/vehicle-autocomplete",
+            select: function (event, vehicle) {
                 +
-                        $("#reg_id").val(group.item.reg_id);
-                $("#name").val(group.item.name);
-                $("#no_vehicle").val(group.item.no_vehicle);
-                $("#all_vehicles").val(group.item.all_vehicles);
-                $("#fee").val(group.item.fee);
-                $("#total_fee").val(group.item.fee);
-                $("#group_type").val(group.item.group_type);
+                        $("#reg_no").val(vehicle.item.reg_id);
+                $("#name").val(vehicle.item.name);
+                $("#fee").val(vehicle.item.fee);
+                $("#total_fee").val(vehicle.item.fee);
+                $("#discount").val(0);
+                $("#group_type").val(vehicle.item.group_id);
+                $("#id").val(vehicle.item.id);
 
 
             },
             minLength: 1
         };
-        $("#reg_id").autocomplete(sacco_details);
+        $("#reg_no").autocomplete(vehicle_details);
 
     });
     //Sums up both discount and fee

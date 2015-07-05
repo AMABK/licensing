@@ -104,10 +104,13 @@ Add Vehicle
                     <input name="under_group" value="No" hidden="" readonly=""/>
                     <label for="category" >Category</label>
                     <select type="text" name="category" id="category" class="form-control" required="">
-                        <option  value="Bus Company" class="no_group" >Bus Company</option>
-                        <option  value="Taxi Company" class="no_group" >Taxi Company</option>
-                        <option  value="Company Vehicle" class="no_group" >Company Vehicle</option>
-                        <option value="Matatu Sacco"  class="reg_id" >Matatu Sacco</option>
+                        <option  value="" class="no_group" >Please select one option</option>
+                        <option  value="1" class="reg_id" >Taxi Company</option>
+                        <option value="2"  class="reg_id" >Matatu Sacco</option>
+                        <option  value="3" class="reg_id" >Bus Company</option>
+                        <option  value="4" class="reg_id" >Tour vans</option>
+                        <option  value="5" class="reg_id" >Company Vehicle</option>
+                        <option value="6"  class="no_group" >Taxi(Does not belong to any group)</option>
                     </select>
                 </div>
                 <div id="group" style="display:none;">
@@ -143,7 +146,7 @@ Add Vehicle
 @parent
 <script>
     $('#category').on('change', function () {
-        if ($(this).val() === "Matatu Sacco") {
+        if (($(this).val() === "Matatu Sacco")||($(this).val() ==="Company Vehicle")||($(this).val() ==="Taxi Company")||($(this).val() ==="Bus Company")) {
             $("#group").show()
         }
         else {
@@ -152,7 +155,8 @@ Add Vehicle
     });
 
 </script>  
-<script>$('#reg_id').autocomplete({
+<script>
+    $('#reg_id').autocomplete({
         source: function (request, response) {
             $.ajax({
                 url: '/group/autocomplete',
@@ -180,7 +184,7 @@ Add Vehicle
             });
         },
         autoFocus: true,
-        minLength: 3
+        minLength: 2
     });
 </script>
 @stop

@@ -55,7 +55,7 @@ class InvoiceController extends Controller {
         );
         if ($validator->fails()) {
             return redirect()->back()
-                    ->withErrors($validator);
+                            ->withErrors($validator);
         } else {
             //dd(strtotime(\Request::get('expiry_date')));
             $invoice = \App\Invoice::create(array(
@@ -93,7 +93,7 @@ class InvoiceController extends Controller {
      */
     public function show() {
         $invoices = \App\Invoice::all();
-        return view('invoice.view-invoices',array('invoice' => $invoices));
+        return view('invoice.view-invoices', array('invoice' => $invoices));
     }
 
     /**
@@ -139,7 +139,6 @@ class InvoiceController extends Controller {
             $vehicle_type = $data->group_type;
             $vehicle_fee = \App\Charge::find($vehicle_type);
             $vehicles = \App\Vehicle::where('group_id', $data->id)->get();
-            $vehicle_type = 1;
             switch ($vehicle_type) {
                 case 1:
                     /*
@@ -194,6 +193,41 @@ class InvoiceController extends Controller {
             $det['no_vehicle'] = $vehicles->count();
             $det['value'] = $data->reg_id;
             $det['label'] = "{$data->reg_id}, {$data->name}";
+            $matches[] = $det;
+        }
+        print json_encode($matches);
+    }
+
+    public function getVehicleDetails() {
+        $reg_no = trim(strip_tags($_GET['term']));
+        //$reg_no = 'KBL';
+        $group_data = \DB::table('vehicles')
+                ->where('reg_no', 'like', '%' . $reg_no . '%')
+                ->where('group_id', 0)
+                ->get(['id', 'reg_no', 'tlb_no', 'no_of_seat','vehicle_make', 'group_id']);
+
+        foreach ($group_data as $data) {
+            if ($data->group_id == 0) {
+                $vehicle_fee = \App\Charge::find(1);
+                $fee = $vehicle_fee->standard_fee;
+            } else {
+                $vehicle_fee = \App\Charge::find($data->group_id);
+                $fee = $vehicle_fee->standard_fee;
+            }
+            
+
+            /*
+             * Taxi charges
+             * Each taxi pays an annual fee of amount x
+             */
+            // dd($allVehicles);
+            $det['reg_no'] = $data->reg_no;
+            $det['id'] = $data->id;
+            $det['tlb_no'] = $data->tlb_no;
+            $det['fee'] = $fee;
+            $det['group_id'] = $data->group_id;
+            $det['value'] = $data->reg_no;
+            $det['label'] = "{$data->reg_no}, {$data->vehicle_make}";
             $matches[] = $det;
         }
         print json_encode($matches);

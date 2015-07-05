@@ -80,7 +80,7 @@ Add Group Invoice
         <!-- Main row -->
         <div class="row" style="width: 70%; margin-left: 10%">
             <!-- Left col -->
-            <h3>Register a new group</h3>
+            <h3>Register a new group invoice</h3>
             <form method="POST" action="/post/add-group-invoice">
                 {!! csrf_field() !!}
                 @if (count($errors) > 0)

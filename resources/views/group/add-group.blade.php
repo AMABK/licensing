@@ -93,7 +93,7 @@ Add Group
                 </div>
                 @endif
                 <div class="form-group">
-                    <label for="name">Sacco Name</label>
+                    <label for="name">Group Name</label>
                     <input type="text" name="name" class="form-control" value="{{ old('name') }}" required="" placeholder="Name">
                 </div>
                 <div class="form-group">
@@ -120,22 +120,6 @@ Add Group
                 <div class="form-group">
                     <label for="phone_no">Phone No</label>
                     <input type="text" name="phone_no" class="form-control" value="{{ old('phone_no') }}" required="" placeholder="Phone number">
-                </div>
-                <div class="form-group">
-                    <label for="no_vehicle">Number of vehicles</label>
-                    <input type="text" name="no_vehicle" class="form-control" value="{{ old('no_vehicle') }}" required=""  placeholder="No of vehicles">
-                </div>
-                <div class="form-group">
-                    <label for="yr_of_license">Year of license</label>
-                    <input type="text" name="yr_of_license" class="form-control" value="{{ old('yr_of_license') }}" required="" placeholder="Year of license">
-                </div>
-                <div class="form-group">
-                    <label for="expiry_date">Expiry date</label>
-                    <input type="date" name="expiry_date" class="form-control" value="{{ old('expiry_date') }}" required="" placeholder="MM/DD/YYYY [Expiry date]">
-                </div>
-                <div class="form-group">
-                    <label for="fee_paid">Fee paid</label>
-                    <input type="text" name="fee_paid" class="form-control" value="{{ old('fee_paid') }}" required="" placeholder="Fees paid">
                 </div>
                 <div>
                     <button type="submit">Register</button>

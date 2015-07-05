@@ -87,47 +87,6 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'add-new-vehicle',
         'uses' => 'GroupController@addNewVehicle'
     ));
-    //Company controller
-    Route::get('/company', array(
-        'as' => 'company',
-        'uses' => 'GroupController@index'
-    ));
-    Route::get('/company/add-company', array(
-        'as' => 'add-company',
-        'uses' => 'GroupController@create'
-    ));
-    Route::post('/post/add-company', array(
-        'as' => 'add-company',
-        'uses' => 'GroupController@store'
-    ));
-    Route::get('/company/view-companies', array(
-        'as' => 'view-companies',
-        'uses' => 'GroupController@show'
-    ));
-    Route::get('/company/view-company/{id}', array(
-        'as' => 'view-company',
-        'uses' => 'GroupController@showCompany'
-    ));
-    Route::get('/company/edit-company/{id}', array(
-        'as' => 'edit-company',
-        'uses' => 'GroupController@edit'
-    ));
-    Route::post('/post/edit-company', array(
-        'as' => 'edit-company',
-        'uses' => 'GroupController@update'
-    ));
-    Route::get('/company/add-vehicle/{id}', array(
-        'as' => 'add-vehicle',
-        'uses' => 'GroupController@addVehicle'
-    ));
-    Route::get('/company/autocomplete', array(
-        'as' => '/company-autocomplete',
-        'uses' => 'GroupController@getGroups'
-    ));
-    Route::get('/company/add-new-vehicle/{id}', array(
-        'as' => 'add-new-vehicle',
-        'uses' => 'GroupController@addNewVehicle'
-    ));
     //Vehicle controller
     Route::get('/vehicle', array(
         'as' => 'vehicle',
@@ -186,10 +145,6 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'edit-group-invoice',
         'uses' => 'InvoiceController@create'
     ));
-    Route::get('/invoice/add-vehicle-invoice', array(
-        'as' => 'add-group-invoice',
-        'uses' => 'InvoiceController@create'
-    ));
     Route::get('/invoice/edit-vehicle-invoice', array(
         'as' => 'edit-group-invoice',
         'uses' => 'InvoiceController@create'
@@ -201,6 +156,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/invoice/group-autocomplete', array(
         'as' => 'group-autocomplete',
         'uses' => 'InvoiceController@getGroupDetails'
+    ));
+    Route::get('/invoice/vehicle-autocomplete', array(
+        'as' => 'vehicle-autocomplete',
+        'uses' => 'InvoiceController@getVehicleDetails'
     ));
     //Admin controller
     Route::get('/admin', array(
