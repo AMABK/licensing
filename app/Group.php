@@ -23,7 +23,7 @@ class Group extends Model {
         return $this->hasMany('App\Vehicle');
     }
     public function invoices() {
-        return $this->hasMany('App\Invoice');
+        return $this->hasMany('App\Invoice','payer_id');
     }
 
     public function vehicle_type() {

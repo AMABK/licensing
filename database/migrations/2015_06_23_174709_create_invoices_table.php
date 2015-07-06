@@ -18,7 +18,7 @@ class CreateInvoicesTable extends Migration {
             $table->integer('discount');
             $table->integer('total_fee');
             $table->integer('payer_id')->unsigned();
-            $table->string('invoice_from');
+            $table->string('invoice_type');
             $table->date('expiry_date');
             $table->longText('licensed_vehicles');
             $table->mediumText('description');

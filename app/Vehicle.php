@@ -21,6 +21,6 @@ class Vehicle extends Model {
 
     public function invoices()
     {
-        return $this->hasMany('App\Invoice');
+        return $this->hasMany('App\Invoice','payer_id');
     }
 }

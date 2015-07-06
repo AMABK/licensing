@@ -98,15 +98,15 @@ Add Group Invoice
                 </div>
                 <div class="form-group">
                     <label for="reg_no">Registration Number</label>
-                    <input type="text" style="text-transform:uppercase" class="form-control txt-auto" id="reg_id" required="" placeholder="Registration Number">
+                    <input type="text" name="reg_no" style="text-transform:uppercase" class="form-control txt-auto" id="reg_no" required="" placeholder="Registration Number">
                     <input type="text" hidden="" name="id" id="id">
                 </div>
                 <div class="form-group">
                     <label for="name">Group Name</label>
-                    <input type="text" name="name" class="form-control" id="name" value="" readonly="" required="" placeholder="Name">
+                    <input type="text" class="form-control" id="name" value="" readonly=""  placeholder="Vehicle does not belong to any group">
                 </div>
                 <div class="form-group">
-                    <label for="type">Group Type</label>
+                    <label for="type">Vehicle Type</label>
                     <input type="text" name="group_type" class="form-control" id="group_type" value="" readonly="" required="" placeholder="Group Type">
                 </div>
                 <div class="form-group">
@@ -120,11 +120,10 @@ Add Group Invoice
                 <div class="form-group">
                     <label for="no_vehicle">Total Fees</label>
                     <input type="text" name="total_fee"  class="form-control" readonly="" required="" id="total_fee"  placeholder="Total Fees">
-                    <input type="text" hidden="" required="" name="licensed_vehicles" id="licenced_vehicles" readonly="">
                 </div>
                 <div class="form-group">
                     <label for="expiry_date">Expiry date [MM/DD/YYYY]</label>
-                    <input type="date" name="expiry_date" class="form-control" value="12/31/{{ date('Y') }}" required="" readonly="" placeholder="MM/DD/YYYY [Expiry date]">
+                    <input type="date" name="expiry_date" class="form-control" value="{{ date('Y-12-31') }}" required="" readonly="" placeholder="MM/DD/YYYY [Expiry date]">
                 </div>
                 <div class="form-group">
                     <label for="expiry_date">Description</label>
@@ -150,8 +149,8 @@ Add Group Invoice
             source: "/invoice/vehicle-autocomplete",
             select: function (event, vehicle) {
                 +
-                        $("#reg_no").val(vehicle.item.reg_id);
-                $("#name").val(vehicle.item.name);
+                        $("#reg_no").val(vehicle.item.reg_no);
+                $("#name").val(vehicle.item.tbl_no);
                 $("#fee").val(vehicle.item.fee);
                 $("#total_fee").val(vehicle.item.fee);
                 $("#discount").val(0);
@@ -160,7 +159,7 @@ Add Group Invoice
 
 
             },
-            minLength: 1
+            minLength: 0
         };
         $("#reg_no").autocomplete(vehicle_details);
 

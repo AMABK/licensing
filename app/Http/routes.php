@@ -141,9 +141,13 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'add-vehicle-invoice',
         'uses' => 'InvoiceController@storeVehicleInvoice'
     ));
-    Route::get('/invoice/edit-group-invoice', array(
-        'as' => 'edit-group-invoice',
-        'uses' => 'InvoiceController@create'
+    Route::get('/invoice/get-group-invoice/{id}', array(
+        'as' => 'get-invoice',
+        'uses' => 'InvoiceController@getInvoice'
+    ));
+    Route::get('/invoice/get-individual-invoice/{id}', array(
+        'as' => 'get-invoice',
+        'uses' => 'InvoiceController@getInvoice'
     ));
     Route::get('/invoice/edit-vehicle-invoice', array(
         'as' => 'edit-group-invoice',

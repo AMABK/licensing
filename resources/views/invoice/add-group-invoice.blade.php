@@ -128,7 +128,7 @@ Add Group Invoice
                 </div>
                 <div class="form-group">
                     <label for="expiry_date">Expiry date [MM/DD/YYYY]</label>
-                    <input type="date" name="expiry_date" class="form-control" value="12/31/{{ date('Y') }}" required="" readonly="" placeholder="MM/DD/YYYY [Expiry date]">
+                    <input type="date" name="expiry_date" class="form-control" value="{{ date('Y-12-31')}}" required="" readonly="" placeholder="MM/DD/YYYY [Expiry date]">
                 </div>
                 <div class="form-group">
                     <label for="expiry_date">Description</label>

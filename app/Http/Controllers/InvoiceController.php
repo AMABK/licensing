@@ -59,14 +59,14 @@ class InvoiceController extends Controller {
         } else {
             //dd(strtotime(\Request::get('expiry_date')));
             $invoice = \App\Invoice::create(array(
-                        'invoice_no' => \Request::get('invoice_no'),
+                        'invoice_no' => strtoupper(\Request::get('invoice_no')),
                         'payer_id' => \Request::get('id'),
                         'no_vehicle' => \Request::get('no_vehicle'),
                         'group_type' => \Request::get('group_type'),
                         'discount' => \Request::get('discount'),
-                        'licensed_vehicles' => \Request::get('licensed_vehicles'),
+                        'licensed_vehicles' => strtoupper(\Request::get('licensed_vehicles')),
                         'total_fee' => \Request::get('total_fee'),
-                        'expiry_date' => strtotime(\Request::get('expiry_date')),
+                        'expiry_date' => \Request::get('expiry_date'),
                         'user_id' => \Auth::user()->id,
                         'description' => \Request::get('description')
                             )
@@ -82,7 +82,44 @@ class InvoiceController extends Controller {
     }
 
     public function storeVehicleInvoice() {
-        //
+                //dd(\Request::get('discount'));
+        $validator = \Validator::make(\Request::all(), array(
+                    'invoice_no' => 'required|unique:invoices',
+                    'id' => 'required|max:10',
+                    'reg_no' => 'required|max:255',
+                    'group_type' => 'required',
+                    'discount' => 'required',
+                    'total_fee' => 'required|integer',
+                    'expiry_date' => 'required',
+                    'description' => 'required'
+                        )
+        );
+        if ($validator->fails()) {
+            return redirect()->back()
+                            ->withErrors($validator);
+        } else {
+            //dd(\Request::all());
+            $invoice = \App\Invoice::create(array(
+                        'invoice_no' => strtoupper(\Request::get('invoice_no')),
+                        'payer_id' => \Request::get('id'),
+                        'group_type' => \Request::get('group_type'),
+                        'discount' => \Request::get('discount'),
+                        'reg_no' => strtoupper(\Request::get('reg_no')),
+                        'total_fee' => \Request::get('total_fee'),
+                        'no_vehicle' => 1,
+                        'expiry_date' => \Request::get('expiry_date'),
+                        'user_id' => \Auth::user()->id,
+                        'description' => \Request::get('description')
+                            )
+            );
+            if ($invoice) {
+                return redirect('/invoice')
+                                ->with('global', '<div class="alert alert-success">Car invoice successfullly created</div>');
+            } else {
+                return redirect('/invoice')
+                                ->with('global', '<div class="alert alert-danger">Whoooops, the invoice could not be created. Please try again!</div>');
+            }
+        }
     }
 
     /**
@@ -210,7 +247,9 @@ class InvoiceController extends Controller {
             if ($data->group_id == 0) {
                 $vehicle_fee = \App\Charge::find(1);
                 $fee = $vehicle_fee->standard_fee;
+                $det['group_id'] = 'Taxi';
             } else {
+                $det['group_id'] = $data->group_id;
                 $vehicle_fee = \App\Charge::find($data->group_id);
                 $fee = $vehicle_fee->standard_fee;
             }
@@ -225,12 +264,15 @@ class InvoiceController extends Controller {
             $det['id'] = $data->id;
             $det['tlb_no'] = $data->tlb_no;
             $det['fee'] = $fee;
-            $det['group_id'] = $data->group_id;
             $det['value'] = $data->reg_no;
             $det['label'] = "{$data->reg_no}, {$data->vehicle_make}";
             $matches[] = $det;
         }
         print json_encode($matches);
     }
-
+    public function getInvoice($id) {
+        $invoice = \App\Invoice::with('group','vehicle')->find($id);
+        //dd($invoice);
+        return $invoice;
+    }
 }

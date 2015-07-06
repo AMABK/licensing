@@ -19,7 +19,7 @@ Group
 
     <!-- Main content -->
     <section class="content">
-
+@include('layout.modal.view-invoice')
         @if(Session::has('global'))
         <center><p>{!!Session::get('global')!!}</p></center>
         @endif
@@ -32,7 +32,11 @@ Group
                 <tbody>
                     @foreach ($invoice as $invoices)
                     <tr>
-                        <td><a href="{{URL::to('invoice/edit-invoice/'.\Hashids::encode($invoices->id))}}"> {{strtoupper($invoices->invoice_no)}}</a></td><td>{{ $invoices->payer_id }}</td><td>{{ $invoices->group_type }}</td><td>{{ $invoices->no_vehicle }}</td><td>{{ $invoices->total_fee }}</td><td>{{ $invoices->discount }}</td><td>{{ $invoices->total_fee-$invoices->discount }}</td><td>{{ $invoices->expiry_date }}</td><td><a href="{{URL::to('invoice/add-new-vehicle/'.\Hashids::encode($invoices->id))}}">Add</a></td>
+                        <td><?php if ($invoices->invoice_type == 'Group') {?><a href="#" class="viewGroupInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php }else{ ?><a href="#" class="viewIndividualInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } ?></td><td><?php if ($invoices->invoice_type == 'Group') {
+    echo $invoices->group['reg_id'];
+} else {
+    echo $invoices->vehicle['reg_no'];
+} ?></td><td>{{ $invoices->group_type }}</td><td>{{ $invoices->no_vehicle }}</td><td>{{ $invoices->total_fee }}</td><td>{{ $invoices->discount }}</td><td>{{ $invoices->total_fee-$invoices->discount }}</td><td>{{ $invoices->expiry_date }}</td><td><a href="#" class="editFarmerLink" data-prop="{{$invoices->id}}" >View</a></td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -53,5 +57,124 @@ Group
 $(document).ready(function () {
     $('#myTable').dataTable();
 });
+//view farmer
+$(document).ready(function () {
+    $(".viewGroupInvoice").click(function () {
+        var prop = $(this).attr("data-prop");
+        //console.log(prop);
+        $.ajax({
+            type: "GET",
+            url: "/invoice/get-group-invoice/" + prop,
+            success: function (data) {
+
+                var invoiceArray = data;
+                console.log(invoiceArray);
+                //Inserting into modal:
+//                    var contentString = ""
+//                    for (var i = 0; i < projectArray.length; i++) {
+//                        contentString += "<input type='digit' name='id' value=" + projectArray[i].id + " >"
+//                    }
+                //console.log(contentString);
+                //console.log(projectArray.projects[0].id);
+                $("#idInvoice").val(invoiceArray.id);
+                $("#noInvoice").val(invoiceArray.invoice_no);
+                $("#payerInvoice").val(invoiceArray.group.reg_id);
+                $("#typeInvoice").val(invoiceArray.invoice_type);
+                $("#createdInvoice").val(invoiceArray.created_at);
+                $("#updatedInvoice").val(invoiceArray.updated_at);
+                $("#feeInvoice").val(invoiceArray.total_fee);
+                $("#discountInvoice").val(invoiceArray.discount);
+                $("#noVehicleInvoice").val(invoiceArray.no_vehicle);
+                $("#expiryInvoice").val(invoiceArray.expiry_date);
+                //console.log(projectArray);
+                //$("#subCountyValue").val(projectArray['sub-county']);
+                //$("#viewFarmerModalContent").append(contentString);
+                $("#viewInvoiceModal").modal("show");
+            }
+        });
+        //Load data into modal:
+        // var content = 
+
+    });
+});
+$(document).ready(function () {
+    $(".viewIndividualInvoice").click(function () {
+        var prop = $(this).attr("data-prop");
+        //console.log(prop);
+        $.ajax({
+            type: "GET",
+            url: "/invoice/get-individual-invoice/" + prop,
+            success: function (data) {
+
+                var invoiceArray = data;
+                console.log(invoiceArray);
+                //Inserting into modal:
+//                    var contentString = ""
+//                    for (var i = 0; i < projectArray.length; i++) {
+//                        contentString += "<input type='digit' name='id' value=" + projectArray[i].id + " >"
+//                    }
+                //console.log(contentString);
+                //console.log(projectArray.projects[0].id);
+                $("#idInvoice").val(invoiceArray.id);
+                $("#noInvoice").val(invoiceArray.invoice_no);
+                $("#payerInvoice").val(invoiceArray.vehicle.reg_id);
+                $("#typeInvoice").val(invoiceArray.invoice_type);
+                $("#createdInvoice").val(invoiceArray.created_at);
+                $("#updatedInvoice").val(invoiceArray.updated_at);
+                $("#feeInvoice").val(invoiceArray.total_fee);
+                $("#discountInvoice").val(invoiceArray.discount);
+                $("#noVehicleInvoice").val(invoiceArray.no_vehicle);
+                $("#expiryInvoice").val(invoiceArray.expiry_date);
+                //console.log(projectArray);
+                //$("#subCountyValue").val(projectArray['sub-county']);
+                //$("#viewFarmerModalContent").append(contentString);
+                $("#viewInvoiceModal").modal("show");
+            }
+        });
+        //Load data into modal:
+        // var content = 
+
+    });
+});
+//Edit farmer
+//$(document).ready(function () {
+//    $(".editFarmerLink").click(function () {
+//        var prop = $(this).attr("data-prop");
+//        console.log(prop);
+//        $.ajax({
+//            type: "GET",
+//            url: "/farmer/get/" + prop,
+//            success: function (data) {
+//
+//                var projectArray = data;
+//                //console.log(projectArray);
+//                //Inserting into modal:
+////                    var contentString = ""
+////                    for (var i = 0; i < projectArray.length; i++) {
+////                        contentString += "<input type='digit' name='id' value=" + projectArray[i].id + " >"
+////                    }
+//                //console.log(contentString);
+//                $("#idProjectE").val(projectArray.projects.id);
+//                $("#idFarmerE").val(projectArray.id);
+//                $("#fNameValueE").val(projectArray.first_name);
+//                $("#mNameValueE").val(projectArray.middle_name);
+//                $("#sNameValueE").val(projectArray.surname);
+//                $("#dobValueE").val(projectArray.dob);
+//                $("#idNoValueE").val(projectArray.id_number);
+//                $("#phoneValueE").val(projectArray.phone);
+//                $("#addressValueE").val(projectArray.address);
+//                $("#genderValueE").val(projectArray.gender);
+//                $("#countryValueE").val(projectArray.country);
+//                $("#countyValueE").val(projectArray.county);
+//                $("#subCountyValueE").val(projectArray['sub-county']);
+//                console.log(projectArray);
+//                $("#editFarmerModal").modal("show");
+//            }
+//        });
+//        //Load data into modal:
+//        // var content = 
+//
+//    });
+//});
 </script>   
 @stop
