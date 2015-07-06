@@ -23,9 +23,6 @@ class InvoiceController extends Controller {
      * @return Response
      */
     public function createGroupInvoice() {
-//        $pdf = \App::make('dompdf.wrapper');
-//        $pdf->loadHTML('<h1>Test</h1>');
-//        return $pdf->stream();
         return view('invoice.add-group-invoice');
     }
 
@@ -82,7 +79,7 @@ class InvoiceController extends Controller {
     }
 
     public function storeVehicleInvoice() {
-                //dd(\Request::get('discount'));
+        //dd(\Request::get('discount'));
         $validator = \Validator::make(\Request::all(), array(
                     'invoice_no' => 'required|unique:invoices',
                     'id' => 'required|max:10',
@@ -241,7 +238,7 @@ class InvoiceController extends Controller {
         $group_data = \DB::table('vehicles')
                 ->where('reg_no', 'like', '%' . $reg_no . '%')
                 ->where('group_id', 0)
-                ->get(['id', 'reg_no', 'tlb_no', 'no_of_seat','vehicle_make', 'group_id']);
+                ->get(['id', 'reg_no', 'tlb_no', 'no_of_seat', 'vehicle_make', 'group_id']);
 
         foreach ($group_data as $data) {
             if ($data->group_id == 0) {
@@ -253,7 +250,7 @@ class InvoiceController extends Controller {
                 $vehicle_fee = \App\Charge::find($data->group_id);
                 $fee = $vehicle_fee->standard_fee;
             }
-            
+
 
             /*
              * Taxi charges
@@ -270,9 +267,22 @@ class InvoiceController extends Controller {
         }
         print json_encode($matches);
     }
+
     public function getInvoice($id) {
-        $invoice = \App\Invoice::with('group','vehicle')->find($id);
+        $invoice = \App\Invoice::with('group', 'vehicle')->find($id);
         //dd($invoice);
         return $invoice;
     }
+
+    public function viewCert($id) {
+        $certs = \App\Invoice::with('group', 'vehicle')->find($id);
+        //dd($cert->toArray());
+        return view('invoice.view-cert',array('cert' => $certs));
+    }
+    public function printCert($id) {
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML('<h1>Test</h1>');
+        return $pdf->stream();
+    }
+
 }

@@ -1,4 +1,4 @@
-<div class="modal fade" id="viewInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="viewInvoiceModal" aria-hidden="true">
+<div class="modal fade" id="viewLicensedModal" tabindex="-1" role="dialog" aria-labelledby="viewLicensedModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -29,7 +29,8 @@
                         </tr>
                         <tr><td>Status</td><td><input id="expiryInvoice" readonly=""></td>
                         </tr>
-                        <tr><td>Licensed Vehicles</td><td><textarea style='text-transform:uppercase;' id="licensedInvoice" readonly=""></textarea></td>
+                        <tr><td>Licensed Vehicles</td><td><input style='text-transform:uppercase' id="LicensedInvoice" readonly=""></td>
+                        </tr>
                         </tr>
                     </table>
                 </div>

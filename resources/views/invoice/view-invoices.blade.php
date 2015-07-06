@@ -36,11 +36,11 @@ Group
     echo $invoices->group['reg_id'];
 } else {
     echo $invoices->vehicle['reg_no'];
-} ?></td><td>{{ $invoices->group_type }}</td><td>{{ $invoices->no_vehicle }}</td><td>{{ $invoices->total_fee }}</td><td>{{ $invoices->discount }}</td><td>{{ $invoices->total_fee-$invoices->discount }}</td><td>{{ $invoices->expiry_date }}</td><td><a href="#" class="editFarmerLink" data-prop="{{$invoices->id}}" >View</a></td>
+} ?></td><td>{{ $invoices->invoice_type }}</td><td>{{ $invoices->no_vehicle }}</td><td>{{ $invoices->total_fee }}</td><td>{{ $invoices->discount }}</td><td>{{ $invoices->total_fee-$invoices->discount }}</td><td>{{ $invoices->expiry_date }}</td><td><a href="#" class="viewIndividualInvoice" data-prop="{{$invoices->id}}" >Print</a></td>
                     </tr>
                     @endforeach
                 </tbody>
-                <tfoot><tr><th>Name</th><th>Reg No</th><th>Group Type</th><th>Expiry Date</th><th>Fees Paid</th><th>Phone</th><th>Email</th><th>Address</th><th>Add Vehicles</th></tr></thead>
+                <tfoot><tr><th>Invoice #</th><th>Payer</th><th>Group Type</th><th>Vehicle #</th><th>Fees Paid</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Vehicles</th></tr></thead>
             </table>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
 
@@ -78,6 +78,7 @@ $(document).ready(function () {
                 //console.log(projectArray.projects[0].id);
                 $("#idInvoice").val(invoiceArray.id);
                 $("#noInvoice").val(invoiceArray.invoice_no);
+                $("#licensedInvoice").val(invoiceArray.licensed_vehicles);
                 $("#payerInvoice").val(invoiceArray.group.reg_id);
                 $("#typeInvoice").val(invoiceArray.invoice_type);
                 $("#createdInvoice").val(invoiceArray.created_at);
@@ -117,7 +118,8 @@ $(document).ready(function () {
                 //console.log(projectArray.projects[0].id);
                 $("#idInvoice").val(invoiceArray.id);
                 $("#noInvoice").val(invoiceArray.invoice_no);
-                $("#payerInvoice").val(invoiceArray.vehicle.reg_id);
+                $("#licensedInvoice").val(invoiceArray.reg_no);
+                $("#payerInvoice").val(invoiceArray.vehicle.reg_no);
                 $("#typeInvoice").val(invoiceArray.invoice_type);
                 $("#createdInvoice").val(invoiceArray.created_at);
                 $("#updatedInvoice").val(invoiceArray.updated_at);
