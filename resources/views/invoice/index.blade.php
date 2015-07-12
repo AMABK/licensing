@@ -4,7 +4,7 @@ Invoice
 @stop
 @section('content')
 
-<div class="content-wrapper">
+<div class="content-wrapper" style="background-color: white;">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
@@ -23,20 +23,20 @@ Invoice
         <div class="row">
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-aqua">
+                <div class="small-box bg-red">
                     <div class="inner">
                         <h3>150</h3>
-                        <p>Saccos</p>
+                        <p>Groups</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-plus"></i>
                     </div>
-                    <a href="{{URL::to('/sacco/add-sacco')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-green">
+                <div class="small-box bg-yellow">
                     <div class="inner">
                         <h3>53</h3>
                         <p>Total Vehicles</p>
@@ -52,12 +52,12 @@ Invoice
                 <div class="small-box bg-yellow">
                     <div class="inner">
                         <h3>57<sup style="font-size: 20px">%</sup></h3>
-                        <p>Belong to saccos</p>
+                        <p>Belong to groups</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-group"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add group <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">

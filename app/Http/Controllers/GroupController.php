@@ -14,7 +14,14 @@ class GroupController extends Controller {
      * @return Response
      */
     public function index() {
-        return view('group.index');
+        $count['groups'] = \App\Group::all()->count();
+        $count['taxi'] = \App\Group::where('type_id',4)->count();
+        $count['matatu'] = \App\Group::where('type_id',2)->count();
+        $count['bus'] = \App\Group::where('type_id',3)->count();
+        $count['tour'] = \App\Group::where('type_id',6)->count();
+        $count['company'] = \App\Group::where('type_id',5)->count();
+        
+        return view('group.index',array('counts' => $count));
     }
 
     /**
@@ -23,7 +30,8 @@ class GroupController extends Controller {
      * @return Response
      */
     public function create() {
-        return view('group.add-group');
+        $groups = \App\Vehicle_type::all();
+        return view('group.add-group',array('group' => $groups));
     }
 
     /**
@@ -36,13 +44,9 @@ class GroupController extends Controller {
         $validator = \Validator::make(\Request::all(), array(
                     'reg_id' => 'required|max:10|unique:groups',
                     'name' => 'required|max:255',
-                    'type' => 'required|max:255',
+                    'type_id' => 'required|max:255',
                     'phone_no' => 'sometimes|digits_between:10,15',
                     'email' => 'sometimes|email',
-                    'no_vehicle' => 'required|integer',
-                    'yr_of_license' => 'required|digits:4',
-                    'expiry_date' => 'required|date',
-                    'fee_paid' => 'required|integer'
                         )
         );
         //dd(\Request::all());
@@ -53,10 +57,10 @@ class GroupController extends Controller {
         } else {
             $group = \App\Group::create(\Request::all());
             if ($group) {
-                return redirect('group/view-group/' . \Hashids::encode(\Request::input('reg_id')))
+                return redirect('/group/add-group' . \Hashids::encode(\Request::input('reg_id')))
                                 ->with('global', '<div class="alert alert-success">Group successfullly saved in the database</div>');
             } else {
-                return redirect('group/add-group')
+                return redirect('/group/add-group')
                                 ->with('global', '<div class="alert alert-danger">Whoooops, your input could not be saved. Please contact administrator!</div>');
             }
         }
@@ -97,13 +101,10 @@ class GroupController extends Controller {
         }
         $validator = \Validator::make(\Request::all(), array(
                     'name' => 'required|max:255',
-                    'type' => 'required|max:255',
+                    'type_id' => 'required|max:255',
+                    'id' => 'required|max:255',
                     'phone_no' => 'sometimes|digits_between:10,15',
                     'email' => 'sometimes|email',
-                    'no_vehicle' => 'required|integer',
-                    'yr_of_license' => 'required|digits:4',
-                    'expiry_date' => 'required|date',
-                    'fee_paid' => 'required|integer'
                         )
         );
         if ($validator->fails()) {
@@ -116,12 +117,11 @@ class GroupController extends Controller {
                     ->where('id', \Request::input('id'))
                     ->update(array(
                 'name' => \Request::input('name'),
+                'type_id' => \Request::input('type_id'),
+                'physical_address' => \Request::input('physical_address'),
+                'postal_address' => \Request::input('postal_address'),
                 'phone_no' => \Request::input('phone_no'),
                 'email' => \Request::input('email'),
-                'no_vehicle' => \Request::input('no_vehicle'),
-                'yr_of_license' => \Request::input('yr_of_license'),
-                'expiry_date' => \Request::input('expiry_date'),
-                'fee_paid' => \Request::input('fee_paid'),
                 'user_id' => \Auth::user()->id
                     )
             );

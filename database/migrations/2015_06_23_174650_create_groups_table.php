@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSaccosTable extends Migration {
+class CreateGroupsTable extends Migration {
 
     /**
      * Run the migrations.
@@ -14,15 +14,12 @@ class CreateSaccosTable extends Migration {
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
             $table->string('reg_id');
-            $table->integer('group_type')->unsigned();
+            $table->integer('type_id')->unsigned();
             $table->string('name');
             $table->string('phone_no')->nullable();
             $table->string('email')->nullable();
-            $table->string('address')->nullable();
-            $table->string('no_vehicle');
-            $table->integer('yr_of_license');
-            $table->date('expiry_date');
-            $table->integer('fee_paid');
+            $table->string('postal_address')->nullable();
+            $table->string('physical_address')->nullable();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
         });

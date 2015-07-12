@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title')
-Sacco
+Admin | Add user
 @stop
 @section('content')
 
@@ -24,7 +24,7 @@ Sacco
         <div class="row">
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-aqua">
+                <div class="small-box bg-yellow-gradient">
                     <div class="inner">
                         <h3>150</h3>
                         <p>Saccos</p>
@@ -37,7 +37,7 @@ Sacco
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-green">
+                <div class="small-box bg-yellow-gradient">
                     <div class="inner">
                         <h3>53</h3>
                         <p>Total Vehicles</p>
@@ -50,7 +50,7 @@ Sacco
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-yellow">
+                <div class="small-box bg-yellow-gradient">
                     <div class="inner">
                         <h3>57<sup style="font-size: 20px">%</sup></h3>
                         <p>Belong to saccos</p>
@@ -63,7 +63,7 @@ Sacco
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-red">
+                <div class="small-box bg-yellow-gradient">
                     <div class="inner">
                         <h3>65<sup style="font-size: 20px">%</sup></h3>
                         <p>Are company vehicles</p>
@@ -83,7 +83,16 @@ Sacco
             <!-- Left col -->
             <h3>Register a new user</h3>
             <form method="POST" action="/post/add-user">
-                {!! csrf_field() !!}
+                                {!! csrf_field() !!}
+                @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
 
                 <div class="form-group">
                     <label for="name">First Name</label>
@@ -107,7 +116,20 @@ Sacco
                 </div>
                 <div class="form-group">
                     <label for="designation">Designation</label>
-                    <input type="text" name="designation" class="form-control" value="{{ old('designation') }}" placeholder="Address">
+                    <select type="text" name="designation" class="form-control" >
+                        <option value="" >Please select user designation</option>
+                        @foreach($designations as $designation)
+                        <option value="{{$designation->id}}" >{{$designation->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="phone_no">Password</label>
+                    <input type="text" name="password" class="form-control" value="" required="" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="phone_no">Confirm Password</label>
+                    <input type="text" name="password_confirmation" class="form-control" value="" required="" placeholder="Password Confirmation">
                 </div>
                 <div class="form-group">
                     <label for="phone_no">Phone No</label>

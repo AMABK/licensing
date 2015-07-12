@@ -14,7 +14,13 @@ class VehicleController extends Controller {
      * @return Response
      */
     public function index() {
-        return view('vehicle.index');
+        $count['vehicles'] = \App\Vehicle::all()->count();
+        $count['taxi'] = \App\Vehicle::where('type_id', 4)->count();
+        $count['matatu'] = \App\Vehicle::where('type_id', 2)->count();
+        $count['bus'] = \App\Vehicle::where('type_id', 3)->count();
+        $count['tour'] = \App\Vehicle::where('type_id', 6)->count();
+        $count['company'] = \App\Vehicle::where('type_id', 5)->count();
+        return view('vehicle.index', array('counts' => $count));
     }
 
     /**
@@ -33,9 +39,10 @@ class VehicleController extends Controller {
      * @return Response
      */
     public function store() {
+        //dd(\Request::all());
         $validator = \Validator::make(\Request::all(), array(
                     'reg_no' => 'required|max:10|unique:vehicles',
-                    'category' => 'required|max:255',
+                    'type_id' => 'required|max:255',
                     'group_id' => 'sometimes|integer',
                     'vehicle_make' => 'required',
                     'no_of_seat' => 'required|integer'
@@ -50,28 +57,42 @@ class VehicleController extends Controller {
             $group_id = \DB::table('groups')
                             ->where('reg_id', \Request::get('reg_id'))->first();
             //dd(\Request::all());
-            $vehicle = \App\Vehicle::create(array(
-                        'reg_no' => \Request::get('reg_no'),
-                        'vehicle_make' => \Request::get('vehicle_make'),
-                        'category' => \Request::get('category'),
-                        'group_id' => $group_id->id,
-                        'tbl_no' => \Request::get('tlb_no'),
-                        'no_of_seat' => \Request::get('no_of_seat'),
-                        'user_id' => \Auth::user()->id
-                            )
-            );
+            if (\Request::get('under_group') == 'Yes') {
+                $vehicle = \App\Vehicle::create(array(
+                            'reg_no' => \Request::get('reg_no'),
+                            'vehicle_make' => \Request::get('vehicle_make'),
+                            'type_id' => \Request::get('type_id'),
+                            'group_id' => \Request::get('group_id'),
+                            'tlb_no' => \Request::get('tlb_no'),
+                            'no_of_seat' => \Request::get('no_of_seat'),
+                            'user_id' => \Auth::user()->id
+                                )
+                );
+            } else {
+
+                $vehicle = \App\Vehicle::create(array(
+                            'reg_no' => \Request::get('reg_no'),
+                            'vehicle_make' => \Request::get('vehicle_make'),
+                            'type_id' => \Request::get('type_id'),
+                            'group_id' => $group_id->id,
+                            'tlb_no' => \Request::get('tlb_no'),
+                            'no_of_seat' => \Request::get('no_of_seat'),
+                            'user_id' => \Auth::user()->id
+                                )
+                );
+            }
             if (\Request::get('under_group') == 'Yes') {
                 if ($vehicle) {
-                    return redirect('group/add-new-vehicle/' . \Hashids::encode($group_id->id))
+                    return redirect('group/add-new-vehicle/' . \Hashids::encode(\Request::get('group_id')))
                                     ->with('global', '<div class="alert alert-success">Vehicle successfullly saved in the database</div>');
                 } else {
-                    return redirect('group/add-new-vehicle/' . \Hashids::encode($group_id->id))
+                    return redirect('group/add-new-vehicle/' . \Hashids::encode(\Request::get('group_id')))
                                     ->with('global', '<div class="alert alert-danger">Whoooops, your input could not be saved. Please contact administrator!</div>');
                 }
             } else {
 
                 if ($vehicle) {
-                    return redirect('vehicle/view-vehicle/' . \Hashids::encode($vehicle->id))
+                    return redirect('vehicle/add-vehicle/')
                                     ->with('global', '<div class="alert alert-success">Vehicle successfullly saved in the database</div>');
                 } else {
                     return redirect('vehicle/add-vehicle')
@@ -99,9 +120,10 @@ class VehicleController extends Controller {
      * @return Response
      */
     public function edit($id) {
-        $groups = \App\Group::all();
+        $types = \App\Vehicle_type::all();
         $vehicle = \App\Vehicle::find(\Hashids::decode($id)[0]);
-        return view('vehicle.edit-vehicle', array('vehicles' => $vehicle, 'group' => $groups));
+        //dd($vehicle);
+        return view('vehicle.edit-vehicle', array('vehicles' => $vehicle, 'type' => $types));
     }
 
     /**

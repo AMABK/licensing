@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title')
-Sacco
+Groups home
 @stop
 @section('content')
 
@@ -23,10 +23,10 @@ Sacco
         <div class="row">
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-aqua">
+                <div class="small-box bg-yellow-gradient">
                     <div class="inner">
-                        <h3>150</h3>
-                        <p>Saccos</p>
+                        <h3>{{$counts['groups']}}</h3>
+                        <p>Groups</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-plus"></i>
@@ -36,36 +36,60 @@ Sacco
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-green">
+                <div class="small-box bg-yellow-gradient">
                     <div class="inner">
-                        <h3>53</h3>
-                        <p>Total Vehicles</p>
+                        <h3>{{$counts['matatu']}}</h3>
+                        <p>Matatu Groups</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-bus"></i>
                     </div>
-                    <a href="#" class="small-box-footer">Add a vehicle <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add a vehicle <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-yellow">
+                <div class="small-box bg-yellow-gradient">
                     <div class="inner">
-                        <h3>57<sup style="font-size: 20px">%</sup></h3>
-                        <p>Belong to groups</p>
+                        <h3>{{$counts['taxi']}}<sup style="font-size: 20px"></sup></h3>
+                        <p>Taxi Group</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-group"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-red">
+                <div class="small-box bg-yellow-gradient">
                     <div class="inner">
-                        <h3>65<sup style="font-size: 20px">%</sup></h3>
-                        <p>Are company vehicles</p>
+                        <h3>{{$counts['tour']}}<sup style="font-size: 20px"></sup></h3>
+                        <p>Tour Group</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-car"></i>
+                    </div>
+                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add group <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-yellow-gradient">
+                    <div class="inner">
+                        <h3>{{$counts['company']}}<sup style="font-size: 20px"></sup></h3>
+                        <p>Companies</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-car"></i>
+                    </div>
+                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add group <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-yellow-gradient">
+                    <div class="inner">
+                        <h3>{{$counts['bus']}}<sup style="font-size: 20px"></sup></h3>
+                        <p>Bus Groups</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-car"></i>
@@ -78,8 +102,8 @@ Sacco
         <center><p>{!!Session::get('global')!!}</p></center>
         @endif
         <!-- Main row -->
-        <div class="row" style="width: 70%; margin-left: 15%;margin-top: 5%">
-            <!-- Left col -->
+<!--        <div class="row" style="width: 70%; margin-left: 15%;margin-top: 5%">
+             Left col 
             <h3>Register a new group</h3>
             <form method="POST" action="/group/add-group">
                 {!! csrf_field() !!}
@@ -124,9 +148,9 @@ Sacco
                     <button type="submit">Register</button>
                 </div>
             </form>
-            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+             right col (We are only adding the ID to make the widgets sortable)
 
-        </div><!-- /.row (main row) -->
+        </div> /.row (main row) -->
 
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->

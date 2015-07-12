@@ -13,7 +13,20 @@
         <script src="/dist/js/bootstrap.min.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
     </head>
     <body>
-
+        <style>
+            .alert-success{
+                background: white;
+            }
+            h3{
+                color: #D63E13;
+            }
+            .btn-success{
+                background: #D63E13;
+            }
+            .btn-success:hover{
+                background: #D63E13;
+            }
+        </style>
         <div id="container">
             <div id="logo">
                 <img src="/images/main_logo.png" alt="" style="border-radius: 10px"/>
@@ -47,7 +60,7 @@
                         <input type="password" name="password" id="password" class="form-control" placeholder="Password" size="20" required="" />
                     </div>
                     <input type="checkbox" name="remember"> Remember Me
-                    <hr />
+                    <hr/>
                     <div class="form-actions">
                         <div class="pull-left">
                             <a href="#" class="flip-link to-recover"><a href="">Reset password?</a></a><br />

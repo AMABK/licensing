@@ -28,19 +28,19 @@ Group
             <!-- Left col -->
             <h3>Registered invoices</h3>
             <table id="myTable" width="100%">
-                <thead><tr><th>Invoice #</th><th>Payer</th><th>Group Type</th><th>Vehicle #</th><th>Fees Paid</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Vehicles</th></tr></thead>
+                <thead><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees Paid</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Approve</th><th>License</th><th>Delete</th></tr></thead>
                 <tbody>
                     @foreach ($invoice as $invoices)
                     <tr>
-                        <td><?php if ($invoices->invoice_type == 'Group') {?><a href="#" class="viewGroupInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php }else{ ?><a href="#" class="viewIndividualInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } ?></td><td><?php if ($invoices->invoice_type == 'Group') {
+                        <td><?php if ($invoices->invoice_type == 'Group Invoice') {?><a href="#" class="viewGroupInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php }else{ ?><a href="#" class="viewIndividualInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } ?></td><td><?php if ($invoices->invoice_type == 'Group Invoice') {
     echo $invoices->group['reg_id'];
 } else {
     echo $invoices->vehicle['reg_no'];
-} ?></td><td>{{ $invoices->invoice_type }}</td><td>{{ $invoices->no_vehicle }}</td><td>{{ $invoices->total_fee }}</td><td>{{ $invoices->discount }}</td><td>{{ $invoices->total_fee-$invoices->discount }}</td><td>{{ $invoices->expiry_date }}</td><td><a href="#" class="viewIndividualInvoice" data-prop="{{$invoices->id}}" >Print</a></td>
+    } ?></td><td>{{ $invoices->invoice_type }}</td><td>{{ $invoices->no_vehicle }}</td><td>{{ $invoices->total_fee }}</td><td>{{ $invoices->discount }}</td><td>{{ $invoices->total_fee-$invoices->discount }}</td><td>{{ $invoices->expiry_date }}</td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}" target="_blank">Approve</a></td><td><a href="#" class="viewIndividualInvoice" data-prop="{{$invoices->id}}" >Print</a></td><td><a href="{{URL::to('/invoice/delete-invoice/'.\Hashids::encode($invoices->id))}}"> Delete</a></td>
                     </tr>
                     @endforeach
                 </tbody>
-                <tfoot><tr><th>Invoice #</th><th>Payer</th><th>Group Type</th><th>Vehicle #</th><th>Fees Paid</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Vehicles</th></tr></thead>
+                <tfoot><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees Paid</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Approve</th><th>License</th><th>Delete</tr></thead>
             </table>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
 

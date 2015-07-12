@@ -20,9 +20,9 @@ Add Group Invoice
     <!-- Main content -->
     <section class="content">
         <!-- Small boxes (Stat box) -->
-        <div class="row">
+<!--        <div class="row">
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
+                 small box 
                 <div class="small-box bg-aqua">
                     <div class="inner">
                         <h3>150</h3>
@@ -33,9 +33,9 @@ Add Group Invoice
                     </div>
                     <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div><!-- ./col -->
+            </div> ./col 
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
+                 small box 
                 <div class="small-box bg-green">
                     <div class="inner">
                         <h3>53<sup style="font-size: 20px">%</sup></h3>
@@ -46,9 +46,9 @@ Add Group Invoice
                     </div>
                     <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div><!-- ./col -->
+            </div> ./col 
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
+                 small box 
                 <div class="small-box bg-yellow">
                     <div class="inner">
                         <h3>44</h3>
@@ -59,9 +59,9 @@ Add Group Invoice
                     </div>
                     <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div><!-- ./col -->
+            </div> ./col 
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
+                 small box 
                 <div class="small-box bg-red">
                     <div class="inner">
                         <h3>65</h3>
@@ -72,8 +72,8 @@ Add Group Invoice
                     </div>
                     <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div><!-- ./col -->
-        </div><!-- /.row -->
+            </div> ./col 
+        </div> /.row -->
         @if(Session::has('global'))
         <p>{!!Session::get('global')!!}</p>
         @endif
@@ -108,6 +108,7 @@ Add Group Invoice
                 <div class="form-group">
                     <label for="type">Group Type</label>
                     <input type="text" name="group_type" class="form-control" id="group_type" value="" readonly="" required="" placeholder="Group Type">
+                    <input type="text" name="type_id" id="type_id" readonly="" required="" hidden="">
                 </div>
                 <div class="form-group">
                     <label for="text">Number of Vehicles</label>
@@ -129,6 +130,23 @@ Add Group Invoice
                 <div class="form-group">
                     <label for="expiry_date">Expiry date [MM/DD/YYYY]</label>
                     <input type="date" name="expiry_date" class="form-control" value="{{ date('Y-12-31')}}" required="" readonly="" placeholder="MM/DD/YYYY [Expiry date]">
+                <div class="form-group">
+                    <label for="no_vehicle">Region</label>
+                    <select name="region_id" required="" class="form-control">
+                        <option type="text" value=""  class="form-control" >Please select a region</option>
+                        @foreach($region as $regions)
+                        <option type="text" value="{{$regions->id}}"  class="form-control" >{{$regions->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="agent">Agent</label>
+                    <select name="agent_id" required="" class="form-control">
+                        <option type="text" value="" >Please select an agent</option>
+                        @foreach($agent as $agents)
+                        <option type="text" value="{{$agents->id}}" >{{$agents->name}}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="expiry_date">Description</label>
@@ -161,6 +179,7 @@ Add Group Invoice
                 $("#fee").val(group.item.fee);
                 $("#total_fee").val(group.item.fee);
                 $("#discount").val(0);
+                $("#type_id").val(group.item.type_id);
                 $("#group_type").val(group.item.group_type);
                 $("#id").val(group.item.id);
 

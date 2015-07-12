@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.3 (LTS) on 2015-06-29.
+ * Generated for Laravel 5.1.6 (LTS) on 2015-07-06.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -5624,6 +5624,17 @@ namespace {
         }
         
         /**
+         * Return the most suitable content type from the given array based on content negotiation.
+         *
+         * @param string|array $contentTypes
+         * @return string|null 
+         * @static 
+         */
+        public static function prefers($contentTypes){
+            return \Illuminate\Http\Request::prefers($contentTypes);
+        }
+        
+        /**
          * Determines whether a request accepts JSON.
          *
          * @return bool 
@@ -5706,11 +5717,12 @@ namespace {
         /**
          * Get the route handling the request.
          *
-         * @return \Illuminate\Routing\Route|null 
+         * @param string|null $param
+         * @return object|string 
          * @static 
          */
-        public static function route(){
-            return \Illuminate\Http\Request::route();
+        public static function route($param = null){
+            return \Illuminate\Http\Request::route($param);
         }
         
         /**
@@ -8320,6 +8332,17 @@ namespace {
         }
         
         /**
+         * Return the most suitable content type from the given array based on content negotiation.
+         *
+         * @param string|array $contentTypes
+         * @return string|null 
+         * @static 
+         */
+        public static function prefers($contentTypes){
+            return \Illuminate\Http\Request::prefers($contentTypes);
+        }
+        
+        /**
          * Determines whether a request accepts JSON.
          *
          * @return bool 
@@ -8402,11 +8425,12 @@ namespace {
         /**
          * Get the route handling the request.
          *
-         * @return \Illuminate\Routing\Route|null 
+         * @param string|null $param
+         * @return object|string 
          * @static 
          */
-        public static function route(){
-            return \Illuminate\Http\Request::route();
+        public static function route($param = null){
+            return \Illuminate\Http\Request::route($param);
         }
         
         /**

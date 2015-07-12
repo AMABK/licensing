@@ -157,9 +157,21 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'view-cert',
         'uses' => 'InvoiceController@viewCert'
     ));
+    Route::get('/invoice/print-cert/{id}', array(
+        'as' => 'print-cert',
+        'uses' => 'InvoiceController@printCert'
+    ));
+    Route::get('/invoice/view-cert/{id}', array(
+        'as' => 'view-cert',
+        'uses' => 'InvoiceController@viewCert'
+    ));
     Route::get('/invoice/view-invoices', array(
         'as' => 'view-invoices',
         'uses' => 'InvoiceController@show'
+    ));
+    Route::get('invoice/delete-invoice/{id}', array(
+        'as' => 'delete-invoice',
+        'uses' => 'InvoiceController@delete'
     ));
     Route::get('/invoice/group-autocomplete', array(
         'as' => 'group-autocomplete',
@@ -169,6 +181,19 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'vehicle-autocomplete',
         'uses' => 'InvoiceController@getVehicleDetails'
     ));
+    //Invoice approval routes
+    Route::get('/invoice/approve/{id}', array(
+        'as' => 'approval',
+        'uses' => 'InvoiceController@approve'
+    ));
+    Route::post('/post/finance-approve', array(
+        'as' => 'finance-approval',
+        'uses' => 'InvoiceController@financeApproval'
+    ));
+    Route::post('/post/manager-approve', array(
+        'as' => 'managerial-approval',
+        'uses' => 'InvoiceController@managerApproval'
+    ));
     //Admin controller
     Route::get('/admin', array(
         'as' => 'admin',
@@ -177,5 +202,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/admin/add-user', array(
         'as' => 'add-user',
         'uses' => 'AdminController@create'
+    ));
+    Route::post('/post/add-user', array(
+        'as' => 'add-user',
+        'uses' => 'AdminController@store'
     ));
 });

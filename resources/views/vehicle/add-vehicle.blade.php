@@ -20,60 +20,7 @@ Add Vehicle
     <!-- Main content -->
     <section class="content">
         <!-- Small boxes (Stat box) -->
-        <div class="row">
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>150</h3>
-                        <p>Groups</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-plus"></i>
-                    </div>
-                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add group <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <h3>53</h3>
-                        <p>Total Vehicles</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-bus"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">Add a vehicle <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-yellow">
-                    <div class="inner">
-                        <h3>57<sup style="font-size: 20px">%</sup></h3>
-                        <p>Belong to groups</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-group"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-red">
-                    <div class="inner">
-                        <h3>65<sup style="font-size: 20px">%</sup></h3>
-                        <p>Are company vehicles</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-car"></i>
-                    </div>
-                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add group <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-        </div><!-- /.row -->
+      <!-- /.row -->
         @if(Session::has('global'))
         <center><p>{!!Session::get('global')!!}</p></center>
         @endif
@@ -103,20 +50,20 @@ Add Vehicle
                 <div class="form-group">
                     <input name="under_group" value="No" hidden="" readonly=""/>
                     <label for="category" >Category</label>
-                    <select type="text" name="category" id="category" class="form-control" required="">
+                    <select type="text" name="type_id" id="category" class="form-control" required="">
                         <option  value="" class="no_group" >Please select one option</option>
-                        <option  value="1" class="reg_id" >Taxi Company</option>
+                        <option  value="4" class="reg_id" >Taxi Company</option>
                         <option value="2"  class="reg_id" >Matatu Sacco</option>
                         <option  value="3" class="reg_id" >Bus Company</option>
-                        <option  value="4" class="reg_id" >Tour vans</option>
+                        <option  value="6" class="reg_id" >Tour vans</option>
                         <option  value="5" class="reg_id" >Company Vehicle</option>
-                        <option value="6"  class="no_group" >Taxi(Does not belong to any group)</option>
+                        <option value="1"  class="no_group" >Taxi(Does not belong to any group)</option>
                     </select>
                 </div>
                 <div id="group" style="display:none;">
                     <div class="form-group">
                         <label for="group_id" >Group Reg No</label>
-                        <input name="reg_id" placeholder="Please select a valid Sacco Reg No" id="reg_id" class="form-control txt-auto" required=""/>
+                        <input name="reg_id"  style="text-transform:uppercase" placeholder="Please select a valid Sacco Reg No" id="reg_id" class="form-control txt-auto" required=""/>
                     </div>
                 </div>
 
@@ -146,7 +93,7 @@ Add Vehicle
 @parent
 <script>
     $('#category').on('change', function () {
-        if (($(this).val() === "Matatu Sacco")||($(this).val() ==="Company Vehicle")||($(this).val() ==="Taxi Company")||($(this).val() ==="Bus Company")) {
+        if (($(this).val() == 6)||($(this).val() == 2)||($(this).val() == 3)||($(this).val() == 4)||($(this).val() == 5)) {
             $("#group").show()
         }
         else {

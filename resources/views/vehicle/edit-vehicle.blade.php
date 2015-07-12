@@ -20,60 +20,7 @@ Update Vehicle
     <!-- Main content -->
     <section class="content">
         <!-- Small boxes (Stat box) -->
-        <div class="row">
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>150</h3>
-                        <p>Saccos</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-plus"></i>
-                    </div>
-                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add group <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <h3>53</h3>
-                        <p>Total Vehicles</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-bus"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">Add a vehicle <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-yellow">
-                    <div class="inner">
-                        <h3>57<sup style="font-size: 20px">%</sup></h3>
-                        <p>Belong to groups</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-group"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-red">
-                    <div class="inner">
-                        <h3>65<sup style="font-size: 20px">%</sup></h3>
-                        <p>Are company vehicles</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-car"></i>
-                    </div>
-                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add group <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-        </div><!-- /.row -->
+        <!-- /.row -->
         @if(Session::has('global'))
         <center><p>{!!Session::get('global')!!}</p></center>
         @endif
@@ -92,71 +39,39 @@ Update Vehicle
                     </ul>
                 </div>
                 @endif
-                @foreach($vehicles as $vehicle)
                 <div class="form-group">
-                    <input type="text" name="id" value="{{$vehicle->id}}" hidden="">
+                    <input type="text" name="id" value="{{$vehicles->id}}" hidden="">
                     <label for="reg_no">Registration Number</label>
-                    <input type="text" name="reg_no" style="text-transform:uppercase" class="form-control" value="{{$vehicle->reg_no }}" required="" readonly="" placeholder="Registration Number">
+                    <input type="text" name="reg_no" style="text-transform:uppercase" class="form-control" value="{{$vehicles->reg_no }}" required="" readonly="" placeholder="Registration Number">
                 </div>
                 <div class="form-group">
                     <label for="vehicle_make">Vehicle Make</label>
-                    <input type="text" class="form-control" name="vehicle_make" class="form-control" value="{{ $vehicle->vehicle_make }}" placeholder="Vehicle make">
+                    <input type="text" class="form-control" name="vehicle_make" class="form-control" value="{{ $vehicles->vehicle_make }}" placeholder="Vehicle make">
                 </div>
                 <div class="form-group">
-                    <label for="category" >Category</label>
-                    <select type="text" name="category" id="category" class="form-control" required="">                        
-                        <?php
-                        if ($vehicle->category == 'Bus') {
-                            echo '<option  value="Bus" class="no_group" selected >Bus</option>';
-                        } else {
-                            echo '<option  value="Bus" class="no_group" >Bus</option>';
-                        }
-                        if ($vehicle->category == 'Taxi') {
-                            echo '<option  value="Taxi" selected class="no_group" >Taxi</option>';
-                        } else {
-                            echo '<option value="Taxi"  class="group_id" >Taxi</option>';
-                        }
-                        if ($vehicle->category == 'Company Vehicle') {
-                            echo '<option  value="Company Vehicle" selected class="no_group" >Company Vehicle</option>';
-                        } else {
-                            echo '<option value="Company Vehicle"  class="group_id" >Company Vehicle</option>';
-                        }
-                        if ($vehicle->category == 'Sacco Vehicle') {
-                            echo '<option value="Sacco Vehicle" selected  class="group_id" >Sacco Vehicle</option>';
-                        } else {
-                            echo '<option value="Sacco Vehicle"  class="group_id" >Sacco Vehicle</option>';
-                        }
-                        if ($vehicle->category == 'Other') {
-                            echo '<option  value="Other" selected class="no_group" >Other</option>';
-                        } else {
-                            echo '<option  value="Other"  class="no_group" >Other</option>';
-                        }
-                        ?> 
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="group_id" >Sacco</label>
-                    <select type="text" name="group_id" class="form-control" id="group_id" required="">
-                        @if($vehicle->group_id != NULL)
-                        <option value="{{$vehicle->group->id}}"  class="Sacco Vehicle" >{{$vehicle->group->name}}</option>
-                        @else
-                        <option value="" >Active only when Sacco Vehicle is selected</option>
+                    <label for="type_id" >Category</label>
+                    <select type="text" name="category" id="category" class="form-control" id="type_id" required="">
+                        @if($vehicles->type_id != NULL)
+                        <option value="{{$vehicles->type_id}}"  class="Sacco Vehicle" >{{$vehicles->vehicle_type->group}}</option>
                         @endif
-                        @foreach($group as $groups)
-                        <option value="{{$groups->id}}"  class="Sacco Vehicle" >{{$groups->name}}</option>
-                        @endforeach
+                        <option  value="group" class="type_id" >Group Vehicle</option>
+                        <option value="1"  class="no_group" >Taxi(Does not belong to any group)</option>
                     </select>
                 </div>
-
+                <div id="group" style="display:none;">
+                    <div class="form-group">
+                        <label for="group_id" >Group Reg No</label>
+                        <input name="reg_id"  style="text-transform:uppercase" placeholder="Please select a valid Sacco Reg No" id="reg_id" class="form-control txt-auto"/>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="tlb_no">TLB Number</label>
-                    <input type="text" style="text-transform:uppercase" name="tlb_no" class="form-control" value="{{ $vehicle->tlb_no }}" required=""  placeholder="TLB No.">
+                    <input type="text" style="text-transform:uppercase" name="tlb_no" class="form-control" value="{{ $vehicles->tlb_no }}" required=""  placeholder="TLB No.">
                 </div>
                 <div class="form-group">
                     <label for="no_of_seat">Number of seats</label>
-                    <input type="text" name="no_of_seat" class="form-control" value="{{ $vehicle->no_of_seat }}" required="" placeholder="Number of seats">
+                    <input type="text" name="no_of_seat" class="form-control" value="{{ $vehicles->no_of_seat }}" required="" placeholder="Number of seats">
                 </div>
-                @endforeach
                 <div style="float: left">
                     <button type="submit" name="update">Update</button>
                 </div>
@@ -180,48 +95,47 @@ Update Vehicle
 @parent
 <script>
     //Chaining script
-    (function ($) {
-        $.fn.chained = function (parent_selector, options) {
-            return this.each(function () {
-                var self = this;
-                var backup = $(self).clone();
-                $(parent_selector).each(function () {
-                    $(this).bind("change", function () {
-                        $(self).html(backup.html());
-                        var selected = "";
-                        $(parent_selector).each(function () {
-                            selected += "\\" + $(":selected", this).val();
-                        });
-                        selected = selected.substr(1);
-                        var first = $(parent_selector).first();
-                        var selected_first = $(":selected", first).val();
-                        $("option", self).each(function () {
-                            if (!$(this).hasClass(selected) && !$(this).hasClass(selected_first) && $(this).val() !== "") {
-                                $(this).remove();
-                            }
-                        });
-                        if (1 == $("option", self).size() && $(self).val() === "") {
-                            $(self).attr("disabled", "disabled");
-                        } else {
-                            $(self).removeAttr("disabled");
-                        }
-                        $(self).trigger("change");
-                    });
-                    if (!$("option:selected", this).length) {
-                        $("option", this).first().attr("selected", "selected");
-                    }
-                    $(this).trigger("change");
-                });
-            });
-        };
-        $.fn.chainedTo = $.fn.chained;
-    })(jQuery);
-    $("#group_id").chained("#category");
-</script>
-<script>
-    $(document).ready(function () {
-
-        $('#myTable').DataTable();
+    $('#category').on('change', function () {
+        if (($(this).val() == 6) || ($(this).val() == 2) || ($(this).val() == 3) || ($(this).val() == 4) || ($(this).val() == 5)) {
+            $("#group").show()
+        }
+        else {
+            $("#group").hide()
+        }
     });
+
+</script> 
+<script>
+    $('#reg_id').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '/group/autocomplete',
+                dataType: "json",
+                data: {
+                    name_has: request.term,
+                    type: 'reg_id'
+                },
+                success: function (data) {
+                    var groupArray = data;
+                    //console.log(groupArray.reg_id);
+                    var arr = new Array;
+                    for (var i = 0; i < groupArray.length; i++) {
+                        arr[i] = groupArray[i].reg_id;
+                        // console.log(arr);
+                    }
+                    response($.map(arr, function (item) {
+                        return {
+                            label: item,
+                            value: item
+
+                        }
+                    }));
+                }
+            });
+        },
+        autoFocus: true,
+        minLength: 2
+    });
+
 </script>   
 @stop

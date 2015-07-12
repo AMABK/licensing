@@ -20,63 +20,12 @@ Add Group
     <!-- Main content -->
     <section class="content">
         <!-- Small boxes (Stat box) -->
-        <div class="row">
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>150</h3>
-                        <p>New Orders</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-bag"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-green">
-                    <div class="inner">
-                        <h3>53<sup style="font-size: 20px">%</sup></h3>
-                        <p>Bounce Rate</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-yellow">
-                    <div class="inner">
-                        <h3>44</h3>
-                        <p>User Registrations</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-person-add"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-red">
-                    <div class="inner">
-                        <h3>65</h3>
-                        <p>Unique Visitors</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-        </div><!-- /.row -->
-        @if(Session::has('global'))
-        <p>{!!Session::get('global')!!}</p>
-        @endif
+        <!-- /.row -->
+        <center>
+            @if(Session::has('global'))
+            <p>{!!Session::get('global')!!}</p>
+            @endif
+        </center>
         <!-- Main row -->
         <div class="row" style="width: 70%; margin-left: 10%">
             <!-- Left col -->
@@ -102,20 +51,24 @@ Add Group
                 </div>
                 <div class="form-group">
                     <label for="type">Group Type</label>
-                    <select type="text" name="group_type" id="category" class="form-control" required="">
-                        <option  value="Bus Company" class="no_sacco" >Bus Company</option>
-                        <option value="Matatu Sacco"  class="sacco_id" >Matatu Sacco</option>
-                        <option  value="Company Vehicle" class="no_sacco" >Company Vehicle</option>
-                        <option  value="Taxi Company" class="no_sacco" >Taxi Company</option>
+                    <select type="text" name="type_id" id="category" class="form-control" required="">
+                        @foreach($group as $groups)
+                        <option  value="{{$groups->id}}" class="no_sacco" >{{$groups->group}}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Email">
+                    <input type="text" name="user_id" value="{{\Auth::user()->id}}" hidden="" >
                 </div>
                 <div class="form-group">
-                    <label for="address">Address</label>
-                    <input type="text" name="address" class="form-control" value="{{ old('address') }}" placeholder="Address">
+                    <label for="address">Postal Address</label>
+                    <input type="text" name="postal_address" class="form-control" value="{{ old('postal_address') }}" placeholder="Address">
+                </div>
+                <div class="form-group">
+                    <label for="address">Physical Address</label>
+                    <input type="text" name="physical_address" class="form-control" value="{{ old('physical_address') }}" placeholder="Address">
                 </div>
                 <div class="form-group">
                     <label for="phone_no">Phone No</label>

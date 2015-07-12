@@ -35,8 +35,13 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
+  <style>
+      .content-wrapper{
+          background :white;
+      }
+  </style>
   <body class="skin-blue sidebar-mini">
-    <div class="wrapper">
+      <div class="wrapper" >
       
       @include('layout.header');
       <!-- Left side column. contains the logo and sidebar -->

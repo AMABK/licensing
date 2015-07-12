@@ -21,9 +21,12 @@ class CreateInvoicesTable extends Migration {
             $table->string('invoice_type');
             $table->date('expiry_date');
             $table->longText('licensed_vehicles');
+            $table->integer('region_id');
+            $table->integer('agent_id');
             $table->mediumText('description');
             $table->integer('user_id')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -23,7 +23,7 @@ Sacco
         <div class="row">
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-aqua">
+                <div class="small-box bg-yellow-gradient">
                     <div class="inner">
                         <h3>150</h3>
                         <p>Saccos</p>
@@ -36,7 +36,7 @@ Sacco
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-green">
+                <div class="small-box bg-yellow-gradient">
                     <div class="inner">
                         <h3>53</h3>
                         <p>Total Vehicles</p>
@@ -49,7 +49,7 @@ Sacco
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-yellow">
+                <div class="small-box bg-yellow-gradient">
                     <div class="inner">
                         <h3>57<sup style="font-size: 20px">%</sup></h3>
                         <p>Belong to saccos</p>
@@ -62,7 +62,7 @@ Sacco
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
-                <div class="small-box bg-red">
+                <div class="small-box bg-yellow-gradient">
                     <div class="inner">
                         <h3>65<sup style="font-size: 20px">%</sup></h3>
                         <p>Are company vehicles</p>
@@ -78,8 +78,8 @@ Sacco
         <center><p>{!!Session::get('global')!!}</p></center>
         @endif
         <!-- Main row -->
-        <div class="row" style="width: 70%; margin-left: 15%;margin-top: 5%">
-            <!-- Left col -->
+<!--        <div class="row" style="width: 70%; margin-left: 15%;margin-top: 5%">
+             Left col 
             <h3>Register a new sacco</h3>
             <form method="POST" action="/sacco/add-sacco">
                 {!! csrf_field() !!}
@@ -124,9 +124,9 @@ Sacco
                     <button type="submit">Register</button>
                 </div>
             </form>
-            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+             right col (We are only adding the ID to make the widgets sortable)
 
-        </div><!-- /.row (main row) -->
+        </div> /.row (main row) -->
 
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->

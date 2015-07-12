@@ -17,7 +17,7 @@ class Group extends Model {
      *
      * @var array
      */
-    protected $fillable = ['reg_id', 'name','group_type', 'phone_no', 'email', 'address', 'no_vehicle', 'yr_of_license', 'expiry_date', 'fee_paid'];
+    protected $fillable = ['reg_id', 'type_id', 'name', 'phone_no', 'email', 'postal_address', 'physical_address', 'user_id'];
     public function vehicles()
     {
         return $this->hasMany('App\Vehicle');
@@ -27,6 +27,6 @@ class Group extends Model {
     }
 
     public function vehicle_type() {
-        return $this->belongsTo('App\Vehicle_type','group_type','id');
+        return $this->belongsTo('App\Vehicle_type','type_id','id');
     }
 }

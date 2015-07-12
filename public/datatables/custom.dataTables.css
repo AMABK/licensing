@@ -1,11 +1,11 @@
     table, td {
         border: 1px solid #086A87;
-        background-color: #F4B1B1;;
+        background-color: white;;
         height: 10px;
     }
 
     thead, th {
-        background-color: #DD573F;
+        background-color: #CC6600;
         border: 1px solid #086A87;
         color: white;
     }

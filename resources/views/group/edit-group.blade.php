@@ -39,7 +39,7 @@ Edit Sacco
                 @endif
                 @foreach($groups as $group)
                 <div class="form-group">
-                    <label for="name">Sacco Name</label>
+                    <label for="name">Group Name</label>
                     <input type="text" name="name" class="form-control" value="{{ $group->name }}" required="" placeholder="Name">
                 </div>
                 <div class="form-group">
@@ -53,31 +53,20 @@ Edit Sacco
                 </div>
                 <div class="form-group">
                     <label for="type">Group Type</label>
-                    <input type="type" name="type" class="form-control" value="{{  $group->group_type }}" readonly="">
+                    <input type="text" name="type_id"  value="{{$group->type_id}}" class="no_sacco" hidden="">
+                    <input type="text"  class="form-control" value="{{$group->vehicle_type->group}}" readonly="">
                 </div>
                 <div class="form-group">
-                    <label for="address">Address</label>
-                    <input type="text" name="address" class="form-control" value="{{  $group->address }}" placeholder="Address">
+                    <label for="address">Postal Address</label>
+                    <input type="text" name="postal_address" class="form-control" value="{{ $group->postal_address }}" placeholder="Address">
+                </div>
+                <div class="form-group">
+                    <label for="address">Physical Address</label>
+                    <input type="text" name="physical_address" class="form-control" value="{{ $group->physical_address }}" placeholder="Address">
                 </div>
                 <div class="form-group">
                     <label for="phone_no">Phone No</label>
                     <input type="text" name="phone_no" class="form-control" value="{{  $group->phone_no }}" required="" placeholder="Phone number">
-                </div>
-                <div class="form-group">
-                    <label for="no_vehicle">Number of vehicles</label>
-                    <input type="text" name="no_vehicle" class="form-control" value="{{  $group->no_vehicle }}" required=""  placeholder="No of vehicles">
-                </div>
-                <div class="form-group">
-                    <label for="yr_of_license">Year of license</label>
-                    <input type="text" name="yr_of_license" class="form-control" value="{{  $group->yr_of_license }}" required="" placeholder="Year of license">
-                </div>
-                <div class="form-group">
-                    <label for="expiry_date">Expiry date</label>
-                    <input type="date" name="expiry_date" class="form-control" value="{{  $group->expiry_date }}" required="" placeholder="MM/DD/YYYY [Expiry date]">
-                </div>
-                <div class="form-group">
-                    <label for="fee_paid">Fee paid</label>
-                    <input type="text" name="fee_paid" class="form-control" value="{{  $group->fee_paid }}" required="" placeholder="Fees paid">
                 </div>
                 @endforeach
                 <div style="float: left">
@@ -98,8 +87,6 @@ Edit Sacco
 @section('scripts')
 @parent
 <script>
-    $(document).ready(function () {
-        $('#myTable').dataTable();
-    });
+
 </script>   
 @stop

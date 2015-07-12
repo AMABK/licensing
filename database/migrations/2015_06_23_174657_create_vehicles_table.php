@@ -16,11 +16,12 @@ class CreateVehiclesTable extends Migration
             $table->increments('id');
             $table->string('reg_no');
             $table->string('vehicle_make');
-            $table->string('category');
-            $table->integer('group_id')->nullable();
-            $table->string('tlb_no');
+            $table->integer('group_id')->unsigned()->nullable();
+            $table->integer('type_id')->unsigned();
+            $table->string('tlb_no')->nullable();
             $table->string('no_of_seat');
             $table->integer('user_id')->unsigned();
+            
             $table->timestamps();
         });
     }

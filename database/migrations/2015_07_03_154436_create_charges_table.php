@@ -14,7 +14,7 @@ class CreateChargesTable extends Migration
     {
         Schema::create('charges', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('vehicle_type')->unsigned();
+            $table->integer('type_id')->unsigned();
             $table->integer('standard_fee');
             $table->integer('extra_fee');
             $table->integer('standard_seats');
