@@ -16,6 +16,11 @@ class DatabaseSeeder extends Seeder
 
          $this->call('UserTableSeeder');
          $this->call('Vehicle_typeTableSeeder');
+         $this->call('AgentTableSeeder');
+         $this->call('ChargeTableSeeder');
+         $this->call('RegionTableSeeder');
+         $this->call('RoleTableSeeder');
+         $this->call('DesignationTableSeeder');
 
         Model::reguard();
     }
