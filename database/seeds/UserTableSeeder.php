@@ -16,7 +16,7 @@ class UserTableSeeder extends Seeder {
             'designation_id' => 1,
             'national_id' => '0000000',
             'phone_no' => '254700000000',
-            'email' => 'arnoldkarani@gmail.com',
+            'email' => 'arnold.mate@optimustechnologies.co.ke',
             'job_id' => 'Admin',
             'status' => 0,
             'password' => bcrypt('secret'),
