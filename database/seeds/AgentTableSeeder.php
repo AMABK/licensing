@@ -15,7 +15,7 @@ class AgentTableSeeder extends Seeder {
                 'name' => 'Defaul Agent',
                 'phone_no' => '254728258655',
                 'region_id' => 1,
-                'postal_address' => '7920 -00400',
+                'postal_address' => '7920-00400',
             ]
         ));
     }
