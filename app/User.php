@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -10,6 +11,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
+    use SoftDeletes;
     use Authenticatable, CanResetPassword;
 
     /**
@@ -35,5 +37,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     
     public function roles() {
         return $this->belongsToMany('App\Role', 'user_roles');
+    }
+    public function designation() {
+        return $this->belongsTo('App\Designation');
     }
 }

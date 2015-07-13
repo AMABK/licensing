@@ -13,6 +13,9 @@
 Route::get('/', function () {
     return view('index');
 });
+Route::get('/auth/login', function () {
+    return view('index');
+});
 // Authentication routes...
 Route::get('/', array(
     'as' => 'login',
@@ -203,20 +206,28 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'add-user',
         'uses' => 'AdminController@create'
     ));
-    Route::get('/admin/manage-user', array(
+    Route::get('/admin/manage-user/{id}', array(
         'as' => '/manage-user',
-        'uses' => 'AdminController@index'
+        'uses' => 'AdminController@viewPrivileges'
+    ));
+    Route::get('/admin/confirm-delete-user/{id}', array(
+        'as' => '/confirm-delete-user',
+        'uses' => 'AdminController@viewPrivileges'
     ));
     Route::get('/admin/view-users', array(
         'as' => '/view-users',
-        'uses' => 'AdminController@index'
+        'uses' => 'AdminController@show'
+    ));
+    Route::get('/admin/edit-user/{id}', array(
+        'as' => '/edit-user',
+        'uses' => 'AdminController@edit'
     ));
     Route::post('/post/add-user', array(
         'as' => 'add-user',
         'uses' => 'AdminController@store'
     ));
-    Route::post('/post/add-user', array(
-        'as' => 'add-user',
-        'uses' => 'AdminController@store'
+    Route::post('/post/edit-user', array(
+        'as' => 'edit-user',
+        'uses' => 'AdminController@update'
     ));
 });

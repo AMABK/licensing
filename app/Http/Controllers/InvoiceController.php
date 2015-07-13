@@ -332,12 +332,12 @@ class InvoiceController extends Controller {
     }
 
     public function viewCert($id) {
-        $check = \App\User_role::where('user_id', Auth::user()->id)
+        $check = \App\User_role::where('user_id', \Auth::user()->id)
                 ->where('role_id', 3)
                 ->count();
         if ($check) {
             $certs = \App\Invoice::with('group', 'vehicle')->find($id);
-//dd($certs->toArray());
+//dd($certs);
             return view('invoice.view-cert', array('cert' => $certs));
 //$data = array("Test1", "Test2", "Test3");
 //        $pdf = \PDF::loadView('invoice.view-cert', array('cert' => $certs));

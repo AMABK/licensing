@@ -12,7 +12,8 @@
         "barryvdh/laravel-dompdf": "0.6.*",
         "barryvdh/laravel-snappy": "0.2.x",
         "vinkla/hashids": "^1.1@dev",
-        "dinesh/barcode": "5.*@dev"
+        "dinesh/barcode": "5.*@dev",
+        "simplesoftwareio/simple-qrcode": "1.3.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

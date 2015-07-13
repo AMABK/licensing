@@ -49,6 +49,9 @@
             @if($rows%4 == 0)
             <div class="row">
                 @endif
+                <?php
+                $qr = ''.sprintf("%06d",$cert->id).'-'.strtoupper($licensed_vehicle[$i]);
+                ?>
                 <div class="col-sm-3">
                     <h3 style="color: white">K</h3>
                     <h3></h3>
@@ -65,7 +68,7 @@
                     <p style="margin-left: 45%"><b>{{$cert->expiry_date}}</b></p>
                     
                     <img src="/images/sign.png"/>
-                    <barcode>{!!\DNS2D::getBarcodeHTML(sprintf("%06d",$cert->id)-strtoupper($licensed_vehicle[$i]), "QRCODE",2,2)!!}</barcode>
+                    <barcode>{!!\DNS2D::getBarcodeHTML($qr, "QRCODE",2,2)!!}</barcode>
 <!--                    <p>SIGNED</p>-->
                     <p style="margin-left: 15%">SIGN</p>
                 </div>

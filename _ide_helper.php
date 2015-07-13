@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.6 (LTS) on 2015-07-06.
+ * Generated for Laravel 5.1.7 (LTS) on 2015-07-13.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -11398,7 +11398,7 @@ namespace {
          * @param string $view
          * @param array $data
          * @param array $mergeData
-         * @return \Illuminate\View\View 
+         * @return \Illuminate\Contracts\View\View 
          * @static 
          */
         public static function make($view, $data = array(), $mergeData = array()){
@@ -11481,13 +11481,13 @@ namespace {
         /**
          * Add a piece of shared data to the environment.
          *
-         * @param string $key
+         * @param array|string $key
          * @param mixed $value
-         * @return void 
+         * @return mixed 
          * @static 
          */
         public static function share($key, $value = null){
-            \Illuminate\View\Factory::share($key, $value);
+            return \Illuminate\View\Factory::share($key, $value);
         }
         
         /**
@@ -12692,16 +12692,16 @@ namespace {
     }
 
 
-    class PDF extends \Barryvdh\Snappy\Facades\SnappyPdf{
+    class PDF extends \Barryvdh\DomPDF\Facade{
         
         /**
-         * Get the Snappy instance.
+         * Get the DomPDF instance
          *
-         * @return \Knp\Snappy\Pdf 
+         * @return \DOMPDF 
          * @static 
          */
-        public static function snappy(){
-            return \Barryvdh\Snappy\PdfWrapper::snappy();
+        public static function getDomPDF(){
+            return \Barryvdh\DomPDF\PDF::getDomPDF();
         }
         
         /**
@@ -12713,7 +12713,7 @@ namespace {
          * @static 
          */
         public static function setPaper($paper, $orientation = null){
-            return \Barryvdh\Snappy\PdfWrapper::setPaper($paper, $orientation);
+            return \Barryvdh\DomPDF\PDF::setPaper($paper, $orientation);
         }
         
         /**
@@ -12724,7 +12724,7 @@ namespace {
          * @static 
          */
         public static function setOrientation($orientation){
-            return \Barryvdh\Snappy\PdfWrapper::setOrientation($orientation);
+            return \Barryvdh\DomPDF\PDF::setOrientation($orientation);
         }
         
         /**
@@ -12732,40 +12732,22 @@ namespace {
          *
          * @param bool $warnings
          * @return $this 
-         * @deprecated 
          * @static 
          */
         public static function setWarnings($warnings){
-            return \Barryvdh\Snappy\PdfWrapper::setWarnings($warnings);
-        }
-        
-        /**
-         * 
-         *
-         * @static 
-         */
-        public static function setOption($name, $value){
-            return \Barryvdh\Snappy\PdfWrapper::setOption($name, $value);
-        }
-        
-        /**
-         * 
-         *
-         * @static 
-         */
-        public static function setOptions($options){
-            return \Barryvdh\Snappy\PdfWrapper::setOptions($options);
+            return \Barryvdh\DomPDF\PDF::setWarnings($warnings);
         }
         
         /**
          * Load a HTML string
          *
          * @param string $string
+         * @param string $encoding Not used yet
          * @return static 
          * @static 
          */
-        public static function loadHTML($string){
-            return \Barryvdh\Snappy\PdfWrapper::loadHTML($string);
+        public static function loadHTML($string, $encoding = null){
+            return \Barryvdh\DomPDF\PDF::loadHTML($string, $encoding);
         }
         
         /**
@@ -12776,7 +12758,7 @@ namespace {
          * @static 
          */
         public static function loadFile($file){
-            return \Barryvdh\Snappy\PdfWrapper::loadFile($file);
+            return \Barryvdh\DomPDF\PDF::loadFile($file);
         }
         
         /**
@@ -12785,22 +12767,22 @@ namespace {
          * @param string $view
          * @param array $data
          * @param array $mergeData
+         * @param string $encoding Not used yet
          * @return static 
          * @static 
          */
-        public static function loadView($view, $data = array(), $mergeData = array()){
-            return \Barryvdh\Snappy\PdfWrapper::loadView($view, $data, $mergeData);
+        public static function loadView($view, $data = array(), $mergeData = array(), $encoding = null){
+            return \Barryvdh\DomPDF\PDF::loadView($view, $data, $mergeData, $encoding);
         }
         
         /**
          * Output the PDF as a string.
          *
          * @return string The rendered PDF as string
-         * @throws \InvalidArgumentException
          * @static 
          */
         public static function output(){
-            return \Barryvdh\Snappy\PdfWrapper::output();
+            return \Barryvdh\DomPDF\PDF::output();
         }
         
         /**
@@ -12811,44 +12793,114 @@ namespace {
          * @static 
          */
         public static function save($filename){
-            return \Barryvdh\Snappy\PdfWrapper::save($filename);
+            return \Barryvdh\DomPDF\PDF::save($filename);
         }
         
         /**
          * Make the PDF downloadable by the user
          *
          * @param string $filename
-         * @return \Barryvdh\Snappy\Response 
+         * @return \Illuminate\Http\Response 
          * @static 
          */
         public static function download($filename = 'document.pdf'){
-            return \Barryvdh\Snappy\PdfWrapper::download($filename);
+            return \Barryvdh\DomPDF\PDF::download($filename);
         }
         
         /**
          * Return a response with the PDF to show in the browser
          *
          * @param string $filename
-         * @return \Barryvdh\Snappy\StreamedResponse 
+         * @return \Illuminate\Http\Response 
          * @static 
          */
         public static function stream($filename = 'document.pdf'){
-            return \Barryvdh\Snappy\PdfWrapper::stream($filename);
+            return \Barryvdh\DomPDF\PDF::stream($filename);
         }
         
     }
 
 
-    class Image extends \Barryvdh\Snappy\Facades\SnappyImage{
+    class DNS1D extends \Dinesh\Barcode\Facades\DNS1DFacade{
         
         /**
-         * Get the Snappy instance.
+         * Return a SVG string representation of barcode.
          *
-         * @return \Knp\Snappy\Image 
+         * @param $code (string) code to print
+         * @param $type (string) type of barcode: <ul><li>C39 : CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.</li><li>C39+ : CODE 39 with checksum</li><li>C39E : CODE 39 EXTENDED</li><li>C39E+ : CODE 39 EXTENDED + CHECKSUM</li><li>C93 : CODE 93 - USS-93</li><li>S25 : Standard 2 of 5</li><li>S25+ : Standard 2 of 5 + CHECKSUM</li><li>I25 : Interleaved 2 of 5</li><li>I25+ : Interleaved 2 of 5 + CHECKSUM</li><li>C128 : CODE 128</li><li>C128A : CODE 128 A</li><li>C128B : CODE 128 B</li><li>C128C : CODE 128 C</li><li>EAN2 : 2-Digits UPC-Based Extention</li><li>EAN5 : 5-Digits UPC-Based Extention</li><li>EAN8 : EAN 8</li><li>EAN13 : EAN 13</li><li>UPCA : UPC-A</li><li>UPCE : UPC-E</li><li>MSI : MSI (Variation of Plessey code)</li><li>MSI+ : MSI + CHECKSUM (modulo 11)</li><li>POSTNET : POSTNET</li><li>PLANET : PLANET</li><li>RMS4CC : RMS4CC (Royal Mail 4-state Customer Code) - CBC (Customer Bar Code)</li><li>KIX : KIX (Klant index - Customer index)</li><li>IMB: Intelligent Mail Barcode - Onecode - USPS-B-3200</li><li>CODABAR : CODABAR</li><li>CODE11 : CODE 11</li><li>PHARMA : PHARMACODE</li><li>PHARMA2T : PHARMACODE TWO-TRACKS</li></ul>
+         * @param $w (int) Minimum width of a single bar in user units.
+         * @param $h (int) Height of barcode in user units.
+         * @param $color (string) Foreground color (in SVG format) for bar elements (background is transparent).
+         * @return string SVG code.
+         * @public 
          * @static 
          */
-        public static function snappy(){
-            return \Barryvdh\Snappy\ImageWrapper::snappy();
+        public static function getBarcodeSVG($code, $type, $w = 2, $h = 30, $color = 'black'){
+            return \Dinesh\Barcode\DNS1D::getBarcodeSVG($code, $type, $w, $h, $color);
+        }
+        
+        /**
+         * Return an HTML representation of barcode.
+         *
+         * @param $code (string) code to print
+         * @param $type (string) type of barcode: <ul><li>C39 : CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.</li><li>C39+ : CODE 39 with checksum</li><li>C39E : CODE 39 EXTENDED</li><li>C39E+ : CODE 39 EXTENDED + CHECKSUM</li><li>C93 : CODE 93 - USS-93</li><li>S25 : Standard 2 of 5</li><li>S25+ : Standard 2 of 5 + CHECKSUM</li><li>I25 : Interleaved 2 of 5</li><li>I25+ : Interleaved 2 of 5 + CHECKSUM</li><li>C128 : CODE 128</li><li>C128A : CODE 128 A</li><li>C128B : CODE 128 B</li><li>C128C : CODE 128 C</li><li>EAN2 : 2-Digits UPC-Based Extention</li><li>EAN5 : 5-Digits UPC-Based Extention</li><li>EAN8 : EAN 8</li><li>EAN13 : EAN 13</li><li>UPCA : UPC-A</li><li>UPCE : UPC-E</li><li>MSI : MSI (Variation of Plessey code)</li><li>MSI+ : MSI + CHECKSUM (modulo 11)</li><li>POSTNET : POSTNET</li><li>PLANET : PLANET</li><li>RMS4CC : RMS4CC (Royal Mail 4-state Customer Code) - CBC (Customer Bar Code)</li><li>KIX : KIX (Klant index - Customer index)</li><li>IMB: Intelligent Mail Barcode - Onecode - USPS-B-3200</li><li>CODABAR : CODABAR</li><li>CODE11 : CODE 11</li><li>PHARMA : PHARMACODE</li><li>PHARMA2T : PHARMACODE TWO-TRACKS</li></ul>
+         * @param $w (int) Width of a single bar element in pixels.
+         * @param $h (int) Height of a single bar element in pixels.
+         * @param $color (string) Foreground color for bar elements (background is transparent).
+         * @return string HTML code.
+         * @public 
+         * @static 
+         */
+        public static function getBarcodeHTML($code, $type, $w = 2, $h = 30, $color = 'black'){
+            return \Dinesh\Barcode\DNS1D::getBarcodeHTML($code, $type, $w, $h, $color);
+        }
+        
+        /**
+         * Return a PNG image representation of barcode (requires GD or Imagick library).
+         *
+         * @param $code (string) code to print
+         * @param $type (string) type of barcode: <ul><li>C39 : CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.</li><li>C39+ : CODE 39 with checksum</li><li>C39E : CODE 39 EXTENDED</li><li>C39E+ : CODE 39 EXTENDED + CHECKSUM</li><li>C93 : CODE 93 - USS-93</li><li>S25 : Standard 2 of 5</li><li>S25+ : Standard 2 of 5 + CHECKSUM</li><li>I25 : Interleaved 2 of 5</li><li>I25+ : Interleaved 2 of 5 + CHECKSUM</li><li>C128 : CODE 128</li><li>C128A : CODE 128 A</li><li>C128B : CODE 128 B</li><li>C128C : CODE 128 C</li><li>EAN2 : 2-Digits UPC-Based Extention</li><li>EAN5 : 5-Digits UPC-Based Extention</li><li>EAN8 : EAN 8</li><li>EAN13 : EAN 13</li><li>UPCA : UPC-A</li><li>UPCE : UPC-E</li><li>MSI : MSI (Variation of Plessey code)</li><li>MSI+ : MSI + CHECKSUM (modulo 11)</li><li>POSTNET : POSTNET</li><li>PLANET : PLANET</li><li>RMS4CC : RMS4CC (Royal Mail 4-state Customer Code) - CBC (Customer Bar Code)</li><li>KIX : KIX (Klant index - Customer index)</li><li>IMB: Intelligent Mail Barcode - Onecode - USPS-B-3200</li><li>CODABAR : CODABAR</li><li>CODE11 : CODE 11</li><li>PHARMA : PHARMACODE</li><li>PHARMA2T : PHARMACODE TWO-TRACKS</li></ul>
+         * @param $w (int) Width of a single bar element in pixels.
+         * @param $h (int) Height of a single bar element in pixels.
+         * @param $color (array) RGB (0-255) foreground color for bar elements (background is transparent).
+         * @return \Dinesh\Barcode\image or false in case of error.
+         * @public 
+         * @static 
+         */
+        public static function getBarcodePNG($code, $type, $w = 2, $h = 30, $color = array()){
+            return \Dinesh\Barcode\DNS1D::getBarcodePNG($code, $type, $w, $h, $color);
+        }
+        
+        /**
+         * Return a .png file path which create in server
+         *
+         * @param $code (string) code to print
+         * @param $type (string) type of barcode: <ul><li>C39 : CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.</li><li>C39+ : CODE 39 with checksum</li><li>C39E : CODE 39 EXTENDED</li><li>C39E+ : CODE 39 EXTENDED + CHECKSUM</li><li>C93 : CODE 93 - USS-93</li><li>S25 : Standard 2 of 5</li><li>S25+ : Standard 2 of 5 + CHECKSUM</li><li>I25 : Interleaved 2 of 5</li><li>I25+ : Interleaved 2 of 5 + CHECKSUM</li><li>C128 : CODE 128</li><li>C128A : CODE 128 A</li><li>C128B : CODE 128 B</li><li>C128C : CODE 128 C</li><li>EAN2 : 2-Digits UPC-Based Extention</li><li>EAN5 : 5-Digits UPC-Based Extention</li><li>EAN8 : EAN 8</li><li>EAN13 : EAN 13</li><li>UPCA : UPC-A</li><li>UPCE : UPC-E</li><li>MSI : MSI (Variation of Plessey code)</li><li>MSI+ : MSI + CHECKSUM (modulo 11)</li><li>POSTNET : POSTNET</li><li>PLANET : PLANET</li><li>RMS4CC : RMS4CC (Royal Mail 4-state Customer Code) - CBC (Customer Bar Code)</li><li>KIX : KIX (Klant index - Customer index)</li><li>IMB: Intelligent Mail Barcode - Onecode - USPS-B-3200</li><li>CODABAR : CODABAR</li><li>CODE11 : CODE 11</li><li>PHARMA : PHARMACODE</li><li>PHARMA2T : PHARMACODE TWO-TRACKS</li></ul>
+         * @param $w (int) Width of a single bar element in pixels.
+         * @param $h (int) Height of a single bar element in pixels.
+         * @param $color (array) RGB (0-255) foreground color for bar elements (background is transparent).
+         * @return \Dinesh\Barcode\path or false in case of error.
+         * @public 
+         * @static 
+         */
+        public static function getBarcodePNGPath($code, $type, $w = 2, $h = 30, $color = array()){
+            return \Dinesh\Barcode\DNS1D::getBarcodePNGPath($code, $type, $w, $h, $color);
+        }
+        
+        /**
+         * Return a .png file path which create in server
+         *
+         * @param $code (string) code to print
+         * @param $type (string) type of barcode: <ul><li>C39 : CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.</li><li>C39+ : CODE 39 with checksum</li><li>C39E : CODE 39 EXTENDED</li><li>C39E+ : CODE 39 EXTENDED + CHECKSUM</li><li>C93 : CODE 93 - USS-93</li><li>S25 : Standard 2 of 5</li><li>S25+ : Standard 2 of 5 + CHECKSUM</li><li>I25 : Interleaved 2 of 5</li><li>I25+ : Interleaved 2 of 5 + CHECKSUM</li><li>C128 : CODE 128</li><li>C128A : CODE 128 A</li><li>C128B : CODE 128 B</li><li>C128C : CODE 128 C</li><li>EAN2 : 2-Digits UPC-Based Extention</li><li>EAN5 : 5-Digits UPC-Based Extention</li><li>EAN8 : EAN 8</li><li>EAN13 : EAN 13</li><li>UPCA : UPC-A</li><li>UPCE : UPC-E</li><li>MSI : MSI (Variation of Plessey code)</li><li>MSI+ : MSI + CHECKSUM (modulo 11)</li><li>POSTNET : POSTNET</li><li>PLANET : PLANET</li><li>RMS4CC : RMS4CC (Royal Mail 4-state Customer Code) - CBC (Customer Bar Code)</li><li>KIX : KIX (Klant index - Customer index)</li><li>IMB: Intelligent Mail Barcode - Onecode - USPS-B-3200</li><li>CODABAR : CODABAR</li><li>CODE11 : CODE 11</li><li>PHARMA : PHARMACODE</li><li>PHARMA2T : PHARMACODE TWO-TRACKS</li></ul>
+         * @param $w (int) Width of a single bar element in pixels.
+         * @param $h (int) Height of a single bar element in pixels.
+         * @param $color (array) RGB (0-255) foreground color for bar elements (background is transparent).
+         * @return \Dinesh\Barcode\url or false in case of error.
+         * @public 
+         * @static 
+         */
+        public static function getBarcodePNGUri($code, $type, $w = 2, $h = 30, $color = array()){
+            return \Dinesh\Barcode\DNS1D::getBarcodePNGUri($code, $type, $w, $h, $color);
         }
         
         /**
@@ -12856,8 +12908,133 @@ namespace {
          *
          * @static 
          */
-        public static function setOption($name, $value){
-            return \Barryvdh\Snappy\ImageWrapper::setOption($name, $value);
+        public static function setStorPath($path){
+            return \Dinesh\Barcode\DNS1D::setStorPath($path);
+        }
+        
+    }
+
+
+    class DNS2D extends \Dinesh\Barcode\Facades\DNS2DFacade{
+        
+        /**
+         * Return a SVG string representation of barcode.
+         * 
+         * <li>$arrcode['code'] code to be printed on text label</li>
+         * <li>$arrcode['num_rows'] required number of rows</li>
+         * <li>$arrcode['num_cols'] required number of columns</li>
+         * <li>$arrcode['bcode'][$r][$c] value of the cell is $r row and $c column (0 = transparent, 1 = black)</li></ul>
+         *
+         * @param $code (string) code to print
+         * @param $type (string) type of barcode: <ul><li>DATAMATRIX : Datamatrix (ISO/IEC 16022)</li><li>PDF417 : PDF417 (ISO/IEC 15438:2006)</li><li>PDF417,a,e,t,s,f,o0,o1,o2,o3,o4,o5,o6 : PDF417 with parameters: a = aspect ratio (width/height); e = error correction level (0-8); t = total number of macro segments; s = macro segment index (0-99998); f = file ID; o0 = File Name (text); o1 = Segment Count (numeric); o2 = Time Stamp (numeric); o3 = Sender (text); o4 = Addressee (text); o5 = File Size (numeric); o6 = Checksum (numeric). NOTES: Parameters t, s and f are required for a Macro Control Block, all other parametrs are optional. To use a comma character ',' on text options, replace it with the character 255: "\xff".</li><li>QRCODE : QRcode Low error correction</li><li>QRCODE,L : QRcode Low error correction</li><li>QRCODE,M : QRcode Medium error correction</li><li>QRCODE,Q : QRcode Better error correction</li><li>QRCODE,H : QR-CODE Best error correction</li><li>RAW: raw mode - comma-separad list of array rows</li><li>RAW2: raw mode - array rows are surrounded by square parenthesis.</li><li>TEST : Test matrix</li></ul>
+         * @param $w (int) Width of a single rectangle element in user units.
+         * @param $h (int) Height of a single rectangle element in user units.
+         * @param $color (string) Foreground color (in SVG format) for bar elements (background is transparent).
+         * @return string SVG code.
+         * @public 
+         * @static 
+         */
+        public static function getBarcodeSVG($code, $type, $w = 3, $h = 3, $color = 'black'){
+            return \Dinesh\Barcode\DNS2D::getBarcodeSVG($code, $type, $w, $h, $color);
+        }
+        
+        /**
+         * Return an HTML representation of barcode.
+         * 
+         * <li>$arrcode['code'] code to be printed on text label</li>
+         * <li>$arrcode['num_rows'] required number of rows</li>
+         * <li>$arrcode['num_cols'] required number of columns</li>
+         * <li>$arrcode['bcode'][$r][$c] value of the cell is $r row and $c column (0 = transparent, 1 = black)</li></ul>
+         *
+         * @param $code (string) code to print
+         * @param $type (string) type of barcode: <ul><li>DATAMATRIX : Datamatrix (ISO/IEC 16022)</li><li>PDF417 : PDF417 (ISO/IEC 15438:2006)</li><li>PDF417,a,e,t,s,f,o0,o1,o2,o3,o4,o5,o6 : PDF417 with parameters: a = aspect ratio (width/height); e = error correction level (0-8); t = total number of macro segments; s = macro segment index (0-99998); f = file ID; o0 = File Name (text); o1 = Segment Count (numeric); o2 = Time Stamp (numeric); o3 = Sender (text); o4 = Addressee (text); o5 = File Size (numeric); o6 = Checksum (numeric). NOTES: Parameters t, s and f are required for a Macro Control Block, all other parametrs are optional. To use a comma character ',' on text options, replace it with the character 255: "\xff".</li><li>QRCODE : QRcode Low error correction</li><li>QRCODE,L : QRcode Low error correction</li><li>QRCODE,M : QRcode Medium error correction</li><li>QRCODE,Q : QRcode Better error correction</li><li>QRCODE,H : QR-CODE Best error correction</li><li>RAW: raw mode - comma-separad list of array rows</li><li>RAW2: raw mode - array rows are surrounded by square parenthesis.</li><li>TEST : Test matrix</li></ul>
+         * @param $w (int) Width of a single rectangle element in pixels.
+         * @param $h (int) Height of a single rectangle element in pixels.
+         * @param $color (string) Foreground color for bar elements (background is transparent).
+         * @return string HTML code.
+         * @public 
+         * @static 
+         */
+        public static function getBarcodeHTML($code, $type, $w = 10, $h = 10, $color = 'black'){
+            return \Dinesh\Barcode\DNS2D::getBarcodeHTML($code, $type, $w, $h, $color);
+        }
+        
+        /**
+         * Return an HTML representation of barcode implemented in html table. Useful for printing Barcodes in email letters (Email client does not support css)
+         * <li>$arrcode['code'] code to be printed on text label</li>
+         * <li>$arrcode['num_rows'] required number of rows</li>
+         * <li>$arrcode['num_cols'] required number of columns</li>
+         * <li>$arrcode['bcode'][$r][$c] value of the cell is $r row and $c column (0 = transparent, 1 = black)</li></ul>
+         *
+         * @param $code (string) code to print
+         * @param $type (string) type of barcode: <ul><li>DATAMATRIX : Datamatrix (ISO/IEC 16022)</li><li>PDF417 : PDF417 (ISO/IEC 15438:2006)</li><li>PDF417,a,e,t,s,f,o0,o1,o2,o3,o4,o5,o6 : PDF417 with parameters: a = aspect ratio (width/height); e = error correction level (0-8); t = total number of macro segments; s = macro segment index (0-99998); f = file ID; o0 = File Name (text); o1 = Segment Count (numeric); o2 = Time Stamp (numeric); o3 = Sender (text); o4 = Addressee (text); o5 = File Size (numeric); o6 = Checksum (numeric). NOTES: Parameters t, s and f are required for a Macro Control Block, all other parametrs are optional. To use a comma character ',' on text options, replace it with the character 255: "\xff".</li><li>QRCODE : QRcode Low error correction</li><li>QRCODE,L : QRcode Low error correction</li><li>QRCODE,M : QRcode Medium error correction</li><li>QRCODE,Q : QRcode Better error correction</li><li>QRCODE,H : QR-CODE Best error correction</li><li>RAW: raw mode - comma-separad list of array rows</li><li>RAW2: raw mode - array rows are surrounded by square parenthesis.</li><li>TEST : Test matrix</li></ul>
+         * @param $cellWidth (int) Width of a single rectangle element in pixels or without units.
+         * @param $cellHeight (int) Height of a single rectangle element in pixels or without units.
+         * @param $color (string) Foreground color for bar elements.
+         * @param $bgColor (string) Background color for bar elements.
+         * @return string HTML code.
+         * @public 
+         * @static 
+         */
+        public static function getBarcodeTabledHTML($code, $type, $cellWidth = 10, $cellHeight = 10, $color = '#000', $bgColor = '#fff'){
+            return \Dinesh\Barcode\DNS2D::getBarcodeTabledHTML($code, $type, $cellWidth, $cellHeight, $color, $bgColor);
+        }
+        
+        /**
+         * Return a PNG image representation of barcode (requires GD or Imagick library).
+         * 
+         * <li>$arrcode['code'] code to be printed on text label</li>
+         * <li>$arrcode['num_rows'] required number of rows</li>
+         * <li>$arrcode['num_cols'] required number of columns</li>
+         * <li>$arrcode['bcode'][$r][$c] value of the cell is $r row and $c column (0 = transparent, 1 = black)</li></ul>
+         *
+         * @param $code (string) code to print
+         * @param $type (string) type of barcode: <ul><li>DATAMATRIX : Datamatrix (ISO/IEC 16022)</li><li>PDF417 : PDF417 (ISO/IEC 15438:2006)</li><li>PDF417,a,e,t,s,f,o0,o1,o2,o3,o4,o5,o6 : PDF417 with parameters: a = aspect ratio (width/height); e = error correction level (0-8); t = total number of macro segments; s = macro segment index (0-99998); f = file ID; o0 = File Name (text); o1 = Segment Count (numeric); o2 = Time Stamp (numeric); o3 = Sender (text); o4 = Addressee (text); o5 = File Size (numeric); o6 = Checksum (numeric). NOTES: Parameters t, s and f are required for a Macro Control Block, all other parametrs are optional. To use a comma character ',' on text options, replace it with the character 255: "\xff".</li><li>QRCODE : QRcode Low error correction</li><li>QRCODE,L : QRcode Low error correction</li><li>QRCODE,M : QRcode Medium error correction</li><li>QRCODE,Q : QRcode Better error correction</li><li>QRCODE,H : QR-CODE Best error correction</li><li>RAW: raw mode - comma-separad list of array rows</li><li>RAW2: raw mode - array rows are surrounded by square parenthesis.</li><li>TEST : Test matrix</li></ul>
+         * @param $w (int) Width of a single rectangle element in pixels.
+         * @param $h (int) Height of a single rectangle element in pixels.
+         * @param $color (array) RGB (0-255) foreground color for bar elements (background is transparent).
+         * @return \Dinesh\Barcode\path or false in case of error.
+         * @public 
+         * @static 
+         */
+        public static function getBarcodePNG($code, $type, $w = 3, $h = 3, $color = array()){
+            return \Dinesh\Barcode\DNS2D::getBarcodePNG($code, $type, $w, $h, $color);
+        }
+        
+        /**
+         * Return a .png file path which create in server
+         *
+         * @param $code (string) code to print
+         * @param $type (string) type of barcode: <ul><li>C39 : CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9.</li><li>C39+ : CODE 39 with checksum</li><li>C39E : CODE 39 EXTENDED</li><li>C39E+ : CODE 39 EXTENDED + CHECKSUM</li><li>C93 : CODE 93 - USS-93</li><li>S25 : Standard 2 of 5</li><li>S25+ : Standard 2 of 5 + CHECKSUM</li><li>I25 : Interleaved 2 of 5</li><li>I25+ : Interleaved 2 of 5 + CHECKSUM</li><li>C128 : CODE 128</li><li>C128A : CODE 128 A</li><li>C128B : CODE 128 B</li><li>C128C : CODE 128 C</li><li>EAN2 : 2-Digits UPC-Based Extention</li><li>EAN5 : 5-Digits UPC-Based Extention</li><li>EAN8 : EAN 8</li><li>EAN13 : EAN 13</li><li>UPCA : UPC-A</li><li>UPCE : UPC-E</li><li>MSI : MSI (Variation of Plessey code)</li><li>MSI+ : MSI + CHECKSUM (modulo 11)</li><li>POSTNET : POSTNET</li><li>PLANET : PLANET</li><li>RMS4CC : RMS4CC (Royal Mail 4-state Customer Code) - CBC (Customer Bar Code)</li><li>KIX : KIX (Klant index - Customer index)</li><li>IMB: Intelligent Mail Barcode - Onecode - USPS-B-3200</li><li>CODABAR : CODABAR</li><li>CODE11 : CODE 11</li><li>PHARMA : PHARMACODE</li><li>PHARMA2T : PHARMACODE TWO-TRACKS</li></ul>
+         * @param $w (int) Width of a single bar element in pixels.
+         * @param $h (int) Height of a single bar element in pixels.
+         * @param $color (array) RGB (0-255) foreground color for bar elements (background is transparent).
+         * @return \Dinesh\Barcode\url or false in case of error.
+         * @public 
+         * @static 
+         */
+        public static function getBarcodePNGUri($code, $type, $w = 3, $h = 3, $color = array()){
+            return \Dinesh\Barcode\DNS2D::getBarcodePNGUri($code, $type, $w, $h, $color);
+        }
+        
+        /**
+         * Return a .png file path which create in server
+         * <li>$arrcode['code'] code to be printed on text label</li>
+         * <li>$arrcode['num_rows'] required number of rows</li>
+         * <li>$arrcode['num_cols'] required number of columns</li>
+         * <li>$arrcode['bcode'][$r][$c] value of the cell is $r row and $c column (0 = transparent, 1 = black)</li></ul>
+         *
+         * @param $code (string) code to print
+         * @param $type (string) type of barcode: <ul><li>DATAMATRIX : Datamatrix (ISO/IEC 16022)</li><li>PDF417 : PDF417 (ISO/IEC 15438:2006)</li><li>PDF417,a,e,t,s,f,o0,o1,o2,o3,o4,o5,o6 : PDF417 with parameters: a = aspect ratio (width/height); e = error correction level (0-8); t = total number of macro segments; s = macro segment index (0-99998); f = file ID; o0 = File Name (text); o1 = Segment Count (numeric); o2 = Time Stamp (numeric); o3 = Sender (text); o4 = Addressee (text); o5 = File Size (numeric); o6 = Checksum (numeric). NOTES: Parameters t, s and f are required for a Macro Control Block, all other parametrs are optional. To use a comma character ',' on text options, replace it with the character 255: "\xff".</li><li>QRCODE : QRcode Low error correction</li><li>QRCODE,L : QRcode Low error correction</li><li>QRCODE,M : QRcode Medium error correction</li><li>QRCODE,Q : QRcode Better error correction</li><li>QRCODE,H : QR-CODE Best error correction</li><li>RAW: raw mode - comma-separad list of array rows</li><li>RAW2: raw mode - array rows are surrounded by square parenthesis.</li><li>TEST : Test matrix</li></ul>
+         * @param $w (int) Width of a single rectangle element in pixels.
+         * @param $h (int) Height of a single rectangle element in pixels.
+         * @param $color (array) RGB (0-255) foreground color for bar elements (background is transparent).
+         * @return \Dinesh\Barcode\path of image whice created
+         * @public 
+         * @static 
+         */
+        public static function getBarcodePNGPath($code, $type, $w = 3, $h = 3, $color = array()){
+            return \Dinesh\Barcode\DNS2D::getBarcodePNGPath($code, $type, $w, $h, $color);
         }
         
         /**
@@ -12865,83 +13042,118 @@ namespace {
          *
          * @static 
          */
-        public static function setOptions($options){
-            return \Barryvdh\Snappy\ImageWrapper::setOptions($options);
+        public static function setStorPath($path){
+            return \Dinesh\Barcode\DNS2D::setStorPath($path);
         }
         
+    }
+
+
+    class QrCode extends \SimpleSoftwareIO\QrCode\Facades\QrCode{
+        
         /**
-         * Load a HTML string
+         * Generates a QrCode
          *
-         * @param string $string
-         * @return static 
+         * @param string $text The text to be converted into a QrCode
+         * @param null|string $filename The filename and path to save the QrCode file
+         * @return string|void Returns a QrCode string depending on the format, or saves to a file.
          * @static 
          */
-        public static function loadHTML($string){
-            return \Barryvdh\Snappy\ImageWrapper::loadHTML($string);
+        public static function generate($text, $filename = null){
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::generate($text, $filename);
         }
         
         /**
-         * Load a HTML file
+         * Merges an image with the center of the QrCode
          *
-         * @param string $file
-         * @return static 
+         * @param $image string The filepath to an image
+         * @return $this 
          * @static 
          */
-        public static function loadFile($file){
-            return \Barryvdh\Snappy\ImageWrapper::loadFile($file);
+        public static function merge($image, $percentage = '0.2'){
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::merge($image, $percentage);
         }
         
         /**
-         * 
+         * Switches the format of the outputted QrCode or defaults to SVG
          *
-         * @static 
-         */
-        public static function loadView($view, $data = array(), $mergeData = array()){
-            return \Barryvdh\Snappy\ImageWrapper::loadView($view, $data, $mergeData);
-        }
-        
-        /**
-         * Output the PDF as a string.
-         *
-         * @return string The rendered PDF as string
+         * @param string $format The desired format.
+         * @return $this 
          * @throws \InvalidArgumentException
          * @static 
          */
-        public static function output(){
-            return \Barryvdh\Snappy\ImageWrapper::output();
+        public static function format($format){
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::format($format);
         }
         
         /**
-         * Save the image to a file
+         * Changes the size of the QrCode
          *
-         * @param $filename
-         * @return static 
+         * @param int $pixels The size of the QrCode in pixels
+         * @return $this 
          * @static 
          */
-        public static function save($filename){
-            return \Barryvdh\Snappy\ImageWrapper::save($filename);
+        public static function size($pixels){
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::size($pixels);
         }
         
         /**
-         * Make the image downloadable by the user
+         * Changes the foreground color of a QrCode
          *
-         * @param string $filename
-         * @return \Symfony\Component\HttpFoundation\Response 
+         * @param int $red
+         * @param int $green
+         * @param int $blue
+         * @return $this 
          * @static 
          */
-        public static function download($filename = 'image.jpg'){
-            return \Barryvdh\Snappy\ImageWrapper::download($filename);
+        public static function color($red, $green, $blue){
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::color($red, $green, $blue);
         }
         
         /**
-         * Return a response with the image to show in the browser
+         * Changes the background color of a QrCode
          *
-         * @param string $filename
-         * @return \Symfony\Component\HttpFoundation\Response 
+         * @param int $red
+         * @param int $green
+         * @param int $blue
+         * @return $this 
          * @static 
          */
-        public static function stream($filename = 'image.jpg'){
-            return \Barryvdh\Snappy\ImageWrapper::stream($filename);
+        public static function backgroundColor($red, $green, $blue){
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::backgroundColor($red, $green, $blue);
+        }
+        
+        /**
+         * Changes the error correction level of a QrCode
+         *
+         * @param string $level Desired error correction level.  L = 7% M = 15% Q = 25% H = 30%
+         * @return $this 
+         * @static 
+         */
+        public static function errorCorrection($level){
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::errorCorrection($level);
+        }
+        
+        /**
+         * Creates a margin around the QrCode
+         *
+         * @param int $margin The desired margin in pixels around the QrCode
+         * @return $this 
+         * @static 
+         */
+        public static function margin($margin){
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::margin($margin);
+        }
+        
+        /**
+         * Sets the Encoding mode.
+         *
+         * @param string $encoding
+         * @return $this 
+         * @static 
+         */
+        public static function encoding($encoding){
+            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::encoding($encoding);
         }
         
     }

@@ -16,6 +16,7 @@ class AdminController extends Controller {
      * @return Response
      */
     public function index() {
+        //dd($this->generateSn());
         return view('admin.index');
     }
 
@@ -26,7 +27,7 @@ class AdminController extends Controller {
      */
     public function create() {
         $designation = \App\Designation::all();
-        return view('admin.add-user',array('designations' => $designation));
+        return view('admin.add-user', array('designations' => $designation));
     }
 
     /**
@@ -92,8 +93,10 @@ class AdminController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function show($id) {
-        //
+    public function show() {
+        $users = User::all();
+        //dd($users);
+        return view('admin.view-users', array('user' => $users));
     }
 
     /**
@@ -103,7 +106,9 @@ class AdminController extends Controller {
      * @return Response
      */
     public function edit($id) {
-        //
+        $user = User::find(\Hashids::decode($id));
+        $designation = \App\Designation::all();
+        return view('admin.edit-user', array('users' => $user, 'designations' => $designation));
     }
 
     /**
@@ -112,8 +117,22 @@ class AdminController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function update($id) {
-        //
+    public function update() {
+        //dd(\Request::all());
+        $update = User::where('job_id', \Request::get('job_id'))
+                ->update(array(
+            'first_name' => \Request::get('first_name'),
+            'last_name' => \Request::get('last_name'),
+            'phone_no' => \Request::get('phone_no'),
+            'designation_id' => \Request::get('designation_id'),
+        ));
+        if ($update) {
+            return redirect('/admin/view-users')
+                            ->with('global', '<div class="alert alert-success">User details successfully updated</div>');
+        } else {
+            return redirect()
+                            ->with('global', '<div class="alert alert-warning">Whoooops, your updates could not be saved. Please try again!</div>');
+        }
     }
 
     /**
@@ -122,8 +141,51 @@ class AdminController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id) {
-        //
+    public function destroy() {
+        $select = User::find(\Request::get('job_id'));
+        if ($select->delete()) {
+            return redirect('/admin/view-users')
+                            ->with('global', '<div class="alert alert-success">User successfully deleted</div>');
+        } else {
+            return redirect('/admin/view-users')
+                            ->with('global', '<div class="alert alert-warning">Whoooops, user could not be deleted. Please try again!</div>');
+        }
+    }
+
+    public function viewPrivileges($id) {
+        $privs = \App\Role::all();
+        $user = User::with('roles')->find(\Hashids::decode($id));
+        //dd($user[0]->roles);
+        $user_privs = \App\User_role::where('user_id', \Hashids::decode($id));
+        return view('admin.view-privileges', array('priv' => $privs, 'user' => $user));
+    }
+
+    public function generateSn() {
+        $check = \App\Serial_number::all()->count();
+        if($check < 1){
+            return 'KP-PSV-A-00001';
+        }
+        $pick_latest = \DB::select('SELECT * FROM serial_numbers ORDER BY id DESC LIMIT 1');
+        $sn_array = explode("-", $pick_latest[0]->sn);
+        if($sn_array[2] == 'Z' && intval($sn_array[3]) > 90000){
+            $remainder = 99999-intval($sn_array[3]);
+            $request->session()->flash('status', '<div class="alert alert-warning">There are ONLY '.$remainder.' license serial numbers remaining. Please contact the product owner to add new parameters.</div>');
+            if (intval($sn_array[3])>99998){
+                return redirect('/')
+                            ->with('global', '<div class="alert alert-danger">You exhausted the existing license serial numbers. Please contact the product owner!</div>');
+            }
+        }
+        if (intval($sn_array[3]) < 1) {
+            $digit = intval($sn_array[3]) + 1;
+            $new_num = str_pad($digit, 5, '0', STR_PAD_LEFT);
+            $new_sn = 'KP-PSV-' . $sn_array[2] . '-' . $new_num;
+            return $new_sn;
+        } else {
+            $new_alp = chr(ord($sn_array[2])+1);
+            $new_num = str_pad(1, 5, '0', STR_PAD_LEFT);
+            $new_sn = 'KP-PSV-' . $new_alp . '-' . $new_num;
+            return $new_sn;
+        }
     }
 
 }
