@@ -326,7 +326,7 @@ class InvoiceController extends Controller {
     }
 
     public function getInvoice($id) {
-        $invoice = \App\Invoice::with('group', 'vehicle')->find($id);
+        $invoice = \App\Invoice::with('group', 'vehicle','status_finance','status_manager')->find($id);
 //dd($invoice);
         return $invoice;
     }
@@ -449,7 +449,7 @@ class InvoiceController extends Controller {
                             return view('invoice.approve-invoice-manager', array('invoices' => $invoice, 'status' => $manager_approval));
                         }
                     } else {
-                        return view('invoice.view-invoices')
+                        return redirect('/invoice/view-invoices')
                                         ->with('global', '<div class="alert alert-warning">Invoice has already been approved by manager</div>');
                     }
                 } else {

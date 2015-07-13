@@ -19,7 +19,7 @@ Group
 
     <!-- Main content -->
     <section class="content">
-@include('layout.modal.view-invoice')
+        @include('layout.modal.view-invoice')
         @if(Session::has('global'))
         <center><p>{!!Session::get('global')!!}</p></center>
         @endif
@@ -32,11 +32,13 @@ Group
                 <tbody>
                     @foreach ($invoice as $invoices)
                     <tr>
-                        <td><?php if ($invoices->invoice_type == 'Group Invoice') {?><a href="#" class="viewGroupInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php }else{ ?><a href="#" class="viewIndividualInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } ?></td><td><?php if ($invoices->invoice_type == 'Group Invoice') {
-    echo $invoices->group['reg_id'];
-} else {
-    echo $invoices->vehicle['reg_no'];
-    } ?></td><td>{{ $invoices->invoice_type }}</td><td>{{ $invoices->no_vehicle }}</td><td>{{ $invoices->total_fee }}</td><td>{{ $invoices->discount }}</td><td>{{ $invoices->total_fee-$invoices->discount }}</td><td>{{ $invoices->expiry_date }}</td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}" target="_blank">Approve</a></td><td><a href="#" class="viewIndividualInvoice" data-prop="{{$invoices->id}}" >Print</a></td><td><a href="{{URL::to('/invoice/delete-invoice/'.\Hashids::encode($invoices->id))}}"> Delete</a></td>
+                        <td><?php if ($invoices->invoice_type == 'Group Invoice') { ?><a href="#" class="viewGroupInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } else { ?><a href="#" class="viewIndividualInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } ?></td><td><?php
+                            if ($invoices->invoice_type == 'Group Invoice') {
+                                echo $invoices->group['reg_id'];
+                            } else {
+                                echo $invoices->vehicle['reg_no'];
+                            }
+                            ?></td><td>{{ $invoices->invoice_type }}</td><td>{{ $invoices->no_vehicle }}</td><td>{{ $invoices->total_fee }}</td><td>{{ $invoices->discount }}</td><td>{{ $invoices->total_fee-$invoices->discount }}</td><td>{{ $invoices->expiry_date }}</td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}" target="_blank">Approve</a></td><td><a href="#" class="viewIndividualInvoice" data-prop="{{$invoices->id}}" >Print</a></td><td><a href="{{URL::to('/invoice/delete-invoice/'.\Hashids::encode($invoices->id))}}"> Delete</a></td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -68,7 +70,7 @@ $(document).ready(function () {
             success: function (data) {
 
                 var invoiceArray = data;
-                console.log(invoiceArray);
+                console.log(invoiceArray.statusManager);
                 //Inserting into modal:
 //                    var contentString = ""
 //                    for (var i = 0; i < projectArray.length; i++) {
@@ -87,6 +89,18 @@ $(document).ready(function () {
                 $("#discountInvoice").val(invoiceArray.discount);
                 $("#noVehicleInvoice").val(invoiceArray.no_vehicle);
                 $("#expiryInvoice").val(invoiceArray.expiry_date);
+//                if (invoiceArray.status_finance === null) {
+//                    document.getElementById('#statusFinance').value = 'N/A';
+//                }
+//                else {
+//                    $("#statusFinance").val(invoiceArray.status_finance.status);
+//                }
+//                if (invoiceArray.status_manager === null) {
+//                    document.getElementById('#statusManager').value = 'N/A';
+//                }
+//                else {
+//                    $("#statusManager").val(invoiceArray.status_finance.status);
+//                }
                 //console.log(projectArray);
                 //$("#subCountyValue").val(projectArray['sub-county']);
                 //$("#viewFarmerModalContent").append(contentString);

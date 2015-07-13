@@ -203,6 +203,18 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'add-user',
         'uses' => 'AdminController@create'
     ));
+    Route::get('/admin/manage-user', array(
+        'as' => '/manage-user',
+        'uses' => 'AdminController@index'
+    ));
+    Route::get('/admin/view-users', array(
+        'as' => '/view-users',
+        'uses' => 'AdminController@index'
+    ));
+    Route::post('/post/add-user', array(
+        'as' => 'add-user',
+        'uses' => 'AdminController@store'
+    ));
     Route::post('/post/add-user', array(
         'as' => 'add-user',
         'uses' => 'AdminController@store'
