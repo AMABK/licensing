@@ -138,9 +138,9 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
         Dinesh\Barcode\BarcodeServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        Barryvdh\Snappy\ServiceProvider::class,
        
 
         /*
@@ -201,11 +201,11 @@ return [
         'Form'      => Collective\Html\FormFacade::class,
         'Html'      => Collective\Html\HtmlFacade::class,
         'Hashids'   => Vinkla\Hashids\Facades\Hashids::class,
-        'PDF'       => Barryvdh\DomPDF\Facade::class,
-        'Image'     => Barryvdh\Snappy\Facades\SnappyImage::class,
         'DNS1D'     => Dinesh\Barcode\Facades\DNS1DFacade::class,
         'DNS2D'     => Dinesh\Barcode\Facades\DNS2DFacade::class,
         'QrCode'    => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'PDF'       => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'Image'     => Barryvdh\Snappy\Facades\SnappyImage::class,
 
     ],
 

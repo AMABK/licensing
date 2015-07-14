@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.7 (LTS) on 2015-07-13.
+ * Generated for Laravel 5.1.7 (LTS) on 2015-07-14.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -12692,135 +12692,6 @@ namespace {
     }
 
 
-    class PDF extends \Barryvdh\DomPDF\Facade{
-        
-        /**
-         * Get the DomPDF instance
-         *
-         * @return \DOMPDF 
-         * @static 
-         */
-        public static function getDomPDF(){
-            return \Barryvdh\DomPDF\PDF::getDomPDF();
-        }
-        
-        /**
-         * Set the paper size (default A4)
-         *
-         * @param string $paper
-         * @param string $orientation
-         * @return $this 
-         * @static 
-         */
-        public static function setPaper($paper, $orientation = null){
-            return \Barryvdh\DomPDF\PDF::setPaper($paper, $orientation);
-        }
-        
-        /**
-         * Set the orientation (default portrait)
-         *
-         * @param string $orientation
-         * @return static 
-         * @static 
-         */
-        public static function setOrientation($orientation){
-            return \Barryvdh\DomPDF\PDF::setOrientation($orientation);
-        }
-        
-        /**
-         * Show or hide warnings
-         *
-         * @param bool $warnings
-         * @return $this 
-         * @static 
-         */
-        public static function setWarnings($warnings){
-            return \Barryvdh\DomPDF\PDF::setWarnings($warnings);
-        }
-        
-        /**
-         * Load a HTML string
-         *
-         * @param string $string
-         * @param string $encoding Not used yet
-         * @return static 
-         * @static 
-         */
-        public static function loadHTML($string, $encoding = null){
-            return \Barryvdh\DomPDF\PDF::loadHTML($string, $encoding);
-        }
-        
-        /**
-         * Load a HTML file
-         *
-         * @param string $file
-         * @return static 
-         * @static 
-         */
-        public static function loadFile($file){
-            return \Barryvdh\DomPDF\PDF::loadFile($file);
-        }
-        
-        /**
-         * Load a View and convert to HTML
-         *
-         * @param string $view
-         * @param array $data
-         * @param array $mergeData
-         * @param string $encoding Not used yet
-         * @return static 
-         * @static 
-         */
-        public static function loadView($view, $data = array(), $mergeData = array(), $encoding = null){
-            return \Barryvdh\DomPDF\PDF::loadView($view, $data, $mergeData, $encoding);
-        }
-        
-        /**
-         * Output the PDF as a string.
-         *
-         * @return string The rendered PDF as string
-         * @static 
-         */
-        public static function output(){
-            return \Barryvdh\DomPDF\PDF::output();
-        }
-        
-        /**
-         * Save the PDF to a file
-         *
-         * @param $filename
-         * @return static 
-         * @static 
-         */
-        public static function save($filename){
-            return \Barryvdh\DomPDF\PDF::save($filename);
-        }
-        
-        /**
-         * Make the PDF downloadable by the user
-         *
-         * @param string $filename
-         * @return \Illuminate\Http\Response 
-         * @static 
-         */
-        public static function download($filename = 'document.pdf'){
-            return \Barryvdh\DomPDF\PDF::download($filename);
-        }
-        
-        /**
-         * Return a response with the PDF to show in the browser
-         *
-         * @param string $filename
-         * @return \Illuminate\Http\Response 
-         * @static 
-         */
-        public static function stream($filename = 'document.pdf'){
-            return \Barryvdh\DomPDF\PDF::stream($filename);
-        }
-        
-    }
-
-
     class DNS1D extends \Dinesh\Barcode\Facades\DNS1DFacade{
         
         /**
@@ -13154,6 +13025,261 @@ namespace {
          */
         public static function encoding($encoding){
             return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::encoding($encoding);
+        }
+        
+    }
+
+
+    class PDF extends \Barryvdh\Snappy\Facades\SnappyPdf{
+        
+        /**
+         * Get the Snappy instance.
+         *
+         * @return \Knp\Snappy\Pdf 
+         * @static 
+         */
+        public static function snappy(){
+            return \Barryvdh\Snappy\PdfWrapper::snappy();
+        }
+        
+        /**
+         * Set the paper size (default A4)
+         *
+         * @param string $paper
+         * @param string $orientation
+         * @return $this 
+         * @static 
+         */
+        public static function setPaper($paper, $orientation = null){
+            return \Barryvdh\Snappy\PdfWrapper::setPaper($paper, $orientation);
+        }
+        
+        /**
+         * Set the orientation (default portrait)
+         *
+         * @param string $orientation
+         * @return static 
+         * @static 
+         */
+        public static function setOrientation($orientation){
+            return \Barryvdh\Snappy\PdfWrapper::setOrientation($orientation);
+        }
+        
+        /**
+         * Show or hide warnings
+         *
+         * @param bool $warnings
+         * @return $this 
+         * @deprecated 
+         * @static 
+         */
+        public static function setWarnings($warnings){
+            return \Barryvdh\Snappy\PdfWrapper::setWarnings($warnings);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setOption($name, $value){
+            return \Barryvdh\Snappy\PdfWrapper::setOption($name, $value);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setOptions($options){
+            return \Barryvdh\Snappy\PdfWrapper::setOptions($options);
+        }
+        
+        /**
+         * Load a HTML string
+         *
+         * @param string $string
+         * @return static 
+         * @static 
+         */
+        public static function loadHTML($string){
+            return \Barryvdh\Snappy\PdfWrapper::loadHTML($string);
+        }
+        
+        /**
+         * Load a HTML file
+         *
+         * @param string $file
+         * @return static 
+         * @static 
+         */
+        public static function loadFile($file){
+            return \Barryvdh\Snappy\PdfWrapper::loadFile($file);
+        }
+        
+        /**
+         * Load a View and convert to HTML
+         *
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @return static 
+         * @static 
+         */
+        public static function loadView($view, $data = array(), $mergeData = array()){
+            return \Barryvdh\Snappy\PdfWrapper::loadView($view, $data, $mergeData);
+        }
+        
+        /**
+         * Output the PDF as a string.
+         *
+         * @return string The rendered PDF as string
+         * @throws \InvalidArgumentException
+         * @static 
+         */
+        public static function output(){
+            return \Barryvdh\Snappy\PdfWrapper::output();
+        }
+        
+        /**
+         * Save the PDF to a file
+         *
+         * @param $filename
+         * @return static 
+         * @static 
+         */
+        public static function save($filename){
+            return \Barryvdh\Snappy\PdfWrapper::save($filename);
+        }
+        
+        /**
+         * Make the PDF downloadable by the user
+         *
+         * @param string $filename
+         * @return \Barryvdh\Snappy\Response 
+         * @static 
+         */
+        public static function download($filename = 'document.pdf'){
+            return \Barryvdh\Snappy\PdfWrapper::download($filename);
+        }
+        
+        /**
+         * Return a response with the PDF to show in the browser
+         *
+         * @param string $filename
+         * @return \Barryvdh\Snappy\StreamedResponse 
+         * @static 
+         */
+        public static function stream($filename = 'document.pdf'){
+            return \Barryvdh\Snappy\PdfWrapper::stream($filename);
+        }
+        
+    }
+
+
+    class Image extends \Barryvdh\Snappy\Facades\SnappyImage{
+        
+        /**
+         * Get the Snappy instance.
+         *
+         * @return \Knp\Snappy\Image 
+         * @static 
+         */
+        public static function snappy(){
+            return \Barryvdh\Snappy\ImageWrapper::snappy();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setOption($name, $value){
+            return \Barryvdh\Snappy\ImageWrapper::setOption($name, $value);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setOptions($options){
+            return \Barryvdh\Snappy\ImageWrapper::setOptions($options);
+        }
+        
+        /**
+         * Load a HTML string
+         *
+         * @param string $string
+         * @return static 
+         * @static 
+         */
+        public static function loadHTML($string){
+            return \Barryvdh\Snappy\ImageWrapper::loadHTML($string);
+        }
+        
+        /**
+         * Load a HTML file
+         *
+         * @param string $file
+         * @return static 
+         * @static 
+         */
+        public static function loadFile($file){
+            return \Barryvdh\Snappy\ImageWrapper::loadFile($file);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function loadView($view, $data = array(), $mergeData = array()){
+            return \Barryvdh\Snappy\ImageWrapper::loadView($view, $data, $mergeData);
+        }
+        
+        /**
+         * Output the PDF as a string.
+         *
+         * @return string The rendered PDF as string
+         * @throws \InvalidArgumentException
+         * @static 
+         */
+        public static function output(){
+            return \Barryvdh\Snappy\ImageWrapper::output();
+        }
+        
+        /**
+         * Save the image to a file
+         *
+         * @param $filename
+         * @return static 
+         * @static 
+         */
+        public static function save($filename){
+            return \Barryvdh\Snappy\ImageWrapper::save($filename);
+        }
+        
+        /**
+         * Make the image downloadable by the user
+         *
+         * @param string $filename
+         * @return \Symfony\Component\HttpFoundation\Response 
+         * @static 
+         */
+        public static function download($filename = 'image.jpg'){
+            return \Barryvdh\Snappy\ImageWrapper::download($filename);
+        }
+        
+        /**
+         * Return a response with the image to show in the browser
+         *
+         * @param string $filename
+         * @return \Symfony\Component\HttpFoundation\Response 
+         * @static 
+         */
+        public static function stream($filename = 'image.jpg'){
+            return \Barryvdh\Snappy\ImageWrapper::stream($filename);
         }
         
     }

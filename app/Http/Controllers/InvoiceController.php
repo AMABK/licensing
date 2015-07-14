@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Auth;
+use Knp\Snappy\Pdf;
 
 class InvoiceController extends Controller {
 
@@ -79,6 +80,22 @@ class InvoiceController extends Controller {
                             )
             );
             if ($invoice) {
+                $arr_reg_no = explode(',', \Request::get('licensed_vehicles'));
+                for ($i = 0; $i < sizeof($arr_reg_no); $i++) {
+                    $add_sn = \App\Serial_number::create(array(
+                                'invoice_id' => $invoice->id,
+                                'reg_no' => $arr_reg_no[$i],
+                                'sn' => $this->generateSn()
+                    ));
+                    if (!$add_sn) {
+                        \App\Serial_number::where('invoice_id', $invoice->id)->delete();
+                        \App\Invoice::find($invoice->id)->delete();
+                        return redirect('/invoice')
+                                        ->with('global', '<div class="alert alert-warning">Group invoice could not be created created. Please try again!</div>');
+                    }
+                }
+            }
+            if ($invoice) {
                 return redirect('/invoice')
                                 ->with('global', '<div class="alert alert-success">Group invoice successfullly created</div>');
             } else {
@@ -107,7 +124,8 @@ class InvoiceController extends Controller {
             return redirect()->back()
                             ->withErrors($validator);
         } else {
-//dd(\Request::all());
+
+
             $invoice = \App\Invoice::create(array(
                         'invoice_no' => strtoupper(\Request::get('invoice_no')),
                         'payer_id' => \Request::get('id'),
@@ -125,6 +143,19 @@ class InvoiceController extends Controller {
                             )
             );
             if ($invoice) {
+
+                $add_sn = \App\Serial_number::create(array(
+                            'invoice_id' => $invoice->id,
+                            'reg_no' => \Request::get('reg_no'),
+                            'sn' => $this->generateSn()
+                ));
+            } else {
+                \App\Serial_number::where('invoice_id', $invoice->id)->delete();
+                \App\Invoice::find($invoice->id)->delete();
+                return redirect('/invoice')
+                                ->with('global', '<div class="alert alert-warning">Invoice details could not be saved into the database</div>');
+            }
+            if ($add_sn) {
                 return redirect('/invoice')
                                 ->with('global', '<div class="alert alert-success">Vehicle invoice successfullly created</div>');
             } else {
@@ -174,14 +205,15 @@ class InvoiceController extends Controller {
     public function delete($id) {
         $select = \App\Invoice::find(\Hashids::decode($id))->first();
         $delete = $select->delete();
-        if($delete){
+        if ($delete) {
             return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-success">Invoice successfully deleted</div>');
-        }else{
+                            ->with('global', '<div class="alert alert-success">Invoice successfully deleted</div>');
+        } else {
             return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-danger">Whoooops, the invoice could not be deleted. Please try again!</div>');
-        }        
+                            ->with('global', '<div class="alert alert-danger">Whoooops, the invoice could not be deleted. Please try again!</div>');
+        }
     }
+
     public function destroy($id) {
 //
     }
@@ -326,12 +358,13 @@ class InvoiceController extends Controller {
     }
 
     public function getInvoice($id) {
-        $invoice = \App\Invoice::with('group', 'vehicle','status_finance','status_manager')->find($id);
+        $invoice = \App\Invoice::with('group', 'vehicle', 'status_finance', 'status_manager')->find($id);
 //dd($invoice);
         return $invoice;
     }
 
-    public function viewCert($id) {
+    public function viewCert($iId) {
+        $id = \Hashids::decode($iId);
         $check = \App\User_role::where('user_id', \Auth::user()->id)
                 ->where('role_id', 3)
                 ->count();
@@ -348,64 +381,21 @@ class InvoiceController extends Controller {
         }
     }
 
-    public function printCert($id) {
-//        $id = 3;
-//        $certs = \App\Invoice::with('group', 'vehicle')->find($id);
-//        //$certs = \App\Invoice::with('group', 'vehicle')->find($id);
-//        $pdf = \PDF::loadView('invoice.print-cert',array('cert' => $certs));
-//        
-//        return $pdf->download('/invoice.pdf');
-        $certs = \App\Invoice::with('group', 'vehicle')->find($id)->toArray();
-//dd($certs['id']);
-        $rows = 0;
-        $licensed_vehicle = explode(",", $certs['licensed_vehicles']);
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML('<?php
-        $rows = 0;
-        $licensed_vehicle = explode(",", $certs["licensed_vehicles"]);
-        //dd($licensed_vehicle);
-        ?>
-        <table>
-        <?php
-            for($i=0;$i< sizeof($licensed_vehicle); $i++){
-            
-            // dd($cert->id);
-            $seats = \App\Vehicle::where("reg_no", $licensed_vehicle[$i])->get(["no_of_seat"])->first();
-            $rows +=1;
-            if ($cert->invoice_type == "Group") {
-                $sacco = $cert->group->name;
-            } else {
-                $sacco = "N/A";
-            }
-            
-            if($rows%4 == 0){ ?>
-            <tr>
-                <?php } ?>
-                <td>
-                    <h3 style="color: white">K</h3>
-                    <h3></h3>
-<!--                    <p>Serial Number </p>-->
-                    <p style="margin-left: 40%"><?php sprintf("%06d",$cert->id)?>
-<!--                    <p>SACCO/COMPANY </p>-->
-                    <p style="margin-left: 55%"><?php echo $sacco;?></p>
-<!--                    <p>Registration Number</p>-->
-                    <p style="margin-left: 55%"><?php echo strtoupper($licensed_vehicle[$i])?></p>
-            <barcode><?php echo \DNS2D::getBarcodeHTML("4445645656", "QRCODE",2,2); ?></barcode>
-<!--                    <p>No. of Seats</p>-->
-            <p style="margin-left: 40%"><?php echo $seats->no_of_seat; ?></p>
-<!--                    <p><b>EXPIRY</b></p>-->
-            <p style="margin-left: 25%"><b><?php echo $cert->expiry_date; ?></b></p>
-            <p></p>
-            <img src="/images/sign.png"/>
-<!--                    <p>SIGNED</p>-->
-            <p style="margin-left: 20%">SIGN</p>
-        </td>
-        <?php if($rows%4 == 0)?>
-    </tr>
-    <?php 
-    }
-    }?>');
-        return $pdf->stream();
+    public function printCert($iId) {
+        $id = \Hashids::decode($iId);
+        $check = \App\User_role::where('user_id', \Auth::user()->id)
+                ->where('role_id', 3)
+                ->count();
+        if ($check) {
+            $certs = \App\Invoice::with('group', 'vehicle')->find($id);
+//dd($certs);
+            //return view('invoice.view-cert', array('cert' => $certs));
+            $pdf = \PDF::loadView('invoice.print-cert',  array('cert' => $certs));
+            return $pdf->download('invoice.pdf');
+        } else {
+            return redirect('/invoice/view-invoices')
+                            ->with('global', '<div class="alert alert-warning">You do not have the license viewing/printing rights</div>');
+        }
     }
 
     public function approve($id) {
@@ -456,7 +446,6 @@ class InvoiceController extends Controller {
                     return redirect('/invoice/view-invoices')
                                     ->with('global', '<div class="alert alert-warning">You do not have the managerial approval rights</div>');
                 }
-                
             } else {
 
                 $check = \App\User_role::where('user_id', \Auth::user()->id)
@@ -494,7 +483,7 @@ class InvoiceController extends Controller {
                 );
                 if ($approve) {
                     return redirect('/invoice/view-invoices')
-                                    ->with('global', '<div class="alert alert-success">Invoice successfully approved</div>');
+                                    ->with('global', '<div class="alert alert-success">Invoice successfully approved by finance</div>');
                 } else {
                     return redirect('/invoice/view-invoices')
                                     ->with('global', '<div class="alert alert-warning">Invoice approval failed</div>');
@@ -508,7 +497,7 @@ class InvoiceController extends Controller {
             );
             if ($approve) {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-success">Invoice successfully approved</div>');
+                                ->with('global', '<div class="alert alert-success">Invoice successfully approved approved by finance</div>');
             } else {
                 return redirect('/invoice/view-invoices')
                                 ->with('global', '<div class="alert alert-warning">Invoice approval failed</div>');
@@ -518,7 +507,7 @@ class InvoiceController extends Controller {
                     ->where('status', 'Rejected');
             if ($rejected->count() > 0) {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-warning">This invoice has already been approved</div>');
+                                ->with('global', '<div class="alert alert-warning">This invoice has already been approved by finance</div>');
             }
             $finance_reject = \App\Status_finance::where('invoice_id', \Request::get('id'))
                     ->where('status', 'Approved');
@@ -526,7 +515,7 @@ class InvoiceController extends Controller {
             if ($finance_reject->count() > 0) {
 
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-success">Invoice has already been approved</div>');
+                                ->with('global', '<div class="alert alert-success">Invoice has already been rejected by finance</div>');
             }
 
             $reject = \App\Status_finance::create(array(
@@ -553,10 +542,10 @@ class InvoiceController extends Controller {
             if ($finance_delete) {
                 \App\Invoice::find(\Hashids::decode($id))->delete();
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-success">This invoice has successfullly been deleted</div>');
+                                ->with('global', '<div class="alert alert-success">This invoice has successfullly been deleted by finance</div>');
             } else {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-warning">This invoice counld not be deleted</div>');
+                                ->with('global', '<div class="alert alert-warning">This invoice could not be deleted by finance</div>');
             }
         }
     }
@@ -567,7 +556,7 @@ class InvoiceController extends Controller {
                     ->where('status', 'Approved');
             if ($approved->count() > 0) {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-warning">This invoice has already been approved</div>');
+                                ->with('global', '<div class="alert alert-warning">This invoice has already been approved by manager</div>');
             }
             $manager_approval = \App\Status_manager::where('invoice_id', \Request::get('id'))
                     ->where('status', 'Rejected');
@@ -581,10 +570,10 @@ class InvoiceController extends Controller {
                 );
                 if ($approve) {
                     return redirect('/invoice/view-invoices')
-                                    ->with('global', '<div class="alert alert-success">Invoice successfully approved</div>');
+                                    ->with('global', '<div class="alert alert-success">Invoice successfully approved by manager</div>');
                 } else {
                     return redirect('/invoice/view-invoices')
-                                    ->with('global', '<div class="alert alert-warning">Invoice approval failed</div>');
+                                    ->with('global', '<div class="alert alert-warning">Invoice approval by manager failed</div>');
                 }
             }
             $approve = \App\Status_manager::create(array(
@@ -595,17 +584,17 @@ class InvoiceController extends Controller {
             );
             if ($approve) {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-success">Invoice successfully approved</div>');
+                                ->with('global', '<div class="alert alert-success">Invoice successfully approved by manager</div>');
             } else {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-warning">Invoice approval failed</div>');
+                                ->with('global', '<div class="alert alert-warning">Invoice approval by manager failed</div>');
             }
         } else if (isset($_POST['reject'])) {
             $rejected = \App\Status_manager::where('invoice_id', \Request::get('id'))
                     ->where('status', 'Rejected');
             if ($rejected->count() > 0) {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-warning">This invoice has already been approved</div>');
+                                ->with('global', '<div class="alert alert-warning">This invoice has already been approved by manager</div>');
             }
             $manager_reject = \App\Status_manager::where('invoice_id', \Request::get('id'))
                     ->where('status', 'Approved');
@@ -613,7 +602,7 @@ class InvoiceController extends Controller {
             if ($manager_reject->count() > 0) {
 
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-success">Invoice has already been approved</div>');
+                                ->with('global', '<div class="alert alert-success">Invoice has already been approved by manager</div>');
             }
 
             $reject = \App\Status_manager::create(array(
@@ -624,28 +613,56 @@ class InvoiceController extends Controller {
             );
             if ($reject) {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-success">Invoice successfully approved</div>');
+                                ->with('global', '<div class="alert alert-success">Invoice successfully approved by manager</div>');
             } else {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-warning">Invoice approval failed</div>');
+                                ->with('global', '<div class="alert alert-warning">Invoice approval by manager failed</div>');
             }
         } else {
             $approved = \App\Status_manager::where('invoice_id', \Request::get('id'))
                     ->where('status', 'Approved');
             if ($rejected->count() > 0) {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-warning">This invoice has already been approved</div>');
+                                ->with('global', '<div class="alert alert-warning">This invoice has already been approved by manager</div>');
             }
             $manager_delete = \App\Status_manager::where('invoice_id', \Request::get('id'))->delete();
             if ($manager_delete) {
                 \App\Status_finance::where('invoice_id', \Request::get('id'))->delete();
                 \App\Invoice::find(\Request::get('id'))->delete();
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-success">This invoice has successfullly been deleted</div>');
+                                ->with('global', '<div class="alert alert-success">This invoice has successfullly been deleted by manager</div>');
             } else {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-warning">This invoice counld not be deleted</div>');
+                                ->with('global', '<div class="alert alert-warning">This invoice counld not be deleted by manager</div>');
             }
+        }
+    }
+
+    public function generateSn() {
+        $check = \App\Serial_number::all()->count();
+        if ($check < 1) {
+            return 'KP-PSV-A-00001';
+        }
+        $pick_latest = \DB::select('SELECT * FROM serial_numbers ORDER BY id DESC LIMIT 1');
+        $sn_array = explode("-", $pick_latest[0]->sn);
+        if ($sn_array[2] == 'Z' && intval($sn_array[3]) > 90000) {
+            $remainder = 99999 - intval($sn_array[3]);
+            $request->session()->flash('status', '<div class="alert alert-warning">There are ONLY ' . $remainder . ' license serial numbers remaining. Please contact the product owner to add new parameters.</div>');
+            if (intval($sn_array[3]) > 99998) {
+                return redirect('/')
+                                ->with('global', '<div class="alert alert-danger">You exhausted the existing license serial numbers. Please contact the product owner!</div>');
+            }
+        }
+        if (intval($sn_array[3]) < 99999) {
+            $digit = intval($sn_array[3]) + 1;
+            $new_num = str_pad($digit, 5, '0', STR_PAD_LEFT);
+            $new_sn = 'KP-PSV-' . $sn_array[2] . '-' . $new_num;
+            return $new_sn;
+        } else {
+            $new_alp = chr(ord($sn_array[2]) + 1);
+            $new_num = str_pad(1, 5, '0', STR_PAD_LEFT);
+            $new_sn = 'KP-PSV-' . $new_alp . '-' . $new_num;
+            return $new_sn;
         }
     }
 

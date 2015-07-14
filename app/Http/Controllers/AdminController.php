@@ -160,32 +160,4 @@ class AdminController extends Controller {
         return view('admin.view-privileges', array('priv' => $privs, 'user' => $user));
     }
 
-    public function generateSn() {
-        $check = \App\Serial_number::all()->count();
-        if($check < 1){
-            return 'KP-PSV-A-00001';
-        }
-        $pick_latest = \DB::select('SELECT * FROM serial_numbers ORDER BY id DESC LIMIT 1');
-        $sn_array = explode("-", $pick_latest[0]->sn);
-        if($sn_array[2] == 'Z' && intval($sn_array[3]) > 90000){
-            $remainder = 99999-intval($sn_array[3]);
-            $request->session()->flash('status', '<div class="alert alert-warning">There are ONLY '.$remainder.' license serial numbers remaining. Please contact the product owner to add new parameters.</div>');
-            if (intval($sn_array[3])>99998){
-                return redirect('/')
-                            ->with('global', '<div class="alert alert-danger">You exhausted the existing license serial numbers. Please contact the product owner!</div>');
-            }
-        }
-        if (intval($sn_array[3]) < 1) {
-            $digit = intval($sn_array[3]) + 1;
-            $new_num = str_pad($digit, 5, '0', STR_PAD_LEFT);
-            $new_sn = 'KP-PSV-' . $sn_array[2] . '-' . $new_num;
-            return $new_sn;
-        } else {
-            $new_alp = chr(ord($sn_array[2])+1);
-            $new_num = str_pad(1, 5, '0', STR_PAD_LEFT);
-            $new_sn = 'KP-PSV-' . $new_alp . '-' . $new_num;
-            return $new_sn;
-        }
-    }
-
 }
