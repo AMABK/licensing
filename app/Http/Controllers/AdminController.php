@@ -154,10 +154,11 @@ class AdminController extends Controller {
 
     public function viewPrivileges($id) {
         $privs = \App\Role::all();
-        $user = User::with('roles')->find(\Hashids::decode($id));
-        //dd($user[0]->roles);
-        $user_privs = \App\User_role::where('user_id', \Hashids::decode($id));
-        return view('admin.view-privileges', array('priv' => $privs, 'user' => $user));
+        $users = User::with('roles')->find(\Hashids::decode($id));
+        //dd($privs);
+
+        //$user_privs = \App\User_role::where('user_id', \Hashids::decode($id));
+        return view('admin.view-privileges', array('priv' => $privs, 'user' => $users));
     }
 
 }

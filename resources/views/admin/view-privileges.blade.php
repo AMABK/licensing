@@ -104,22 +104,36 @@ Admin | Add user
                         border-color: blue;
                     }
                 </style>
+
                 <table>
                     <tr><th style="width:32%; ">Privilege</th><th style="width:70%">Description</th><th style="width:20%">Access</th></tr>
-                    @foreach($priv as $privs)
-                    <tr><td>{{$privs->role}}</td><td>Description</td><td><input type="radio" name="{{$privs->id}}"> <input type="radio" name="{{$privs->id}}"></td></tr>
+                    @foreach ($priv as $privs) 
+                    <?php
+                    $i = 0;
+                    ?>
+                    @foreach ($user[0]->roles as $users) 
+                    @if ($privs->id == $users->id) 
+                    <tr><td>{{$privs->role}}</td><td>Description</td><td><input type="radio" checked="" name="{{$privs->id}}">Yes<input type="radio" name="{{$privs->id}}">No</td></tr>
+                    <?php
+                    $i++;
+                    ?>
+                    @endif
+                    @endforeach
+                    @if($i == 0)
+                    <tr><td>{{$privs->role}}</td><td>Description</td><td><input type="radio" name="{{$privs->id}}">Yes<input type="radio" checked="" name="{{$privs->id}}">No</td></tr>
+                    @endif
                     @endforeach
                 </table
-                </div>
-                    <button type="submit">Update Privileges</button>
-                </div>
+        </div>
+        <button type="submit">Update Privileges</button>
+</div>
 
-            </form>
-            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+</form>
+<!-- right col (We are only adding the ID to make the widgets sortable)-->
 
-        </div><!-- /.row (main row) -->
+</div><!-- /.row (main row) -->
 
-    </section><!-- /.content -->
+</section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
 @stop
