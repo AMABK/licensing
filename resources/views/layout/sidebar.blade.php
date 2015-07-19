@@ -109,7 +109,7 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{URL::to('/')}}"><i class="fa fa-home"></i> Invoices home</a></li>
+                    <li><a href="{{URL::to('/reports')}}"><i class="fa fa-home"></i> Reports home</a></li>
                 </ul>
             </li>
             <!--            <li class="treeview">

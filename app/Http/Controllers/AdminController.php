@@ -120,9 +120,10 @@ class AdminController extends Controller {
     public function update() {
         //dd(\Request::all());
         if (isset($_POST['delete'])) {
-            if(\Request::get('job_id') == \Auth::user()->job_id){
+            if (\Request::get('job_id') == \Auth::user()->job_id) {
                 return redirect('/admin/view-users')
-                                ->with('global', '<div class="alert alert-warning">Whoooops, user can not delete him/herself</div>');            }
+                                ->with('global', '<div class="alert alert-warning">Whoooops, user can not delete him/herself</div>');
+            }
             $select = $this->destroy(\Request::get('job_id'));
             if (!$select) {
                 return redirect('/admin/view-users')
@@ -161,7 +162,7 @@ class AdminController extends Controller {
 
     public function viewPrivileges($id) {
         $privs = \App\Role::all();
-        $users = User::with('roles', 'designation')->find(\Hashids::decode($id));
+        $users = User::with('roles', 'designation')->find(\Hashids::decode($id)[0]);
         //dd($users);
         //$user_privs = \App\User_role::where('user_id', \Hashids::decode($id));
         return view('admin.view-privileges', array('priv' => $privs, 'user' => $users));
@@ -182,6 +183,51 @@ class AdminController extends Controller {
         } else {
             return redirect('admin/view-users')
                             ->with('global', '<div class="alert alert-warning">User could not be restored</div>');
+        }
+    }
+
+    public function postPrivileges() {
+        $check = \App\User_role::where('user_id', \Auth::user()->id)
+                        ->where('role_id', 1)->count();
+        if ($check < 1) {
+            return redirect('/admin/view-users')
+                            ->with('global', '<div class="alert alert-warning">User does not have enough privileges to modify privileges or status!</div>');
+        }
+        if (\Request::get('user_id') == \Auth::user()->id) {
+            return redirect('/admin/view-users')
+                            ->with('global', '<div class="alert alert-warning">User can not modify his own privileges or status!</div>');
+        }
+        $status = User::where('id', \Request::get('user_id'))
+                ->update(array(
+            'status' => \Request::get('status')
+                )
+        );
+        \App\User_role::where('user_id', \Request::get('user_id'))->delete();
+        if ($status) {
+            $privs = \Request::get('privilege');
+            //dd($privs);
+            foreach ($privs as $key => $value) {
+                if ($value == 'Yes') {
+                    $updated = \App\User_role::create(array(
+                                'role_id' => $key,
+                                'user_id' => \Request::get('user_id'),
+                                'assigned_by' => \Auth::user()->id
+                                    )
+                    );
+                } else {
+                    $updated = TRUE;
+                }
+            }
+        } else {
+            return redirect('/admin/view-users')
+                            ->with('global', '<div class="alert alert-warning">User privileges could not be updated</div>');
+        }
+        if ($updated) {
+            return redirect('/admin/view-users')
+                            ->with('global', '<div class="alert alert-success">User privileges successfully updated</div>');
+        } else {
+            return redirect('/admin/view-users')
+                            ->with('global', '<div class="alert alert-warning">User privileges could not be updated</div>');
         }
     }
 

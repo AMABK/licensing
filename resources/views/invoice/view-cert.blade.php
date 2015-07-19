@@ -29,7 +29,8 @@
         </style>
     </head>
     <body>
-        @foreach($certs as $cert)
+        <button><a href="{{URL::to('/invoice/view-invoices/')}}">Return to invoices</a></button>
+        <button style="float: right"><a href="{{URL::to('/invoice/print-cert/'.\Hashids::encode($cert->id))}}">Print Licenses</a></button>
         <?php
         $rows = 0;
         $licensed_vehicle = explode(",", $cert->licensed_vehicles);
@@ -89,6 +90,6 @@
 
         <!-- Bootstrap 3.3.2 JS -->
         <script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>    
-        @endforeach
+        
     </body>
 </html>

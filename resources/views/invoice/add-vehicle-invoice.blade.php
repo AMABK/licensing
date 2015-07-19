@@ -3,7 +3,7 @@
 Add Group Invoice
 @stop
 @section('content')
-
+<link href="/dist/css/jquery-ui.css" rel="stylesheet" type="text/css" />
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">

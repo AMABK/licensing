@@ -3,7 +3,11 @@
 Admin | Add user
 @stop
 @section('content')
-
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
+</style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -21,67 +25,14 @@ Admin | Add user
     <!-- Main content -->
     <section class="content">
         <!-- Small boxes (Stat box) -->
-        <div class="row">
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-yellow-gradient">
-                    <div class="inner">
-                        <h3>150</h3>
-                        <p>Saccos</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-plus"></i>
-                    </div>
-                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add g <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-yellow-gradient">
-                    <div class="inner">
-                        <h3>53</h3>
-                        <p>Total Vehicles</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-bus"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">Add a vehicle <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-yellow-gradient">
-                    <div class="inner">
-                        <h3>57<sup style="font-size: 20px">%</sup></h3>
-                        <p>Belong to saccos</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-group"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-yellow-gradient">
-                    <div class="inner">
-                        <h3>65<sup style="font-size: 20px">%</sup></h3>
-                        <p>Are company vehicles</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-car"></i>
-                    </div>
-                    <a href="{{URL::to('/sacco/add-sacco')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div><!-- ./col -->
-        </div><!-- /.row -->
+        <!-- /.row -->
         @if(Session::has('global'))
         <center><p>{!!Session::get('global')!!}</p></center>
         @endif
         <!-- Main row -->
         <div class="row" style="width: 70%; margin-left: 15%;margin-top: 5%">
             <!-- Left col -->
-            <h3>Edit user {{strtoupper($user[0]->job_id)}}, [{{$user[0]->first_name}} {{$user[0]->last_name}} - {{$user[0]->designation->name}}] privileges</h3>
+            <h3>Edit user {{strtoupper($user->job_id)}}, [{{$user->first_name}} {{$user->last_name}} - {{$user->designation->name}}] privileges</h3>
             <form method="POST" action="/post/edit-privileges">
                 {!! csrf_field() !!}
                 @if (count($errors) > 0)
@@ -107,20 +58,22 @@ Admin | Add user
 
                 <table>
                     <tr><th style="width:32%; ">Privilege</th><th style="width:70%">Description</th><th style="width:20%">Access</th></tr>
+                    <input name="user_id" value="{{$user->id}}" hidden="">
+                    <tr><td>Users Status</td><td>Is the user Active?</td><td><input type="radio" <?php if($user->status == 1) echo 'checked=""';?> name="status" value="1">Yes<input type="radio"  <?php if($user->status == 0) echo 'checked=""';?> name="status" value="0">No</td></tr>
                     @foreach ($priv as $privs) 
                     <?php
                     $i = 0;
                     ?>
-                    @foreach ($user[0]->roles as $users) 
+                    @foreach ($user->roles as $users) 
                     @if ($privs->id == $users->id) 
-                    <tr><td>{{$privs->role}}</td><td>Description</td><td><input type="radio" checked="" name="{{$privs->id}}">Yes<input type="radio" name="{{$privs->id}}">No</td></tr>
+                    <tr><td>{{$privs->role}}</td><td>Description</td><td><input type="radio" checked="" name="privilege[{{$privs->id}}]" value="Yes">Yes<input type="radio" value="No" name="privilege[{{$privs->id}}]">No</td></tr>
                     <?php
                     $i++;
                     ?>
                     @endif
                     @endforeach
                     @if($i == 0)
-                    <tr><td>{{$privs->role}}</td><td>Description</td><td><input type="radio" name="{{$privs->id}}">Yes<input type="radio" checked="" name="{{$privs->id}}">No</td></tr>
+                    <tr><td>{{$privs->role}}</td><td>Description</td><td><input type="radio" name="privilege[{{$privs->id}}]" value="Yes">Yes<input type="radio" checked="" value="No" name="privilege[{{$privs->id}}]">No</td></tr>
                     @endif
                     @endforeach
                 </table

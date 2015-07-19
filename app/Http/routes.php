@@ -160,10 +160,12 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'view-cert',
         'uses' => 'InvoiceController@viewCert'
     ));
-    Route::get('/invoice/print-cert/{id}', array(
-        'as' => 'print-cert',
-        'uses' => 'InvoiceController@printCert'
-    ));
+    Route::group(['middleware' => 'print'], function() {
+        Route::get('/invoice/print-cert/{id}', array(
+            'as' => 'print-cert',
+            'uses' => 'InvoiceController@printCert'
+        ));
+    });
     Route::get('/invoice/view-cert/{id}', array(
         'as' => 'view-cert',
         'uses' => 'InvoiceController@viewCert'
@@ -222,6 +224,10 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => '/edit-user',
         'uses' => 'AdminController@edit'
     ));
+    Route::get('/admin/restore-user/{id}', array(
+        'as' => '/restore-user',
+        'uses' => 'AdminController@restoreDeletedUser'
+    ));
     Route::post('/post/add-user', array(
         'as' => 'add-user',
         'uses' => 'AdminController@store'
@@ -230,8 +236,21 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'edit-user',
         'uses' => 'AdminController@update'
     ));
-    Route::get('/admin/restore-user/{id}', array(
-        'as' => '/restore-user',
-        'uses' => 'AdminController@restoreDeletedUser'
+    Route::post('/post/edit-privileges', array(
+        'as' => 'edit-privileges',
+        'uses' => 'AdminController@postPrivileges'
+    ));
+    //Reports controller
+    Route::get('/reports', array(
+        'as' => 'reports',
+        'uses' => 'ReportController@index'
+    ));
+    Route::get('/reports/details', array(
+        'as' => 'details',
+        'uses' => 'ReportController@details'
+    ));
+    Route::post('/reports', array(
+        'as' => 'get-report',
+        'uses' => 'ReportController@show'
     ));
 });

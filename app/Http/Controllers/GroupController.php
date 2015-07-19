@@ -43,7 +43,7 @@ class GroupController extends Controller {
 
         $validator = \Validator::make(\Request::all(), array(
                     'reg_id' => 'required|max:10|unique:groups',
-                    'name' => 'required|max:255',
+                    'name' => 'required|max:255|unique:groups',
                     'type_id' => 'required|max:255',
                     'phone_no' => 'sometimes|digits_between:10,15',
                     'email' => 'sometimes|email',

@@ -369,9 +369,9 @@ class InvoiceController extends Controller {
                 ->where('role_id', 3)
                 ->count();
         if ($check) {
-            $certs = \App\Invoice::with('group', 'vehicle')->find($id);
+            $cert = \App\Invoice::with('group', 'vehicle')->find($id[0]);
 //dd($certs);
-            return view('invoice.view-cert', array('cert' => $certs));
+            return view('invoice.view-cert', array('cert' => $cert));
 //$data = array("Test1", "Test2", "Test3");
 //        $pdf = \PDF::loadView('invoice.view-cert', array('cert' => $certs));
 //        return $pdf->stream();
@@ -388,12 +388,12 @@ class InvoiceController extends Controller {
                 ->where('role_id', 3)
                 ->count();
         if ($check) {
-            $printer_approval = \App\Status_printed::where('invoice_id', $id)->count();
-            if ($printer_approval->count() < 1) {
+            $printer_approval = \App\Status_printed::where('invoice_id', $id[0])->count();
+            if ($printer_approval < 1) {
                 $print = \App\Status_printed::create(array(
-                            'invoice_id' => $id,
+                            'invoice_id' => $id[0],
                             'status' => 'Printed',
-                            'user_id' => Auth::user()->id
+                            'user_id' => \Auth::user()->id
                                 )
                 );
                 if (!$print) {
@@ -403,9 +403,9 @@ class InvoiceController extends Controller {
             }
 
 
-            $certs = \App\Invoice::with('group', 'vehicle')->find($id);
+            $cert = \App\Invoice::with('group', 'vehicle')->find($id[0]);
 //dd($certs);
-            return view('invoice.print-cert', array('certs' => $certs));
+            return view('invoice.print-cert', array('cert' => $cert));
 //$data = array("Test1", "Test2", "Test3");
 //        $pdf = \PDF::loadView('invoice.view-cert', array('cert' => $certs));
 //        return $pdf->stream();

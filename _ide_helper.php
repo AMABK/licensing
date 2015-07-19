@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.7 (LTS) on 2015-07-14.
+ * Generated for Laravel 5.1.7 (LTS) on 2015-07-19.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -11987,6 +11987,19 @@ namespace {
         }
         
         /**
+         * Create a tel input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function tel($name, $value = null, $options = array()){
+            return \Collective\Html\FormBuilder::tel($name, $value, $options);
+        }
+        
+        /**
          * Create a number input field.
          *
          * @param string $name
@@ -12010,6 +12023,19 @@ namespace {
          */
         public static function date($name, $value = null, $options = array()){
             return \Collective\Html\FormBuilder::date($name, $value, $options);
+        }
+        
+        /**
+         * Create a time input field.
+         *
+         * @param string $name
+         * @param string $value
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function time($name, $value = null, $options = array()){
+            return \Collective\Html\FormBuilder::time($name, $value, $options);
         }
         
         /**
@@ -12915,371 +12941,6 @@ namespace {
          */
         public static function setStorPath($path){
             return \Dinesh\Barcode\DNS2D::setStorPath($path);
-        }
-        
-    }
-
-
-    class QrCode extends \SimpleSoftwareIO\QrCode\Facades\QrCode{
-        
-        /**
-         * Generates a QrCode
-         *
-         * @param string $text The text to be converted into a QrCode
-         * @param null|string $filename The filename and path to save the QrCode file
-         * @return string|void Returns a QrCode string depending on the format, or saves to a file.
-         * @static 
-         */
-        public static function generate($text, $filename = null){
-            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::generate($text, $filename);
-        }
-        
-        /**
-         * Merges an image with the center of the QrCode
-         *
-         * @param $image string The filepath to an image
-         * @return $this 
-         * @static 
-         */
-        public static function merge($image, $percentage = '0.2'){
-            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::merge($image, $percentage);
-        }
-        
-        /**
-         * Switches the format of the outputted QrCode or defaults to SVG
-         *
-         * @param string $format The desired format.
-         * @return $this 
-         * @throws \InvalidArgumentException
-         * @static 
-         */
-        public static function format($format){
-            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::format($format);
-        }
-        
-        /**
-         * Changes the size of the QrCode
-         *
-         * @param int $pixels The size of the QrCode in pixels
-         * @return $this 
-         * @static 
-         */
-        public static function size($pixels){
-            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::size($pixels);
-        }
-        
-        /**
-         * Changes the foreground color of a QrCode
-         *
-         * @param int $red
-         * @param int $green
-         * @param int $blue
-         * @return $this 
-         * @static 
-         */
-        public static function color($red, $green, $blue){
-            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::color($red, $green, $blue);
-        }
-        
-        /**
-         * Changes the background color of a QrCode
-         *
-         * @param int $red
-         * @param int $green
-         * @param int $blue
-         * @return $this 
-         * @static 
-         */
-        public static function backgroundColor($red, $green, $blue){
-            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::backgroundColor($red, $green, $blue);
-        }
-        
-        /**
-         * Changes the error correction level of a QrCode
-         *
-         * @param string $level Desired error correction level.  L = 7% M = 15% Q = 25% H = 30%
-         * @return $this 
-         * @static 
-         */
-        public static function errorCorrection($level){
-            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::errorCorrection($level);
-        }
-        
-        /**
-         * Creates a margin around the QrCode
-         *
-         * @param int $margin The desired margin in pixels around the QrCode
-         * @return $this 
-         * @static 
-         */
-        public static function margin($margin){
-            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::margin($margin);
-        }
-        
-        /**
-         * Sets the Encoding mode.
-         *
-         * @param string $encoding
-         * @return $this 
-         * @static 
-         */
-        public static function encoding($encoding){
-            return \SimpleSoftwareIO\QrCode\BaconQrCodeGenerator::encoding($encoding);
-        }
-        
-    }
-
-
-    class PDF extends \Barryvdh\Snappy\Facades\SnappyPdf{
-        
-        /**
-         * Get the Snappy instance.
-         *
-         * @return \Knp\Snappy\Pdf 
-         * @static 
-         */
-        public static function snappy(){
-            return \Barryvdh\Snappy\PdfWrapper::snappy();
-        }
-        
-        /**
-         * Set the paper size (default A4)
-         *
-         * @param string $paper
-         * @param string $orientation
-         * @return $this 
-         * @static 
-         */
-        public static function setPaper($paper, $orientation = null){
-            return \Barryvdh\Snappy\PdfWrapper::setPaper($paper, $orientation);
-        }
-        
-        /**
-         * Set the orientation (default portrait)
-         *
-         * @param string $orientation
-         * @return static 
-         * @static 
-         */
-        public static function setOrientation($orientation){
-            return \Barryvdh\Snappy\PdfWrapper::setOrientation($orientation);
-        }
-        
-        /**
-         * Show or hide warnings
-         *
-         * @param bool $warnings
-         * @return $this 
-         * @deprecated 
-         * @static 
-         */
-        public static function setWarnings($warnings){
-            return \Barryvdh\Snappy\PdfWrapper::setWarnings($warnings);
-        }
-        
-        /**
-         * 
-         *
-         * @static 
-         */
-        public static function setOption($name, $value){
-            return \Barryvdh\Snappy\PdfWrapper::setOption($name, $value);
-        }
-        
-        /**
-         * 
-         *
-         * @static 
-         */
-        public static function setOptions($options){
-            return \Barryvdh\Snappy\PdfWrapper::setOptions($options);
-        }
-        
-        /**
-         * Load a HTML string
-         *
-         * @param string $string
-         * @return static 
-         * @static 
-         */
-        public static function loadHTML($string){
-            return \Barryvdh\Snappy\PdfWrapper::loadHTML($string);
-        }
-        
-        /**
-         * Load a HTML file
-         *
-         * @param string $file
-         * @return static 
-         * @static 
-         */
-        public static function loadFile($file){
-            return \Barryvdh\Snappy\PdfWrapper::loadFile($file);
-        }
-        
-        /**
-         * Load a View and convert to HTML
-         *
-         * @param string $view
-         * @param array $data
-         * @param array $mergeData
-         * @return static 
-         * @static 
-         */
-        public static function loadView($view, $data = array(), $mergeData = array()){
-            return \Barryvdh\Snappy\PdfWrapper::loadView($view, $data, $mergeData);
-        }
-        
-        /**
-         * Output the PDF as a string.
-         *
-         * @return string The rendered PDF as string
-         * @throws \InvalidArgumentException
-         * @static 
-         */
-        public static function output(){
-            return \Barryvdh\Snappy\PdfWrapper::output();
-        }
-        
-        /**
-         * Save the PDF to a file
-         *
-         * @param $filename
-         * @return static 
-         * @static 
-         */
-        public static function save($filename){
-            return \Barryvdh\Snappy\PdfWrapper::save($filename);
-        }
-        
-        /**
-         * Make the PDF downloadable by the user
-         *
-         * @param string $filename
-         * @return \Barryvdh\Snappy\Response 
-         * @static 
-         */
-        public static function download($filename = 'document.pdf'){
-            return \Barryvdh\Snappy\PdfWrapper::download($filename);
-        }
-        
-        /**
-         * Return a response with the PDF to show in the browser
-         *
-         * @param string $filename
-         * @return \Barryvdh\Snappy\StreamedResponse 
-         * @static 
-         */
-        public static function stream($filename = 'document.pdf'){
-            return \Barryvdh\Snappy\PdfWrapper::stream($filename);
-        }
-        
-    }
-
-
-    class Image extends \Barryvdh\Snappy\Facades\SnappyImage{
-        
-        /**
-         * Get the Snappy instance.
-         *
-         * @return \Knp\Snappy\Image 
-         * @static 
-         */
-        public static function snappy(){
-            return \Barryvdh\Snappy\ImageWrapper::snappy();
-        }
-        
-        /**
-         * 
-         *
-         * @static 
-         */
-        public static function setOption($name, $value){
-            return \Barryvdh\Snappy\ImageWrapper::setOption($name, $value);
-        }
-        
-        /**
-         * 
-         *
-         * @static 
-         */
-        public static function setOptions($options){
-            return \Barryvdh\Snappy\ImageWrapper::setOptions($options);
-        }
-        
-        /**
-         * Load a HTML string
-         *
-         * @param string $string
-         * @return static 
-         * @static 
-         */
-        public static function loadHTML($string){
-            return \Barryvdh\Snappy\ImageWrapper::loadHTML($string);
-        }
-        
-        /**
-         * Load a HTML file
-         *
-         * @param string $file
-         * @return static 
-         * @static 
-         */
-        public static function loadFile($file){
-            return \Barryvdh\Snappy\ImageWrapper::loadFile($file);
-        }
-        
-        /**
-         * 
-         *
-         * @static 
-         */
-        public static function loadView($view, $data = array(), $mergeData = array()){
-            return \Barryvdh\Snappy\ImageWrapper::loadView($view, $data, $mergeData);
-        }
-        
-        /**
-         * Output the PDF as a string.
-         *
-         * @return string The rendered PDF as string
-         * @throws \InvalidArgumentException
-         * @static 
-         */
-        public static function output(){
-            return \Barryvdh\Snappy\ImageWrapper::output();
-        }
-        
-        /**
-         * Save the image to a file
-         *
-         * @param $filename
-         * @return static 
-         * @static 
-         */
-        public static function save($filename){
-            return \Barryvdh\Snappy\ImageWrapper::save($filename);
-        }
-        
-        /**
-         * Make the image downloadable by the user
-         *
-         * @param string $filename
-         * @return \Symfony\Component\HttpFoundation\Response 
-         * @static 
-         */
-        public static function download($filename = 'image.jpg'){
-            return \Barryvdh\Snappy\ImageWrapper::download($filename);
-        }
-        
-        /**
-         * Return a response with the image to show in the browser
-         *
-         * @param string $filename
-         * @return \Symfony\Component\HttpFoundation\Response 
-         * @static 
-         */
-        public static function stream($filename = 'image.jpg'){
-            return \Barryvdh\Snappy\ImageWrapper::stream($filename);
         }
         
     }

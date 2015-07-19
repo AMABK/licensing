@@ -28,7 +28,6 @@ ob_start();
 </style>
 <html>
     <body>
-        @foreach($cert as $cert)
         <?php
         $rows = 0;
         $licensed_vehicle = explode(",", $cert->licensed_vehicles);
@@ -74,7 +73,6 @@ ob_start();
 @endfor
 </tbody>
 </table>
-@endforeach
 </body>
 </html>
 
