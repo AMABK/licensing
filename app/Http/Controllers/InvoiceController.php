@@ -173,8 +173,16 @@ class InvoiceController extends Controller {
      * @return Response
      */
     public function show() {
-        $invoices = \App\Invoice::all();
+        $invoices = \App\Invoice::with('status_manager', 'status_finance')->get();
+        //dd($invoices);
         return view('invoice.view-invoices', array('invoice' => $invoices));
+    }
+
+    public function showDeleted() {
+        $invoices = \App\Invoice::with('status_manager', 'status_finance')->onlyTrashed()->get();
+        ;
+        //dd($invoices);
+        return view('invoice.view-deleted-invoices', array('invoice' => $invoices));
     }
 
     /**
@@ -215,8 +223,30 @@ class InvoiceController extends Controller {
         }
     }
 
-    public function destroy($id) {
-//
+    public function confirmDelete($id) {
+        $destroy = \App\Invoice::onlyTrashed()->find(\Hashids::decode($id)[0])->forceDelete();
+        if (!$destroy) {
+            \App\Serial_number::where('invoice_id', \Hashids::decode($id)[0])->delete();
+            \App\Status_manager::where('invoice_id', \Hashids::decode($id)[0])->deleted();
+            \App\Status_finance::where('invoice_id', \Hashids::decode($id)[0])->deleted();
+            \App\Status_printed::where('invoice_id', \Hashids::decode($id)[0])->deleted();
+            return redirect('/invoice/view-invoices')
+                            ->with('global', '<div class="alert alert-success">Invoice permanently deleted</div>');
+        } else {
+            return redirect('/invoice/view-invoices')
+                            ->with('global', '<div class="alert alert-warning">Invoice could not be permanently deleted</div>');
+        }
+    }
+
+    public function restore($id) {
+        $restore = \App\Invoice::onlyTrashed()->find(\Hashids::decode($id)[0])->restore();
+        if ($restore) {
+            return redirect('/invoice/view-invoices')
+                            ->with('global', '<div class="alert alert-success">Invoice successfully restored</div>');
+        } else {
+            return redirect('/invoice/view-invoices')
+                            ->with('global', '<div class="alert alert-warning">Invoice could not be restored</div>');
+        }
     }
 
     public function getGroupDetails() {

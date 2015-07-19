@@ -28,7 +28,7 @@ Group
             <!-- Left col -->
             <h3>Registered invoices</h3>
             <table id="myTable" width="100%">
-                <thead><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees Paid</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Finance</th><th>Manager</th><th>License</th><th>Delete</th></tr></thead>
+                <thead><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees Paid</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Finance</th><th>Manager</th><th>Restore</th><th>Delete</th></tr></thead>
                 <tbody>
                     @foreach ($invoice as $invoices)
                     <tr>
@@ -38,11 +38,11 @@ Group
                             } else {
                                 echo $invoices->vehicle['reg_no'];
                             }
-                            ?></td><td>{{ $invoices->invoice_type }}</td><td>{{ $invoices->no_vehicle }}</td><td>{{ $invoices->total_fee }}</td><td>{{ $invoices->discount }}</td><td>{{ $invoices->total_fee-$invoices->discount }}</td><td>{{ $invoices->expiry_date }}</td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}"><?php if($invoices->status_finance->status==''){ echo 'Approve';}else{ echo $invoices->status_finance->status;} ?></a></td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}"><?php if($invoices->status_manager->status==''){ echo 'Approve';}else{ echo $invoices->status_finance->status;} ?></a></td><td><a href="{{URL::to('/invoice/view-cert/'.Hashids::encode($invoices->id))}}" target="_blank">View</a></td><td><a href="{{URL::to('/invoice/delete-invoice/'.\Hashids::encode($invoices->id))}}"> Delete</a></td>
+                            ?></td><td>{{ $invoices->invoice_type }}</td><td>{{ $invoices->no_vehicle }}</td><td>{{ $invoices->total_fee }}</td><td>{{ $invoices->discount }}</td><td>{{ $invoices->total_fee-$invoices->discount }}</td><td>{{ $invoices->expiry_date }}</td><td><?php if($invoices->status_finance->status==''){ echo 'Approve';}else{ echo $invoices->status_finance->status;} ?></td><td><?php if($invoices->status_manager->status==''){ echo 'Approve';}else{ echo $invoices->status_finance->status;} ?></td><td><a href="{{URL::to('/invoice/restore-invoice/'.Hashids::encode($invoices->id))}}" >Restore</a></td><td><a href="{{URL::to('/invoice/confirm-delete-invoice/'.\Hashids::encode($invoices->id))}}"> Delete</a></td>
                     </tr>
                     @endforeach
                 </tbody>
-                <tfoot><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees Paid</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Finance</th><th>Manager</th><th>License</th><th>Delete</tr></thead>
+                <tfoot><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees Paid</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Finance</th><th>Manager</th><th>Restore</th><th>Delete</tr></thead>
             </table>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
 

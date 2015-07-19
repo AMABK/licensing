@@ -170,6 +170,10 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'view-cert',
         'uses' => 'InvoiceController@viewCert'
     ));
+    Route::get('/invoice/view-deleted-invoices', array(
+        'as' => 'view-deleted-invoices',
+        'uses' => 'InvoiceController@showDeleted'
+    ));
     Route::get('/invoice/view-invoices', array(
         'as' => 'view-invoices',
         'uses' => 'InvoiceController@show'
@@ -177,6 +181,14 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('invoice/delete-invoice/{id}', array(
         'as' => 'delete-invoice',
         'uses' => 'InvoiceController@delete'
+    ));
+    Route::get('invoice/confirm-delete-invoice/{id}', array(
+        'as' => 'confirm-delete-invoice',
+        'uses' => 'InvoiceController@confirmDelete'
+    ));
+    Route::get('/invoice/restore-invoice/{id}', array(
+        'as' => 'restore-invoice',
+        'uses' => 'InvoiceController@restore'
     ));
     Route::get('/invoice/group-autocomplete', array(
         'as' => 'group-autocomplete',

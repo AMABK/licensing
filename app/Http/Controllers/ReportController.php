@@ -15,6 +15,8 @@ class ReportController extends Controller {
      */
     public function index() {
         $date = date('2015-1-1');
+        $f_date = date_create('01-01-2015');
+        $det['set_date'] = date_format($f_date, 'd-m-Y');
         $det['total_groups'] = \App\Group::all()->count();
         $det['company_groups'] = \App\Group::where('type_id', 5)->where('created_at', '>=', $date)->count();
         $det['taxi_groups'] = \App\Group::where('type_id', 4)->where('created_at', '>=', $date)->count();
@@ -23,7 +25,6 @@ class ReportController extends Controller {
         $det['tour_groups'] = \App\Group::where('type_id', 6)->where('created_at', '>=', $date)->count();
         // Registered groups
         $det['total_vehicles'] = \App\Vehicle::all()->count();
-        ;
         $det['company_vehicles'] = \App\Vehicle::where('type_id', 5)->where('created_at', '>=', $date)->count();
         $det['taxi_vehicles'] = \App\Vehicle::where('type_id', 4)->where('created_at', '>=', $date)->count();
         $det['bus_vehicles'] = \App\Vehicle::where('type_id', 3)->where('created_at', '>=', $date)->count();
@@ -60,7 +61,8 @@ class ReportController extends Controller {
      */
     public function show() {
         $date = \Request::get('set_date');
-
+        
+        $det['set_date'] = $date;
         // Registered groups
         $det['total_groups'] = \App\Group::all()->count();
         $det['company_groups'] = \App\Group::where('type_id', 5)->where('created_at', '>=', $date)->count();
@@ -70,7 +72,6 @@ class ReportController extends Controller {
         $det['tour_groups'] = \App\Group::where('type_id', 6)->where('created_at', '>=', $date)->count();
         // Registered groups
         $det['total_vehicles'] = \App\Vehicle::all()->count();
-        ;
         $det['company_vehicles'] = \App\Vehicle::where('type_id', 5)->where('created_at', '>=', $date)->count();
         $det['taxi_vehicles'] = \App\Vehicle::where('type_id', 4)->where('created_at', '>=', $date)->count();
         $det['bus_vehicles'] = \App\Vehicle::where('type_id', 3)->where('created_at', '>=', $date)->count();

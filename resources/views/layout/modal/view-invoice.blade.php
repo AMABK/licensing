@@ -27,10 +27,6 @@
                         </tr>
                         <tr><td>Expiry Date</td><td><input id="expiryInvoice" readonly=""></td>
                         </tr>
-                        <tr><td>Finance Approval</td><td><input id="statusFinance" value="Feature Not Configured" readonly=""></td>
-                        </tr>
-                        <tr><td>Manager Approval</td><td><input id="statusManager" value="Feature Not Configured" readonly=""></td>
-                        </tr>
                         <tr><td>Licensed Vehicles</td><td><textarea style='text-transform:uppercase;' id="licensedInvoice" readonly=""></textarea></td>
                         </tr>
                     </table>

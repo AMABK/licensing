@@ -34,7 +34,7 @@ Reports | Home
                 <input type="date" class="form-control txt-auto" name="set_date" id="set_date" required="" placeholder="Please select a valid date">
             </form>
             <div class="col col-xs-12">
-            Report from : <h8>01/01/2015 </h8> To<h8>{{date('d-m-Y')}}</h8>
+            Report from : <h8>{{$data['set_date']}} </h8> To<h8>{{date('d-m-Y')}}</h8>
             </div>
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->

@@ -100,6 +100,7 @@
                     <li><a href="{{URL::to('/invoice/add-group-invoice')}}"><i class="fa fa-plus-circle"></i> Add group invoice</a></li>
                     <li><a href="{{URL::to('/invoice/add-vehicle-invoice')}}"><i class="fa fa-plus-circle"></i> Add vehicle invoice</a></li>
                     <li><a href="{{URL::to('/invoice/view-invoices')}}"><i class="fa fa-eye"></i> View invoices</a></li>
+                    <li><a href="{{URL::to('/invoice/view-deleted-invoices')}}"><i class="fa fa-eye"></i> View deleted invoices</a></li>
                 </ul>
             </li>
             <li class="treeview">
