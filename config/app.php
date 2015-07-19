@@ -139,6 +139,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,
         Dinesh\Barcode\BarcodeServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
        
 
         /*
@@ -201,6 +202,7 @@ return [
         'Hashids'   => Vinkla\Hashids\Facades\Hashids::class,
         'DNS1D'     => Dinesh\Barcode\Facades\DNS1DFacade::class,
         'DNS2D'     => Dinesh\Barcode\Facades\DNS2DFacade::class,
+        'PDF'       => Barryvdh\DomPDF\Facade::class,
 
     ],
 

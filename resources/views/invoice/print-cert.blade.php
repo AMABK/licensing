@@ -1,6 +1,6 @@
 
 <?php
-require_once base_path('dompdf/dompdf_config.inc.php');
+//require_once base_path('dompdf/dompdf_config.inc.php');
 
 ob_start();
 ?>
