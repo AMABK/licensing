@@ -140,7 +140,6 @@ return [
         Vinkla\Hashids\HashidsServiceProvider::class,
         Dinesh\Barcode\BarcodeServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
-        Barryvdh\Snappy\ServiceProvider::class,
        
 
         /*
@@ -204,8 +203,6 @@ return [
         'DNS1D'     => Dinesh\Barcode\Facades\DNS1DFacade::class,
         'DNS2D'     => Dinesh\Barcode\Facades\DNS2DFacade::class,
         'QrCode'    => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
-        'PDF'       => Barryvdh\Snappy\Facades\SnappyPdf::class,
-        'Image'     => Barryvdh\Snappy\Facades\SnappyImage::class,
 
     ],
 
