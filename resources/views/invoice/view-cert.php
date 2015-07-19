@@ -7,8 +7,8 @@
         <!-- FontAwesome 4.3.0 -->
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <!-- Ionicons 2.0.0 -->
-        <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />    
-
+        <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+        
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn"t work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -19,30 +19,29 @@
             barcode,img{
                 position:absolute;
                 margin-left: 85%;
-                
+
             }
             img{
                 position:absolute;
                 margin-left: 35%;
-                
+
             }
         </style>
     </head>
     <body>
-        @foreach($cert as $cert)
+        @foreach($certs as $cert)
         <?php
         $rows = 0;
         $licensed_vehicle = explode(",", $cert->licensed_vehicles);
-        
         ?>
         <div class="container">
             @for($i=0;$i< sizeof($licensed_vehicle); $i++)
             <?php
-            $get_sn = App\Serial_number::where('invoice_id',$cert->id)
-                    ->where('reg_no',$licensed_vehicle[$i])
+            $get_sn = App\Serial_number::where('invoice_id', $cert->id)
+                    ->where('reg_no', $licensed_vehicle[$i])
                     ->get()
                     ->toArray();
-            //dd($get_sn[0]['sn']);
+           //dd($get_sn);
             $seats = \App\Vehicle::where("reg_no", $licensed_vehicle[$i])->get(["no_of_seat"])->first();
             $rows +=1;
             if ($cert->invoice_type == "Group") {
@@ -66,12 +65,12 @@
                     <p style="margin-left: 55%">{{$sacco}}</p>
 <!--                    <p>Registration Number</p>-->
                     <p style="margin-left: 55%">{{strtoupper($licensed_vehicle[$i])}}</p>
-                    
+
 <!--                    <p>No. of Seats</p>-->
                     <p style="margin-left: 40%">{{$seats->no_of_seat}}</p>
 <!--                    <p><b>EXPIRY</b></p>-->
                     <p style="margin-left: 45%"><b>{{$cert->expiry_date}}</b></p>
-                    
+
                     <img src="/images/sign.png"/>
                     <barcode>{!!\DNS2D::getBarcodeHTML($get_sn[0]['sn'], "QRCODE",3,3)!!}</barcode>
 <!--                    <p>SIGNED</p>-->
@@ -90,6 +89,6 @@
 
         <!-- Bootstrap 3.3.2 JS -->
         <script src="/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>    
-@endforeach
+        @endforeach
     </body>
 </html>

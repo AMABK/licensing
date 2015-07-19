@@ -210,9 +210,9 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => '/manage-user',
         'uses' => 'AdminController@viewPrivileges'
     ));
-    Route::get('/admin/confirm-delete-user/{id}', array(
-        'as' => '/confirm-delete-user',
-        'uses' => 'AdminController@viewPrivileges'
+    Route::get('/admin/view-deleted-users', array(
+        'as' => '/view-deleted-users',
+        'uses' => 'AdminController@viewDeletedUsers'
     ));
     Route::get('/admin/view-users', array(
         'as' => '/view-users',
@@ -229,5 +229,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/post/edit-user', array(
         'as' => 'edit-user',
         'uses' => 'AdminController@update'
+    ));
+    Route::get('/admin/restore-user/{id}', array(
+        'as' => '/restore-user',
+        'uses' => 'AdminController@restoreDeletedUser'
     ));
 });

@@ -135,6 +135,7 @@ class InvoiceController extends Controller {
                         'reg_no' => strtoupper(\Request::get('reg_no')),
                         'total_fee' => \Request::get('total_fee'),
                         'no_vehicle' => 1,
+                        'licensed_vehicles' => \Request::get('reg_no'),
                         'expiry_date' => \Request::get('expiry_date'),
                         'region_id' => \Request::get('region_id'),
                         'agent_id' => \Request::get('agent_id'),
@@ -359,7 +360,6 @@ class InvoiceController extends Controller {
 
     public function getInvoice($id) {
         $invoice = \App\Invoice::with('group', 'vehicle', 'status_finance', 'status_manager')->find($id);
-//dd($invoice);
         return $invoice;
     }
 
@@ -381,17 +381,34 @@ class InvoiceController extends Controller {
         }
     }
 
+// Prints the certificate
     public function printCert($iId) {
         $id = \Hashids::decode($iId);
         $check = \App\User_role::where('user_id', \Auth::user()->id)
                 ->where('role_id', 3)
                 ->count();
         if ($check) {
+            $printer_approval = \App\Status_printed::where('invoice_id', $id)->count();
+            if ($printer_approval->count() < 1) {
+                $print = \App\Status_printed::create(array(
+                            'invoice_id' => $id,
+                            'status' => 'Printed',
+                            'user_id' => Auth::user()->id
+                                )
+                );
+                if (!$print) {
+                    return redirect('/invoice/view-invoices')
+                                    ->with('global', '<div class="alert alert-warning">License cound not be printed, system unable to update printing status</div>');
+                }
+            }
+
+
             $certs = \App\Invoice::with('group', 'vehicle')->find($id);
 //dd($certs);
-            //return view('invoice.view-cert', array('cert' => $certs));
-            $pdf = \PDF::loadView('invoice.print-cert',  array('cert' => $certs));
-            return $pdf->download('invoice.pdf');
+            return view('invoice.print-cert', array('certs' => $certs));
+//$data = array("Test1", "Test2", "Test3");
+//        $pdf = \PDF::loadView('invoice.view-cert', array('cert' => $certs));
+//        return $pdf->stream();
         } else {
             return redirect('/invoice/view-invoices')
                             ->with('global', '<div class="alert alert-warning">You do not have the license viewing/printing rights</div>');

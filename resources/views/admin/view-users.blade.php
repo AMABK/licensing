@@ -32,7 +32,7 @@ View users
                 <tbody>
                     @foreach ($user as $users)
                     <tr>
-                        <td><a href="{{URL::to('admin/edit-user/'.\Hashids::encode($users->id))}}"> {{strtoupper($users->job_id)}}</a></td><td>{{ $users->first_name }}</td><td>{{ $users->last_name }}</td><td>{{ $users->phone_no }}</td><td>{{ $users->email }}</td><td>{{ $users->designation_id }}</td><td>{{ $users->status ? 'Active':'Suspended' }}</td><td><a href="{{URL::to('/admin/add-user')}}">Add</a></td><td><a href="{{URL::to('/admin/manage-user/'.Hashids::encode($users->id))}}">Privileges</a></td>
+                        <td><a href="{{URL::to('admin/edit-user/'.\Hashids::encode($users->id))}}"> {{strtoupper($users->job_id)}}</a></td><td>{{ $users->first_name }}</td><td>{{ $users->last_name }}</td><td>{{ $users->phone_no }}</td><td>{{ $users->email }}</td><td>{{ $users->designation->name }}</td><td>{{ $users->status ? 'Active':'Suspended' }}</td><td><a href="{{URL::to('/admin/add-user')}}">Add</a></td><td><a href="{{URL::to('/admin/manage-user/'.Hashids::encode($users->id))}}">Privileges</a></td>
                     </tr>
                     @endforeach
                 </tbody>

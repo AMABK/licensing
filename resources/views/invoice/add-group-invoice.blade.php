@@ -97,7 +97,7 @@ Add Group Invoice
                     <input type="text" style="text-transform:uppercase" name="invoice_no" class="form-control txt-auto" required="" placeholder="Invoice Number">
                 </div>
                 <div class="form-group">
-                    <label for="reg_id">Registration Number</label>
+                    <label for="reg_id">Group Registration Number</label>
                     <input type="text" style="text-transform:uppercase" class="form-control txt-auto" id="reg_id" required="" placeholder="Registration Number">
                     <input type="text" hidden="" name="id" id="id">
                 </div>

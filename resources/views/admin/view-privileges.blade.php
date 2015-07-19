@@ -81,7 +81,7 @@ Admin | Add user
         <!-- Main row -->
         <div class="row" style="width: 70%; margin-left: 15%;margin-top: 5%">
             <!-- Left col -->
-            <h3>Edit user {{strtoupper($user[0]->job_id)}}, [{{$user[0]->first_name}} {{$user[0]->last_name}}] privileges</h3>
+            <h3>Edit user {{strtoupper($user[0]->job_id)}}, [{{$user[0]->first_name}} {{$user[0]->last_name}} - {{$user[0]->designation->name}}] privileges</h3>
             <form method="POST" action="/post/edit-privileges">
                 {!! csrf_field() !!}
                 @if (count($errors) > 0)

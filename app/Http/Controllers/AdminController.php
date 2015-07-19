@@ -94,7 +94,7 @@ class AdminController extends Controller {
      * @return Response
      */
     public function show() {
-        $users = User::all();
+        $users = User::with('designation')->get();
         //dd($users);
         return view('admin.view-users', array('user' => $users));
     }
@@ -119,6 +119,20 @@ class AdminController extends Controller {
      */
     public function update() {
         //dd(\Request::all());
+        if (isset($_POST['delete'])) {
+            if(\Request::get('job_id') == \Auth::user()->job_id){
+                return redirect('/admin/view-users')
+                                ->with('global', '<div class="alert alert-warning">Whoooops, user can not delete him/herself</div>');            }
+            $select = $this->destroy(\Request::get('job_id'));
+            if (!$select) {
+                return redirect('/admin/view-users')
+                                ->with('global', '<div class="alert alert-success">User successfully deleted</div>');
+            } else {
+                return redirect('/admin/view-users')
+                                ->with('global', '<div class="alert alert-warning">Whoooops, user could not be deleted. Please try again!</div>');
+            }
+        }
+
         $update = User::where('job_id', \Request::get('job_id'))
                 ->update(array(
             'first_name' => \Request::get('first_name'),
@@ -130,7 +144,7 @@ class AdminController extends Controller {
             return redirect('/admin/view-users')
                             ->with('global', '<div class="alert alert-success">User details successfully updated</div>');
         } else {
-            return redirect()
+            return redirect('/admin/view-users')
                             ->with('global', '<div class="alert alert-warning">Whoooops, your updates could not be saved. Please try again!</div>');
         }
     }
@@ -141,24 +155,34 @@ class AdminController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function destroy() {
-        $select = User::find(\Request::get('job_id'));
-        if ($select->delete()) {
-            return redirect('/admin/view-users')
-                            ->with('global', '<div class="alert alert-success">User successfully deleted</div>');
-        } else {
-            return redirect('/admin/view-users')
-                            ->with('global', '<div class="alert alert-warning">Whoooops, user could not be deleted. Please try again!</div>');
-        }
+    public function destroy($job_id) {
+        $select = User::where('job_id', $job_id)->delete();
     }
 
     public function viewPrivileges($id) {
         $privs = \App\Role::all();
-        $users = User::with('roles')->find(\Hashids::decode($id));
-        //dd($privs);
-
+        $users = User::with('roles', 'designation')->find(\Hashids::decode($id));
+        //dd($users);
         //$user_privs = \App\User_role::where('user_id', \Hashids::decode($id));
         return view('admin.view-privileges', array('priv' => $privs, 'user' => $users));
+    }
+
+    public function viewDeletedUsers() {
+        $deleted = User::onlyTrashed()->with('designation')->get();
+        return view('admin.view-deleted-users', array('user' => $deleted));
+    }
+
+    public function restoreDeletedUser($id) {
+        $restore = User::onlyTrashed()
+                ->where('id', \Hashids::decode($id))
+                ->restore();
+        if ($restore) {
+            return redirect('admin/view-users')
+                            ->with('global', '<div class="alert alert-success">User successfully restored</div>');
+        } else {
+            return redirect('admin/view-users')
+                            ->with('global', '<div class="alert alert-warning">User could not be restored</div>');
+        }
     }
 
 }

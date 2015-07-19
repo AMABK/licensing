@@ -116,7 +116,7 @@ Admin | Add user
                 </div>
                 <div class="form-group">
                     <label for="designation">Designation</label>
-                    <select type="text" name="designation" class="form-control" >
+                    <select type="text" name="designation_id" class="form-control" >
                         <option value="" >Please select user designation</option>
                         @foreach($designations as $designation)
                         <option value="{{$designation->id}}" >{{$designation->name}}</option>
