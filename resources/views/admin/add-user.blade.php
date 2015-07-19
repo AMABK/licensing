@@ -21,9 +21,9 @@ Admin | Add user
     <!-- Main content -->
     <section class="content">
         <!-- Small boxes (Stat box) -->
-        <div class="row">
+<!--        <div class="row">
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
+                 small box 
                 <div class="small-box bg-yellow-gradient">
                     <div class="inner">
                         <h3>150</h3>
@@ -34,9 +34,9 @@ Admin | Add user
                     </div>
                     <a href="{{URL::to('/sacco/add-sacco')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div><!-- ./col -->
+            </div> ./col 
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
+                 small box 
                 <div class="small-box bg-yellow-gradient">
                     <div class="inner">
                         <h3>53</h3>
@@ -47,9 +47,9 @@ Admin | Add user
                     </div>
                     <a href="#" class="small-box-footer">Add a vehicle <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div><!-- ./col -->
+            </div> ./col 
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
+                 small box 
                 <div class="small-box bg-yellow-gradient">
                     <div class="inner">
                         <h3>57<sup style="font-size: 20px">%</sup></h3>
@@ -60,9 +60,9 @@ Admin | Add user
                     </div>
                     <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div><!-- ./col -->
+            </div> ./col 
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
+                 small box 
                 <div class="small-box bg-yellow-gradient">
                     <div class="inner">
                         <h3>65<sup style="font-size: 20px">%</sup></h3>
@@ -73,8 +73,8 @@ Admin | Add user
                     </div>
                     <a href="{{URL::to('/sacco/add-sacco')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div><!-- ./col -->
-        </div><!-- /.row -->
+            </div> ./col 
+        </div> /.row -->
         @if(Session::has('global'))
         <center><p>{!!Session::get('global')!!}</p></center>
         @endif

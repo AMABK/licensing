@@ -29,7 +29,7 @@ Reports | Home
     <section class="content">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-            <form id="report_form" action="/reports/get-report" method="POST">
+            <form id="report_form" action="/reports" method="POST">
                 {!! csrf_field() !!}
                 <input type="date" class="form-control txt-auto" name="set_date" id="set_date" required="" placeholder="Please select a valid date">
             </form>
@@ -46,7 +46,7 @@ Reports | Home
                     <div class="icon">
                         <i class="fa fa-group"></i>
                     </div>
-                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="" class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">

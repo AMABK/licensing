@@ -9,7 +9,7 @@ ob_start();
         list-style: none; 
     }
     body{
-        font-size: 8px;
+        font-size: 16px;
     }   
     table, th, td {
         border: 1px solid black;
@@ -51,14 +51,14 @@ ob_start();
                 @if($rows%4 == 0)
                 <tr>
                     @endif
-                    <td style="width: 165px ">
+                    <td style="width: 300px;height: 300px ">
             <li>
-                <ul style="padding-top: 4%;padding-left: 28%">{{$get_sn[0]['sn']}}</ul>
+                <ul style="padding-top: 0%;padding-left: 28%">{{$get_sn[0]['sn']}}</ul>
                 <ul style="padding-left: 33%">{{$sacco}}</ul>
                 <ul style="padding-left: 34%">{{strtoupper($licensed_vehicle[$i])}}</ul>
                
-                <ul style="padding-left: 25%; padding-top: 0px">{{$seats->no_of_seat}}</ul> <barcode>{!!\DNS2D::getBarcodeHTML($get_sn[0]['sn'], "QRCODE",2,2)!!}</barcode>
-                <ul style="padding-left: 19%; padding-bottom: 15px">{{$cert->expiry_date}}</ul><img src="/home/arnold/Desktop/sign.png" width="40px" height="13px"/>
+                <ul style="padding-left: 25%; padding-top: 0px">{{$seats->no_of_seat}}</ul> <barcode>{!!\DNS2D::getBarcodeHTML($get_sn[0]['sn'], "QRCODE",3,3)!!}</barcode>
+                <ul style="padding-left: 19%; padding-bottom: 15px">{{$cert->expiry_date}}</ul><img src="/home/arnold/Desktop/sign.png" width="80px" height="26px"/>
                 <ul></ul>
                 
                 
@@ -79,6 +79,8 @@ ob_start();
 <?php
 $html = ob_get_clean();
 $dompdf = new DOMPDF();
+$customPaper = array(0,0,1200,3600);
+$dompdf->set_paper($customPaper);
 $dompdf->load_html($html);
 $dompdf->render();
 $dompdf->stream("sample.pdf");
