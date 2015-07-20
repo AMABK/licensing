@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title')
-Admin | Add user
+Add user
 @stop
 @section('content')
 <style>

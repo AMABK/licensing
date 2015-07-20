@@ -49,22 +49,6 @@ Update Vehicle
                     <input type="text" class="form-control" name="vehicle_make" class="form-control" value="{{ $vehicles->vehicle_make }}" placeholder="Vehicle make">
                 </div>
                 <div class="form-group">
-                    <label for="type_id" >Category</label>
-                    <select type="text" name="category" id="category" class="form-control" id="type_id" required="">
-                        @if($vehicles->type_id != NULL)
-                        <option value="{{$vehicles->type_id}}"  class="Sacco Vehicle" >{{$vehicles->vehicle_type->group}}</option>
-                        @endif
-                        <option  value="group" class="type_id" >Group Vehicle</option>
-                        <option value="1"  class="no_group" >Taxi(Does not belong to any group)</option>
-                    </select>
-                </div>
-                <div id="group" style="display:none;">
-                    <div class="form-group">
-                        <label for="group_id" >Group Reg No</label>
-                        <input name="reg_id"  style="text-transform:uppercase" placeholder="Please select a valid Sacco Reg No" id="reg_id" class="form-control txt-auto"/>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label for="tlb_no">TLB Number</label>
                     <input type="text" style="text-transform:uppercase" name="tlb_no" class="form-control" value="{{ $vehicles->tlb_no }}" required=""  placeholder="TLB No.">
                 </div>

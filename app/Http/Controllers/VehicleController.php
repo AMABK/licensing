@@ -45,7 +45,7 @@ class VehicleController extends Controller {
                     'type_id' => 'required|max:255',
                     'group_id' => 'sometimes|integer',
                     'vehicle_make' => 'required',
-                    'no_of_seat' => 'required|integer'
+                    'no_of_seat' => 'integer'
                         )
         );
         //dd(\Request::all());
@@ -57,7 +57,7 @@ class VehicleController extends Controller {
             $group_id = \DB::table('groups')
                             ->where('reg_id', \Request::get('reg_id'))->first();
             //dd(\Request::all());
-            if (\Request::get('under_group') == 'Yes') {
+            if (\Request::get('reg_id') != '') {
                 $vehicle = \App\Vehicle::create(array(
                             'reg_no' => \Request::get('reg_no'),
                             'vehicle_make' => \Request::get('vehicle_make'),
@@ -74,7 +74,7 @@ class VehicleController extends Controller {
                             'reg_no' => \Request::get('reg_no'),
                             'vehicle_make' => \Request::get('vehicle_make'),
                             'type_id' => \Request::get('type_id'),
-                            'group_id' => $group_id->id,
+                            'group_id' => null,
                             'tlb_no' => \Request::get('tlb_no'),
                             'no_of_seat' => \Request::get('no_of_seat'),
                             'user_id' => \Auth::user()->id
@@ -109,8 +109,23 @@ class VehicleController extends Controller {
      * @return Response
      */
     public function show() {
-        $vehicles = \App\Vehicle::all();
-        return view('vehicle.view-vehicles', array('vehicle' => $vehicles));
+        $vehicles = \App\Vehicle::with('group')->get();
+        $i = 0;
+        $group = [];
+        //This foreach is not in use, for use incase of system modifications in the view-vehicles view
+        foreach ($vehicles as $vehicle) {
+            if ($vehicle->type_id == 1) {
+                $group[$i]['group_id'] = "";
+                $group[$i]['group_name'] = 'No Group';
+            } else {
+                //echo ($vehicle->group->id);
+                $group[$i]['group_id'] = $vehicle->group->id;
+                $group[$i]['group_name'] = $vehicle->group->name;
+                //dd($vehicle->group->id);
+            }
+            $i++;
+        }
+        return view('vehicle.view-vehicles', array('vehicle' => $vehicles, 'group' => $group));
     }
 
     /**
@@ -138,7 +153,6 @@ class VehicleController extends Controller {
                             ->with('global', '<div class="alert alert-warning">Whoooops, this functionality is not yet available!</div>');
         }
         $validator = \Validator::make(\Request::all(), array(
-                    'category' => 'required|max:255',
                     'group_id' => 'sometimes|integer',
                     'vehicle_make' => 'required',
                     'no_of_seat' => 'required|integer'
@@ -149,12 +163,15 @@ class VehicleController extends Controller {
                             ->withErrors($validator)
                             ->withInput();
         } else {
+            if(\Request::input('group_id')==''){
+                $group_id = null;
+            }  else {
+                $group_id = \Request::input('group_id');
+            }
             $vehicle = \DB::table('vehicles')
                     ->where('id', \Request::input('id'))
                     ->update(array(
-                'category' => \Request::input('category'),
                 'vehicle_make' => \Request::input('vehicle_make'),
-                'group_id' => \Request::input('group_id'),
                 'tlb_no' => \Request::input('tlb_no'),
                 'no_of_seat' => \Request::input('no_of_seat'),
                 'user_id' => \Auth::user()->id
@@ -196,12 +213,14 @@ class VehicleController extends Controller {
                             ->with('global', '<div class="alert alert-warning">Vehicle already belongs to a group!.</div>');
         }
 
+        $type = \App\Group::find(\Hashids::decode($ids)[0]);
+        //dd($type->id);
         $add = \DB::table('vehicles')
                 ->where('id', \Hashids::decode($ids)[1])
                 ->where('group_id', null)
                 ->update(array(
-            'group_id' => \Hashids::decode($ids)[0],
-            'category' => 'Group Vehicle',
+            'group_id' => $type->id,
+            'type_id' => intval($type->id),
             'user_id' => \Auth::user()->id
                 )
         );
@@ -228,7 +247,7 @@ class VehicleController extends Controller {
                 ->where('group_id', $id[0])
                 ->update(array(
             'group_id' => null,
-            'category' => 'Other',
+            'type_id' => 1,
             'user_id' => \Auth::user()->id
                 )
         );

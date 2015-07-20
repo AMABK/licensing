@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title')
-Sacco
+Admin
 @stop
 @section('content')
 

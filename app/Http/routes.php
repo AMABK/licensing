@@ -203,6 +203,10 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'approval',
         'uses' => 'InvoiceController@approve'
     ));
+    Route::post('/post/licensing-approve', array(
+        'as' => 'licensing-approval',
+        'uses' => 'InvoiceController@licensingApproval'
+    ));
     Route::post('/post/finance-approve', array(
         'as' => 'finance-approval',
         'uses' => 'InvoiceController@financeApproval'

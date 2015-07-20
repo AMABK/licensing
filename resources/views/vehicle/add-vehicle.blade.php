@@ -63,7 +63,7 @@ Add Vehicle
                 <div id="group" style="display:none;">
                     <div class="form-group">
                         <label for="group_id" >Group Reg No</label>
-                        <input name="reg_id"  style="text-transform:uppercase" placeholder="Please select a valid Sacco Reg No" id="reg_id" class="form-control txt-auto" required=""/>
+                        <input name="reg_id"  style="text-transform:uppercase" placeholder="Please select a valid Sacco Reg No" id="reg_id" class="form-control txt-auto" />
                     </div>
                 </div>
 

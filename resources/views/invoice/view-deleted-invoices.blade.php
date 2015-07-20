@@ -26,9 +26,9 @@ Group
         <!-- Main row -->
         <div class="row" style="margin: 3px">
             <!-- Left col -->
-            <h3>Registered invoices</h3>
+            <h3>Deleted invoices</h3>
             <table id="myTable" width="100%">
-                <thead><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees Paid</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Finance</th><th>Manager</th><th>Restore</th><th>Delete</th></tr></thead>
+                <thead><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Finance</th><th>CEO</th><th>Restore</th><th>Delete</th></tr></thead>
                 <tbody>
                     @foreach ($invoice as $invoices)
                     <tr>
@@ -42,7 +42,7 @@ Group
                     </tr>
                     @endforeach
                 </tbody>
-                <tfoot><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees Paid</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Finance</th><th>Manager</th><th>Restore</th><th>Delete</tr></thead>
+                <tfoot><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Finance</th><th>CEO</th><th>Restore</th><th>Delete</tr></thead>
             </table>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
 
