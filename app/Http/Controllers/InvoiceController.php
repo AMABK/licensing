@@ -445,6 +445,12 @@ class InvoiceController extends Controller {
         $check = \App\User_role::where('user_id', \Auth::user()->id)
                 ->where('role_id', 3)
                 ->count();
+        $authorised = \App\Status_manager::where('invoice_id', $id[0])
+                ->where('status', 'Approved')
+                ->count();
+        if($authorised < 1){
+            return redirect('/invoice/view-invoices')
+                            ->with('global', '<div class="alert alert-warning">This invoice has not been approved by CEO, please request approval before trying again</div>');        }
         if ($check) {
             $printer_approval = \App\Status_printed::where('invoice_id', $id[0])->count();
             if ($printer_approval < 1) {

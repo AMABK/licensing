@@ -1,30 +1,10 @@
 @extends('layout.main')
 @section('title')
-Sacco
+Add to group 
 @stop
 @section('content')
-<link rel="stylesheet" type="text/css" href="/datatables/jquery.dataTables.min.css" title="yellow" media="screen" />
-<style>
-    table, td {
-        border: 1px solid #086A87;
-        background-color: #D8D8D8;
-        height: 10px;
-    }
+<link rel="stylesheet" type="text/css" href="/datatables/custom.dataTables.css" title="yellow" media="screen" />
 
-    thead, th {
-        background-color: #00BFFF;
-        border: 1px solid #086A87;
-        color: white;
-    }
-    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
-        background-color: #D8D8D8;
-    }
-    .nav-tabs>li>a {
-        background-color: rgb(239, 224, 224);
-    }
-
-
-</style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -49,15 +29,19 @@ Sacco
             <!-- Left col -->
             <h3>Add vehicle Reg No [{{strtoupper($vehicle->reg_no)}}], {{$vehicle->no_of_seat}} seator, to a group</h3>
             <table id="myTable" width="100%">
-                <thead><tr><th>Name</th><th>Reg No</th><th>#Vehicles</th><th>Yr of License</th><th>Expiry Date</th><th>Fees Paid</th><th>Phone</th><th>Email</th><th>Address</th><th>Add Vehicle</th></tr></thead>
+                <thead><tr><th>Name</th><th>Reg No</th><th>#Vehicles</th><th>Phone</th><th>Email</th><th>Address</th><th>Add Vehicle</th></tr></thead>
                 <tbody>
                     @foreach ($group as $groups)
+                    <?php
+                    $num = \App\Vehicle::where('group_id',$groups->id)->count()
+                    
+                    ?>
                     <tr>
-                        <td><a href="{{URL::to('group/edit-group/'.\Hashids::encode($groups->id))}}"> {{$groups->name}}</a></td><td>{{ $groups->reg_id }}</td><td>{{ $groups->no_vehicle }}</td><td>{{ $groups->yr_of_license }}</td><td>{{ $groups->expiry_date }}</td><td>{{ $groups->fee_paid }}</td><td>{{ $groups->phone_no }}</td><td>{{ $groups->email }}</td><td>{{ $groups->address }}</td><td><a href="{{URL::to('vehicle/add-group/'.\Hashids::encode($groups->id,$vehicle->id))}}">Add</a></td>
+                        <td><a href="{{URL::to('group/edit-group/'.\Hashids::encode($groups->id))}}"> {{$groups->name}}</a></td><td>{{ $groups->reg_id }}</td><td>{{ $num }}</td><td>{{ $groups->phone_no }}</td><td>{{ $groups->email }}</td><td>{{ $groups->address }}</td><td><a href="{{URL::to('vehicle/add-group/'.\Hashids::encode($groups->id,$vehicle->id))}}">Add</a></td>
                     </tr>
                     @endforeach
                 </tbody>
-                <tfoot><tr><th>Name</th><th>Reg No</th><th>#Vehicles</th><th>Yr of License</th><th>Expiry Date</th><th>Fees Paid</th><th>Phone</th><th>Email</th><th>Address</th><th>Add Vehicle</th></tr></thead>
+                <tfoot><tr><th>Name</th><th>Reg No</th><th>#Vehicles</th><th>Phone</th><th>Email</th><th>Address</th><th>Add Vehicle</th></tr></thead>
             </table>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
 

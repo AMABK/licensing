@@ -48,6 +48,7 @@ ob_start();
                 } else {
                     $sacco = "N/A";
                 }
+                $link = \App\Sign_link::where('status',1)->first();
                 ?>
                 @if($rows%4 == 0)
                 <tr>
@@ -59,7 +60,7 @@ ob_start();
                 <ul style="padding-left: 47%">{{strtoupper($licensed_vehicle[$i])}}</ul>
                
                 <ul style="padding-left: 35%; padding-top: -3px;padding-bottom: -10px">{{$seats->no_of_seat}}</ul> <barcode>{!!\DNS2D::getBarcodeHTML($get_sn[0]['sn'], "QRCODE",3.4,3.4)!!}</barcode>
-                <ul style="padding-left: 35%; padding-bottom: 28px">{{$cert->expiry_date}}</ul><img src="/home/arnold/Desktop/sign.png" width="80px" height="26px"/>
+                <ul style="padding-left: 35%; padding-bottom: 28px">{{$cert->expiry_date}}</ul><img src="{{$link->link}}sign.png" width="80px" height="26px"/>
                 <ul></ul>
                 
                 
