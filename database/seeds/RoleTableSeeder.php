@@ -24,6 +24,10 @@ class RoleTableSeeder extends Seeder {
                 'description' => '',
             ],
             [
+                'role' => 'Licensing Approval',
+                'description' => '',
+            ],
+            [
                 'role' => 'Printing License',
                 'description' => '',
             ],

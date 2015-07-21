@@ -203,7 +203,7 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'approval',
         'uses' => 'InvoiceController@approve'
     ));
-    Route::post('/post/licensing-approve', array(
+    Route::post('/post/licesing-approve', array(
         'as' => 'licensing-approval',
         'uses' => 'InvoiceController@licensingApproval'
     ));

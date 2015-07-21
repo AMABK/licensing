@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title')
-Group
+Invoices
 @stop
 @section('content')
 <link rel="stylesheet" type="text/css" href="/datatables/custom.dataTables.css" title="yellow" media="screen" />
@@ -28,7 +28,7 @@ Group
             <!-- Left col -->
             <h3>Registered invoices</h3>
             <table id="myTable" width="100%">
-                <thead><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Finance</th><th>CEO</th><th>License</th><th>Delete</th></tr></thead>
+                <thead><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Licensing</th><th>Finance</th><th>CEO</th><th>License</th><th>Delete</th></tr></thead>
                 <tbody>
                     <?php
                     $i= 0;
@@ -41,14 +41,14 @@ Group
                             } else {
                                 echo $invoices->vehicle['reg_no'];
                             }
-                            ?></td><td>{{ $invoices->invoice_type }}</td><td>{{ $invoices->no_vehicle }}</td><td>{{ $invoices->total_fee }}</td><td>{{ $invoices->discount }}</td><td>{{ $invoices->total_fee-$invoices->discount }}</td><td>{{ $invoices->expiry_date }}</td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}">{{$status[$i]['finance']}}</a></td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}">{{$status[$i]['manager']}}</a></td><td><a href="{{URL::to('/invoice/view-cert/'.Hashids::encode($invoices->id))}}" target="_blank">View</a></td><td><a href="{{URL::to('/invoice/delete-invoice/'.\Hashids::encode($invoices->id))}}"> Delete</a></td>
+                            ?></td><td>{{ $invoices->invoice_type }}</td><td>{{ $invoices->no_vehicle }}</td><td>{{ $invoices->total_fee }}</td><td>{{ $invoices->discount }}</td><td>{{ $invoices->total_fee-$invoices->discount }}</td><td>{{ $invoices->expiry_date }}</td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}">{{$status[$i]['licensing']}}</a></td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}">{{$status[$i]['finance']}}</a></td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}">{{$status[$i]['manager']}}</a></td><td><a href="{{URL::to('/invoice/view-cert/'.Hashids::encode($invoices->id))}}" target="_blank">View</a></td><td><a href="{{URL::to('/invoice/delete-invoice/'.\Hashids::encode($invoices->id))}}"> Delete</a></td>
                     </tr>
                     <?php
                     $i++;
                     ?>
                     @endforeach
                 </tbody>
-                <tfoot><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Finance</th><th>CEO</th><th>License</th><th>Delete</tr></thead>
+                <tfoot><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Licensing</th><th>Finance</th><th>CEO</th><th>License</th><th>Delete</tr></thead>
             </table>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
 

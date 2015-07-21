@@ -187,6 +187,11 @@ class InvoiceController extends Controller {
             } else {
                 $status[$i]['manager'] = 'Approve';
             }
+            if (isset($invoice->status_licensing->status)) {
+                $status[$i]['licensing'] = $invoice->status_licensing->status;
+            } else {
+                $status[$i]['licensing'] = 'Approve';
+            }
             $i++;
         }
         //dd($status);
@@ -195,7 +200,6 @@ class InvoiceController extends Controller {
 
     public function showDeleted() {
         $invoices = \App\Invoice::with('status_manager', 'status_finance')->onlyTrashed()->get();
-        ;
         //dd($invoices);
         return view('invoice.view-deleted-invoices', array('invoice' => $invoices));
     }
@@ -239,17 +243,26 @@ class InvoiceController extends Controller {
     }
 
     public function confirmDelete($id) {
-        $destroy = \App\Invoice::onlyTrashed()->find(\Hashids::decode($id)[0])->forceDelete();
-        if (!$destroy) {
-            \App\Serial_number::where('invoice_id', \Hashids::decode($id)[0])->delete();
-            \App\Status_manager::where('invoice_id', \Hashids::decode($id)[0])->deleted();
-            \App\Status_finance::where('invoice_id', \Hashids::decode($id)[0])->deleted();
-            \App\Status_printed::where('invoice_id', \Hashids::decode($id)[0])->deleted();
-            return redirect('/invoice/view-invoices')
-                            ->with('global', '<div class="alert alert-success">Invoice permanently deleted</div>');
+        $check = \App\User_role::where('user_id', \Auth::user()->id)
+                ->where('role_id', 3)
+                ->count();
+        if ($check > 0) {
+            $destroy = \App\Invoice::onlyTrashed()->find(\Hashids::decode($id)[0])->forceDelete();
+            if (!$destroy) {
+                \App\Serial_number::where('invoice_id', \Hashids::decode($id)[0])->delete();
+                \App\Status_manager::where('invoice_id', \Hashids::decode($id)[0])->deleted();
+                \App\Status_finance::where('invoice_id', \Hashids::decode($id)[0])->deleted();
+                \App\Status_licensing::where('invoice_id', \Hashids::decode($id)[0])->deleted();
+                \App\Status_printed::where('invoice_id', \Hashids::decode($id)[0])->deleted();
+                return redirect('/invoice/view-invoices')
+                                ->with('global', '<div class="alert alert-success">Invoice permanently deleted</div>');
+            } else {
+                return redirect('/invoice/view-invoices')
+                                ->with('global', '<div class="alert alert-warning">Invoice could not be permanently deleted</div>');
+            }
         } else {
             return redirect('/invoice/view-invoices')
-                            ->with('global', '<div class="alert alert-warning">Invoice could not be permanently deleted</div>');
+                            ->with('global', '<div class="alert alert-warning">You do not have privileges to permanently delete invoices. Please contact system administator</div>');
         }
     }
 
@@ -462,87 +475,39 @@ class InvoiceController extends Controller {
 
     public function approve($id) {
         //Liensing approval
-//        $licensing_approval = \App\Status_licensing::where('invoice_id', \Hashids::decode($id))->get();
-//        if ($licensing_approval->count() < 1) {
-//            $check = \App\User_role::where('user_id', \Auth::user()->id)
-//                    ->where('role_id', 3)
-//                    ->count();
-//            if ($check < 1) {
-//                return redirect('/invoice/view-invoices')
-//                                ->with('global', '<div class="alert alert-warning">You do not have the licensing approval rights</div>');
-//            } else {
-////dd(\Hashids::decode($id));
-//                $invoice = \App\Invoice::find(\Hashids::decode($id));
-//                return view('invoice.approve-invoice-licensing', array('invoices' => $invoice, 'status' => $licensing_approval));
-//            }
-//        } else {
-//            $check = \App\User_role::where('user_id', \Auth::user()->id)
-//                    ->where('role_id', 4)
-//                    ->count();
-//            if ($check < 1) {
-//                return redirect('/invoice/view-invoices')
-//                                ->with('global', '<div class="alert alert-warning">You do not have the licensing approval rights</div>');
-//            } else {
-//                if ($licensing_approval[0]->status == 'Rejected') {
-//                    $invoice = \App\Invoice::find(\Hashids::decode($id));
-//                    return view('invoice.approve-invoice-licensing', array('invoices' => $invoice, 'status' => $licensing_approval))
-//                                    ->with('global', '<div class="alert alert-warning">This invoice had been previously rejected. Do you want to approve it</div>');
-//                } else if ($licensing_approval[0]->status == 'Rejected') {
-//                    return redirect('/invoice/view-invoices')
-//                                    ->with('global', '<div class="alert alert-warning">This invoice has already been approved by licensing department</div>');
-//                } else {
-//                    return redirect('/invoice/view-invoices')
-//                                    ->with('global', '<div class="alert alert-danger">The system could not perform the licensing approval request. Contact System Admin.</div>');
-//                }
-//            }
-        //Finance approval
-        $finance_approval = \App\Status_finance::where('invoice_id', \Hashids::decode($id))->get();
-//Check if approved
-        if ($finance_approval->count() < 1) {
-//Check if user has finance access rights
+        $licensing_approval = \App\Status_licensing::where('invoice_id', \Hashids::decode($id))->get();
+        if ($licensing_approval->count() < 1) {
             $check = \App\User_role::where('user_id', \Auth::user()->id)
-                    ->where('role_id', 3)
+                    ->where('role_id', 4)
                     ->count();
             if ($check < 1) {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-warning">You do not have the finance approval rights</div>');
+                                ->with('global', '<div class="alert alert-warning">You do not have the licensing approval rights</div>');
             } else {
 //dd(\Hashids::decode($id));
                 $invoice = \App\Invoice::find(\Hashids::decode($id));
-                return view('invoice.approve-invoice-finance', array('invoices' => $invoice, 'status' => $finance_approval));
+                return view('invoice.approve-invoice-licensing', array('invoices' => $invoice, 'status' => $licensing_approval));
             }
         } else {
-            //Check if was approved or rejected
-            if ($finance_approval[0]->status == 'Approved') {
-                //Check if user has managerial rights
-                $check = \App\User_role::where('user_id', \Auth::user()->id)
-                        ->where('role_id', 2)
-                        ->count();
-                if ($check > 0) {
-//Check if is approved by manager
-                    $manager_approval = \App\Status_manager::where('invoice_id', \Hashids::decode($id))->get();
-                    if ($manager_approval->count() < 1) {
-//Check if user has manager access rights
-                        $check = \App\User_role::where('user_id', \Auth::user()->id)
-                                ->where('role_id', 3)
-                                ->count();
-                        if ($check < 1) {
-                            return redirect('/invoice/view-invoices')
-                                            ->with('global', '<div class="alert alert-warning">You do not have the managerial approval rights</div>');
-                        } else {
-                            $invoice = \App\Invoice::find(\Hashids::decode($id));
-                            return view('invoice.approve-invoice-manager', array('invoices' => $invoice, 'status' => $manager_approval));
-                        }
-                    } else {
-                        return redirect('/invoice/view-invoices')
-                                        ->with('global', '<div class="alert alert-warning">Invoice has already been approved by manager</div>');
-                    }
-                } else {
-                    return redirect('/invoice/view-invoices')
-                                    ->with('global', '<div class="alert alert-warning">You do not have the managerial approval rights</div>');
-                }
+            $check = \App\User_role::where('user_id', \Auth::user()->id)
+                    ->where('role_id', 4)
+                    ->count();
+            if ($check < 1) {
+                return redirect('/invoice/view-invoices')
+                                ->with('global', '<div class="alert alert-warning">You do not have the licensing approval rights</div>');
             } else {
-
+                //dd($licensing_approval);
+                if ($licensing_approval[0]->status == 'Rejected') {
+                    $invoice = \App\Invoice::find(\Hashids::decode($id));
+                    return view('invoice.approve-invoice-licensing', array('invoices' => $invoice, 'status' => $licensing_approval))
+                                    ->with('global', '<div class="alert alert-warning">This invoice had been previously rejected. Do you want to approve it?</div>');
+                }
+            }
+            //Finance approval
+            $finance_approval = \App\Status_finance::where('invoice_id', \Hashids::decode($id))->get();
+//Check if approved
+            if ($finance_approval->count() < 1) {
+//Check if user has finance access rights
                 $check = \App\User_role::where('user_id', \Auth::user()->id)
                         ->where('role_id', 3)
                         ->count();
@@ -554,6 +519,50 @@ class InvoiceController extends Controller {
                     $invoice = \App\Invoice::find(\Hashids::decode($id));
                     return view('invoice.approve-invoice-finance', array('invoices' => $invoice, 'status' => $finance_approval));
                 }
+            } else {
+                //Check if was approved or rejected
+                if ($finance_approval[0]->status == 'Approved') {
+                    //Check if user has managerial rights
+                    $check = \App\User_role::where('user_id', \Auth::user()->id)
+                            ->where('role_id', 2)
+                            ->count();
+                    if ($check > 0) {
+//Check if is approved by manager
+                        $manager_approval = \App\Status_manager::where('invoice_id', \Hashids::decode($id))->get();
+                        if ($manager_approval->count() < 1) {
+//Check if user has manager access rights
+                            $check = \App\User_role::where('user_id', \Auth::user()->id)
+                                    ->where('role_id', 3)
+                                    ->count();
+                            if ($check < 1) {
+                                return redirect('/invoice/view-invoices')
+                                                ->with('global', '<div class="alert alert-warning">You do not have the managerial approval rights</div>');
+                            } else {
+                                $invoice = \App\Invoice::find(\Hashids::decode($id));
+                                return view('invoice.approve-invoice-manager', array('invoices' => $invoice, 'status' => $manager_approval));
+                            }
+                        } else {
+                            return redirect('/invoice/view-invoices')
+                                            ->with('global', '<div class="alert alert-warning">Invoice has already been approved by manager</div>');
+                        }
+                    } else {
+                        return redirect('/invoice/view-invoices')
+                                        ->with('global', '<div class="alert alert-warning">You do not have the managerial approval rights</div>');
+                    }
+                } else {
+
+                    $check = \App\User_role::where('user_id', \Auth::user()->id)
+                            ->where('role_id', 3)
+                            ->count();
+                    if ($check < 1) {
+                        return redirect('/invoice/view-invoices')
+                                        ->with('global', '<div class="alert alert-warning">You do not have the finance approval rights</div>');
+                    } else {
+//dd(\Hashids::decode($id));
+                        $invoice = \App\Invoice::find(\Hashids::decode($id));
+                        return view('invoice.approve-invoice-finance', array('invoices' => $invoice, 'status' => $finance_approval));
+                    }
+                }
             }
         }
     }
@@ -564,7 +573,7 @@ class InvoiceController extends Controller {
                     ->where('status', 'Approved');
             if ($approved->count() > 0) {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-warning">This invoice has already been approved</div>');
+                                ->with('global', '<div class="alert alert-warning">This invoice has already been approved by licensing department</div>');
             }
             $finance_approval = \App\Status_licensing::where('invoice_id', \Request::get('id'))
                     ->where('status', 'Rejected');
@@ -578,10 +587,10 @@ class InvoiceController extends Controller {
                 );
                 if ($approve) {
                     return redirect('/invoice/view-invoices')
-                                    ->with('global', '<div class="alert alert-success">Invoice successfully approved by finance</div>');
+                                    ->with('global', '<div class="alert alert-success">Invoice successfully approved by licensing department</div>');
                 } else {
                     return redirect('/invoice/view-invoices')
-                                    ->with('global', '<div class="alert alert-warning">Invoice approval failed</div>');
+                                    ->with('global', '<div class="alert alert-warning">Invoice approval by licensing department failed</div>');
                 }
             }
             $approve = \App\Status_licensing::create(array(
@@ -592,17 +601,17 @@ class InvoiceController extends Controller {
             );
             if ($approve) {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-success">Invoice successfully approved approved by finance</div>');
+                                ->with('global', '<div class="alert alert-success">Invoice successfully approved by licensing department</div>');
             } else {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-warning">Invoice approval failed</div>');
+                                ->with('global', '<div class="alert alert-warning">Invoice approval by licensing department failed</div>');
             }
         } else if (isset($_POST['reject'])) {
             $rejected = \App\Status_licensing::where('invoice_id', \Request::get('id'))
                     ->where('status', 'Rejected');
             if ($rejected->count() > 0) {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-warning">This invoice has already been approved by finance</div>');
+                                ->with('global', '<div class="alert alert-warning">This invoice has already been approved by licensing department</div>');
             }
             $finance_reject = \App\Status_licensing::where('invoice_id', \Request::get('id'))
                     ->where('status', 'Approved');
@@ -610,7 +619,7 @@ class InvoiceController extends Controller {
             if ($finance_reject->count() > 0) {
 
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-success">Invoice has already been rejected by finance</div>');
+                                ->with('global', '<div class="alert alert-success">Invoice has already been rejected by licensing department</div>');
             }
 
             $reject = \App\Status_licensing::create(array(
@@ -621,26 +630,26 @@ class InvoiceController extends Controller {
             );
             if ($reject) {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-success">Invoice successfully approved</div>');
+                                ->with('global', '<div class="alert alert-success">Invoice successfully approved by licensing department</div>');
             } else {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-warning">Invoice approval failed</div>');
+                                ->with('global', '<div class="alert alert-warning">Invoice approval by licensing department failed</div>');
             }
         } else {
             $approved = \App\Status_licensing::where('invoice_id', \Request::get('id'))
                     ->where('status', 'Approved');
             if ($rejected->count() > 0) {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-warning">This invoice has already been approved</div>');
+                                ->with('global', '<div class="alert alert-warning">This invoice has already been approved by licensing department</div>');
             }
             $finance_delete = \App\Status_licensing::where('invoice_id', \Request::get('id'))->delete();
             if ($finance_delete) {
                 \App\Invoice::find(\Hashids::decode($id))->delete();
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-success">This invoice has successfullly been deleted by finance</div>');
+                                ->with('global', '<div class="alert alert-success">This invoice has successfullly been deleted by licensing department</div>');
             } else {
                 return redirect('/invoice/view-invoices')
-                                ->with('global', '<div class="alert alert-warning">This invoice could not be deleted by finance</div>');
+                                ->with('global', '<div class="alert alert-warning">This invoice could not be deleted by licensing department</div>');
             }
         }
     }

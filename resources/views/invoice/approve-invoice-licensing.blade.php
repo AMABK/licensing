@@ -26,7 +26,7 @@ Approve Invoice | Finance
         <!-- Main row -->
         <div class="row" style="width: 70%; margin-left: 10%">
             <!-- Left col -->
-            <h3>Finance invoice approval</h3>
+            <h3>Licensing department invoice approval</h3>
             <form method="POST" action="/post/licesing-approve">
                 {!! csrf_field() !!}
                 @if (count($errors) > 0)

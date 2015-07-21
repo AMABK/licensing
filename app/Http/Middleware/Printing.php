@@ -15,7 +15,7 @@ class Printing {
      */
     public function handle($request, Closure $next) {
         $check = \App\User_role::where('user_id',  \Auth::user()->id)
-                ->where('role_id',4)
+                ->where('role_id',5)
                 ->count();
         if ($check < 1) {
             return redirect('/invoice/view-invoices')
