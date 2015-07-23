@@ -7,24 +7,27 @@ ob_start();
 <style>
     li { 
         list-style: none; 
+        height: 22px;
     }
     body{
         font-size: 14px;
     }   
     table, th, td {
-        border: 1px solid black;
     }
     barcode{
         position:absolute;
-        margin-left: 74%;
-        padding-top: 32px;
+        margin-left: -27%;
+        padding-top: 55px;
     }
     img{
         position:absolute;
-        margin-left: 30%;
-       padding-top: -25px;
+        margin-left: -80%;
+       padding-top: 38px;
 
     }
+    
+    
+
 </style>
 <html>
     <body>
@@ -32,7 +35,7 @@ ob_start();
         $rows = 0;
         $licensed_vehicle = explode(",", $cert->licensed_vehicles);
         ?>
-        <table style="width: auto">
+        <table style="width: auto; padding-top: -7%">
             <tbody>
                 @for($i=0;$i< sizeof($licensed_vehicle); $i++)
                 <?php
@@ -54,13 +57,12 @@ ob_start();
                 <tr>
                     @endif
                     <td style="width: 282.1px;height: 282.1px ">
-            <li>
-                <ul style="padding-top: 2%;padding-left: 28%">{{$get_sn[0]['sn']}}</ul>
-                <ul style="padding-left: 44%;padding-top: -1px">{{$sacco}}</ul>
-                <ul style="padding-left: 47%">{{strtoupper($licensed_vehicle[$i])}}</ul>
-               
-                <ul style="padding-left: 35%; padding-top: -3px;padding-bottom: -10px">{{$seats->no_of_seat}}</ul> <barcode>{!!\DNS2D::getBarcodeHTML($get_sn[0]['sn'], "QRCODE",3.4,3.4)!!}</barcode>
-                <ul style="padding-left: 35%; padding-bottom: 28px">{{$cert->expiry_date}}</ul><img src="{{$link->link}}sign.png" width="80px" height="26px"/>
+            <ul>
+                <li style="padding-top: 4%;padding-left: 18%">{{$get_sn[0]['sn']}}</li>
+                <li style="padding-left: 44%; height: 15px;padding-bottom: 10px">{{$sacco}}</li>
+                <li style="padding-left: 47%; height: 26px">{{strtoupper($licensed_vehicle[$i])}}</li>              
+                <li style="padding-left: 35%;height: 32px; padding-top: 0px;">{{$seats->no_of_seat}}</li> <barcode>{!!\DNS2D::getBarcodeHTML($get_sn[0]['sn'], "QRCODE",3.4,3.4)!!}</barcode>
+                <li style="padding-left: 25%; padding-bottom: 25px">{{$cert->expiry_date}}</li><img src="{{$link->link}}sign.png" width="80px" height="26px"/>
                 <ul></ul>
                 
                 
