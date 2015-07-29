@@ -12,10 +12,25 @@ class RegionTableSeeder extends Seeder {
     public function run() {
         \DB::table('regions')->insert(array(
             [
-                'name' => 'Nairobi',
+                'name' => 'Mombasa',
             ],
             [
-                'name' => 'Central',
+                'name' => 'Kakamega',
+            ],
+            [
+                'name' => 'Nyeri',
+            ],
+            [
+                'name' => 'Machakos',
+            ],
+            [
+                'name' => 'Kisii',
+            ],
+            [
+                'name' => 'Nakuru',
+            ],
+            [
+                'name' => 'Eldoret',
             ]
         ));
     }

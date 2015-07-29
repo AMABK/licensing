@@ -16,10 +16,10 @@ class UserTableSeeder extends Seeder {
             'designation_id' => 1,
             'national_id' => '0000000',
             'phone_no' => '254700000000',
-            'email' => 'arnold.mate@optimustechnologies.co.ke',
+            'email' => 'admin@prisk.co.ke',
             'job_id' => 'Admin',
-            'status' => 0,
-            'password' => bcrypt('secret'),
+            'status' => 1,
+            'password' => Hash::make('secret@prisk'),
         ]);
     }
 
