@@ -176,6 +176,7 @@ class InvoiceController extends Controller {
         $invoices = \App\Invoice::with('status_manager', 'status_finance')->get();
         //dd($invoices);
         $i = 0;
+        $status[0]=null;
         foreach ($invoices as $invoice) {
             if (isset($invoice->status_finance->status)) {
                 $status[$i]['finance'] = $invoice->status_finance->status;
