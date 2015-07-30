@@ -61,7 +61,8 @@ ob_start();
                 <li style="padding-left: 44%; height: 15px;padding-bottom: 10px">{{$sacco}}</li>
                 <li style="padding-left: 47%; height: 26px">{{strtoupper($licensed_vehicle[$i])}}</li>              
                 <li style="padding-left: 35%;height: 32px; padding-top: 0px;">{{$seats->no_of_seat}}</li> <barcode>{!!\DNS2D::getBarcodeHTML($get_sn[0]['sn'], "QRCODE",3.4,3.4)!!}</barcode>
-                <li style="padding-left: 25%; padding-bottom: 25px">{{$cert->expiry_date}}</li><img src="{{$link->link}}sign.png" width="80px" height="26px"/>
+                <li style="padding-left: 25%; padding-bottom: 25px">{{$cert->expiry_date}}</li><img src="{{$link->link}}sign.png" width="0px" height="0px"/>
+<!--                <img src="{{$link->link}}sign.png" width="80px" height="26px"/>-->
                 <ul></ul>
                 
                 
