@@ -55,7 +55,7 @@ ob_start();
                 @if($rows%4 == 0)
                 <tr>
                     @endif
-                    <td style="width: 282.1px;height: 282.1px ">
+                    <td style="width: 283.1px;height: 283.1px ">
             <ul>
                 <li style="padding-top: 4%;padding-left: 18%">{{$get_sn[0]['sn']}}</li>
                 <li style="padding-left: 44%; height: 15px;padding-bottom: 10px">{{$sacco}}</li>

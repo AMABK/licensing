@@ -16,10 +16,15 @@ class UserTableSeeder extends Seeder {
             'designation_id' => 1,
             'national_id' => '0000000',
             'phone_no' => '254700000000',
-            'email' => 'admin@prisk.co.ke',
+            'email' => 'admin@prisk.or.ke',
             'job_id' => 'Admin',
             'status' => 1,
             'password' => Hash::make('secret@prisk'),
+        ]);
+        \DB::table('user_roles')->insert([
+            'role_id' => 1,
+            'user_id' => 1,
+            'assigned_by' => 1
         ]);
     }
 

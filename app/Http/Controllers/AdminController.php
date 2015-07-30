@@ -44,7 +44,7 @@ class AdminController extends Controller {
                     'job_id' => 'required|unique:users',
                     'email' => 'required|unique:users',
                     'national_id' => 'required|unique:users',
-                    'designation' => 'required|integer',
+                    'designation_id' => 'required|integer',
                     'password' => 'required|confirmed|min:6',
                         )
         );
@@ -60,7 +60,7 @@ class AdminController extends Controller {
                         'last_name' => $data['last_name'],
                         'national_id' => $data['national_id'],
                         'job_id' => $data['job_id'],
-                        'designation_id' => $data['designation'],
+                        'designation_id' => $data['designation_id'],
                         'code' => $code,
                         'status' => 0,
                         'phone_no' => $data['phone_no'],

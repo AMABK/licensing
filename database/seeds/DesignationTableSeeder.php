@@ -10,17 +10,17 @@ class DesignationTableSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        \DB::table('designations')->insert(
-                [
-                    'name' => 'System Admin'
-                ], 
-                [
-                    'name' => 'Managerial'
-                ], 
-                [
-                    'name' => 'Officer'
-                ]
-        );
+        \DB::table('designations')->insert(array(
+            [
+                'name' => 'System Admin'
+            ],
+            [
+                'name' => 'Managerial'
+            ],
+            [
+                'name' => 'Officer'
+            ]
+        ));
     }
 
 }
