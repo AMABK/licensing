@@ -83,23 +83,23 @@ use AuthenticatesAndRegistersUsers;
                         $message->to($user->email, $user->first_name)->subject('Activate your account');
                     });
             if ($mail) {
-                return $user
+                return redirect('/')
                                 ->with('global', '<div class="alert alert-success" align="center">Account activation link has been sent to user email.</div>');
             } else {
-                return $user
+                return redirect('/')
                                 ->with('global', '<div class="alert alert-warning" align="center">Activation link could not be sent to the user email. Please resend the activation link</div>');
             }
         }
-        
     }
-        public function getActivate($code) {
+
+    public function getActivate($code) {
         $user = User::where('code', '=', $code)->where('status', '=', 0);
         if ($user->count()) {
             $user = $user->first();
             /*
              * Update user to active state
              */
-            $user->active = 1;
+            $user->status = 1;
             $user->code = '';
 
             if ($user->save()) {

@@ -16,6 +16,17 @@ Route::get('/', function () {
 Route::get('/auth/login', function () {
     return view('index');
 });
+// Password reset link request routes...
+Route::get('password/email', 'Auth\PasswordController@getEmail');
+Route::post('password/email', 'Auth\PasswordController@postEmail');
+
+// Password reset routes...
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+Route::post('password/reset', 'Auth\PasswordController@postReset');
+Route::get('/account-activate/{code}', array(
+    'as' => 'account-activate',
+    'uses' => 'Auth\AuthController@getActivate'
+));
 // Authentication routes...
 Route::get('/', array(
     'as' => 'login',
@@ -35,6 +46,14 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/auth/register', array(
         'as' => 'register',
         'uses' => 'Auth\AuthController@getRegister'
+    ));
+    Route::get('/change-password', array(
+        'as' => 'change-password',
+        'uses' => 'AdminController@getChangePassword'
+    ));
+    Route::post('/change-password', array(
+        'as' => 'change-password',
+        'uses' => 'AdminController@postChangePassword'
     ));
     Route::post('/auth/register', array(
         'as' => 'register',
@@ -220,42 +239,40 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'admin',
         'uses' => 'AdminController@index'
     ));
-    Route::get('/admin/add-user', array(
-        'as' => 'add-user',
-        'uses' => 'AdminController@create'
+    Route::get('/admin/view-users', array(
+        'as' => '/view-users',
+        'uses' => 'AdminController@show'
     ));
     Route::get('/admin/manage-user/{id}', array(
         'as' => '/manage-user',
         'uses' => 'AdminController@viewPrivileges'
     ));
-    Route::get('/admin/view-deleted-users', array(
-        'as' => '/view-deleted-users',
-        'uses' => 'AdminController@viewDeletedUsers'
-    ));
-    Route::get('/admin/view-users', array(
-        'as' => '/view-users',
-        'uses' => 'AdminController@show'
-    ));
-    Route::get('/admin/edit-user/{id}', array(
-        'as' => '/edit-user',
-        'uses' => 'AdminController@edit'
-    ));
-    Route::get('/admin/restore-user/{id}', array(
-        'as' => '/restore-user',
-        'uses' => 'AdminController@restoreDeletedUser'
-    ));
-    Route::post('/post/add-user', array(
-        'as' => 'add-user',
-        'uses' => 'AdminController@store'
-    ));
-    Route::post('/post/edit-user', array(
-        'as' => 'edit-user',
-        'uses' => 'AdminController@update'
-    ));
-    Route::post('/post/edit-privileges', array(
-        'as' => 'edit-privileges',
-        'uses' => 'AdminController@postPrivileges'
-    ));
+    Route::group(['middleware' => 'admin'], function() {
+        Route::get('/admin/edit-user/{id}', array(
+            'as' => '/edit-user',
+            'uses' => 'AdminController@edit'
+        ));
+        Route::get('/admin/add-user', array(
+            'as' => 'add-user',
+            'uses' => 'AdminController@create'
+        ));
+        Route::get('/admin/view-deleted-users', array(
+            'as' => '/view-deleted-users',
+            'uses' => 'AdminController@viewDeletedUsers'
+        ));
+        Route::get('/admin/restore-user/{id}', array(
+            'as' => '/restore-user',
+            'uses' => 'AdminController@restoreDeletedUser'
+        ));
+        Route::post('/post/add-user', array(
+            'as' => 'add-user',
+            'uses' => 'AdminController@store'
+        ));
+        Route::post('/post/edit-privileges', array(
+            'as' => 'edit-privileges',
+            'uses' => 'AdminController@postPrivileges'
+        ));
+    });
     //Reports controller
     Route::get('/reports', array(
         'as' => 'reports',

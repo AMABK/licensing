@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class Printing {
+class Administrator {
 
     /**
      * Handle an incoming request.
@@ -14,12 +14,12 @@ class Printing {
      * @return mixed
      */
     public function handle($request, Closure $next) {
-        $check = \App\User_role::where('user_id',  \Auth::user()->id)
-                ->where('role_id',5)
+        $check = \App\User_role::where('user_id', \Auth::user()->id)
+                ->where('role_id', 1)
                 ->count();
         if ($check < 1) {
-            return redirect('/invoice/view-invoices')
-                                        ->with('global', '<div class="alert alert-warning">User does not have printing privileges</div>');
+            return redirect('/admin')
+                            ->with('global', '<div class="alert alert-warning">User does not have administrator privileges</div>');
         }
 
         return $next($request);

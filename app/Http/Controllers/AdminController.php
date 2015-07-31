@@ -43,7 +43,6 @@ class AdminController extends Controller {
                     'last_name' => 'required',
                     'job_id' => 'required|unique:users',
                     'email' => 'required|unique:users',
-                    'national_id' => 'required|unique:users',
                     'designation_id' => 'required|integer',
                     'password' => 'required|confirmed|min:6',
                         )
@@ -58,24 +57,23 @@ class AdminController extends Controller {
             $user = User::create([
                         'first_name' => $data['first_name'],
                         'last_name' => $data['last_name'],
-                        'national_id' => $data['national_id'],
                         'job_id' => $data['job_id'],
                         'designation_id' => $data['designation_id'],
                         'code' => $code,
                         'status' => 0,
                         'phone_no' => $data['phone_no'],
                         'email' => $data['email'],
-                        'password' => bcrypt($data['password']),
+                        'password' => \Hash::make($data['password']),
             ]);
 
             if ($user) {
                 //Send activation link
-                $mail = Mail::pretend();
-//            $mail = Mail::send('emails.auth.activate', array(
-//                        'link' => route('account-activate', $code),
-//                        'name' => $data['first_name']), function($message) use ($user) {
-//                        $message->to($user->email, $user->first_name)->subject('Activate your account');
-//                    });
+                //$mail = Mail::pretend();
+                $mail = Mail::send('auth.activate', array(
+                            'link' => route('account-activate', $code),
+                            'name' => $data['first_name']), function($message) use ($user) {
+                            $message->to($user->email, $user->first_name)->subject('Activate your account');
+                        });
                 if ($mail) {
                     return redirect('/admin/add-user')
                                     ->with('global', '<div class="alert alert-success" align="center">Account activation link has been sent to user email.</div>');
@@ -229,6 +227,32 @@ class AdminController extends Controller {
             return redirect('/admin/view-users')
                             ->with('global', '<div class="alert alert-warning">User privileges could not be updated</div>');
         }
+    }
+
+    public function getChangePassword() {
+        return view('auth.change');
+    }
+
+    public function postChangePassword() {
+        $current = \Request::get('current_password');
+        if (\Auth::attempt(['email' => \Auth::user()->email, 'password' => $current])) {
+            $user = \App\User::findOrFail(\Auth::user()->id);
+
+            // Validate the new password length...
+
+            $user->fill([
+                'password' => Hash::make($current)
+            ])->save();
+            if ($user) {
+                return redirect('/home')
+                                ->with('global', '<div class="alert alert-success" align="center">Password reset successful.</div>');
+            } else {
+                return redirect('/home')
+                                ->with('global', '<div class="alert alert-warning" align="center">Password reset failed.</div>');
+            }
+        }
+        return redirect('/home')
+                        ->with('global', '<div class="alert alert-warning" align="center">Your current password is not correct.</div>');
     }
 
 }

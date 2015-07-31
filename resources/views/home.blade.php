@@ -20,9 +20,9 @@ Home
         <!-- Main content -->
         <section class="content">
           <!-- Small boxes (Stat box) -->
-          <div class="row">
+<!--          <div class="row">
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
+                 small box 
                 <div class="small-box bg-yellow-gradient">
                     <div class="inner">
                         <h3>150</h3>
@@ -33,9 +33,9 @@ Home
                     </div>
                     <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div><!-- ./col -->
+            </div> ./col 
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
+                 small box 
                 <div class="small-box bg-yellow-gradient">
                     <div class="inner">
                         <h3>53</h3>
@@ -46,9 +46,9 @@ Home
                     </div>
                     <a href="{{URL::to('/vehicle/add-vehicle')}}" class="small-box-footer">Add a vehicle <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div><!-- ./col -->
+            </div> ./col 
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
+                 small box 
                 <div class="small-box bg-yellow-gradient">
                     <div class="inner">
                         <h3>57<sup style="font-size: 20px">%</sup></h3>
@@ -59,9 +59,9 @@ Home
                     </div>
                     <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add group <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div><!-- ./col -->
+            </div> ./col 
             <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
+                 small box 
                 <div class="small-box bg-yellow-gradient">
                     <div class="inner">
                         <h3>65<sup style="font-size: 20px">%</sup></h3>
@@ -72,8 +72,8 @@ Home
                     </div>
                     <a href="{{URL::to('/vehicle/add-vehicle')}}" class="small-box-footer">Add vehicle <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
-            </div><!-- ./col -->
-        </div><!-- /.row -->
+            </div> ./col 
+        </div> /.row -->
         @if(Session::has('global'))
         <p>{!!Session::get('global')!!}</p>
         @endif

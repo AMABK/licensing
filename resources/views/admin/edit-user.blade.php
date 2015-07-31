@@ -54,10 +54,6 @@ Admin | Add user
                     <input type="text" name="job_id" class="form-control" value="{{ $user->job_id }}" required="" readonly="">
                 </div>
                 <div class="form-group">
-                    <label for="job_id">National Id (&lowast;) Read only</label>
-                    <input type="text" name="national_id" class="form-control" value="{{ $user->national_id }}" required="" readonly="">
-                </div>
-                <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" name="email" class="form-control" value="{{ $user->email }}" readonly="">
                 </div>

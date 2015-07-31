@@ -31,5 +31,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         //Custom route middleware
         'print' => \App\Http\Middleware\Printing::class,
+        'admin' => \App\Http\Middleware\Administrator::class,
     ];
 }
