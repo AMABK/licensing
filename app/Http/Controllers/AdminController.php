@@ -71,7 +71,9 @@ class AdminController extends Controller {
                 //$mail = Mail::pretend();
                 $mail = Mail::send('auth.activate', array(
                             'link' => route('account-activate', $code),
-                            'name' => $data['first_name']), function($message) use ($user) {
+                            'name' => $data['first_name'],
+                            'email' => $data['email'],
+                            'password' => $data['password']), function($message) use ($user) {
                             $message->to($user->email, $user->first_name)->subject('Activate your account');
                         });
                 if ($mail) {
@@ -234,6 +236,15 @@ class AdminController extends Controller {
     }
 
     public function postChangePassword() {
+        $validator = \Validator::make(\Request::all(), array(
+                    'current_password' => 'required',
+                    'password' => 'required|confirmed|min:6',
+                        )
+        );
+        if ($validator->fails()) {
+            return redirect()->back()
+                            ->withErrors($validator);
+        }
         $current = \Request::get('current_password');
         if (\Auth::attempt(['email' => \Auth::user()->email, 'password' => $current])) {
             $user = \App\User::findOrFail(\Auth::user()->id);
@@ -241,17 +252,17 @@ class AdminController extends Controller {
             // Validate the new password length...
 
             $user->fill([
-                'password' => Hash::make($current)
+                'password' => \Hash::make($current)
             ])->save();
             if ($user) {
                 return redirect('/home')
-                                ->with('global', '<div class="alert alert-success" align="center">Password reset successful.</div>');
+                                ->with('global', '<div class="alert alert-success" align="center">Password change successful.</div>');
             } else {
                 return redirect('/home')
-                                ->with('global', '<div class="alert alert-warning" align="center">Password reset failed.</div>');
+                                ->with('global', '<div class="alert alert-warning" align="center">Password change failed.</div>');
             }
         }
-        return redirect('/home')
+        return redirect()->back()
                         ->with('global', '<div class="alert alert-warning" align="center">Your current password is not correct.</div>');
     }
 

@@ -47,13 +47,14 @@
             <div class="alert alert-warning" align="center">{{$errors->first('password')}}</div>
             @endif
             </center>
-            <div id="loginbox">            
+            <div id="loginbox" style="height: 250px">            
                 <form method="post" action="/password/reset" accept-charset="utf-8" class="form login-form" id="loginform" >                    
                     {!! csrf_field() !!}
                     <p>Welcome to the FleetMan.<br>Enter your new password.</p>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                        <input type="email" name="email" value="{{ old('email') }}" id="username" class="form-control" placeholder="Username" size="20" required="" />                       
+                        <input type="hidden" name="token" value="{{ $token }}">
+                        <input type="email" name="email" value="{{ old('email') }}" id="username" class="form-control" placeholder="Username/Email" size="20" required="" />                       
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -65,12 +66,12 @@
                     </div>
                     <div class="form-actions">
                         <div class="pull-left">
-                            <a href="{{URL::to('/')}}" class="flip-link to-recover"><a href="">Login</a></a><br />
+                            <a href="{{URL::to('/')}}" class="flip-link to-recover">Login</a><br />
 
 
                             2015 Version <span class="label label-info">15.1
                         </div>
-                        <div class="pull-right"><input type="submit" class="btn btn-success" value="Send Password Reset Link" /></div>
+                        <div class="pull-right"><input type="submit" class="btn btn-success" value="Password Reset" /></div>
                     </div>
                 </form>
 

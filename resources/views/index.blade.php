@@ -48,7 +48,7 @@
                     <hr />
                     <div class="form-actions">
                         <div class="pull-left">
-                            <a href="#" class="flip-link to-recover"><a href="">Reset password?</a></a><br />
+                            <a href="{{URL::to('/password/email')}}" >Reset password?</a><br />
 
 
                             2015 Version <span class="label label-info">15.1

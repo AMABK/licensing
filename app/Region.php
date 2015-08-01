@@ -12,5 +12,8 @@ class Region extends Model {
     public function invoice() {
         return $this->hasMany('App\Invoice');
     }
+    public function agent() {
+        return $this->hasMany('App\Agent');
+    }
 
 }

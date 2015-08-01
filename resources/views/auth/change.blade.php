@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Welcome to FleetMan | Fleet Management System --  By Optimus E-Solutions</title>
+        <title>Change FleetMan Password | Fleet Management System --  By Optimus E-Solutions</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <link rel="stylesheet" rev="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
         <link href="/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -34,7 +34,7 @@
 
             <div class="alert alert-success text-center msg-demo">
 
-                <h3>Password Reset</h3>
+                <h3>Password Change</h3>
             </div>
             <center>
             @if(Session::has('global'))
@@ -50,7 +50,7 @@
             <div id="loginbox"style="height: 250px">            
                 <form method="post" action="/change-password" accept-charset="utf-8" class="form login-form" id="loginform" >                    
                     {!! csrf_field() !!}
-                    <p>Change your password.<br>Enter your new password.</p>
+                    <p>Change your password</p>
 
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -71,7 +71,7 @@
 
                             2015 Version <span class="label label-info">15.1
                         </div>
-                        <div class="pull-right"><input type="submit" class="btn btn-success" value="Send Password Reset Link" /></div>
+                        <div class="pull-right"><input type="submit" class="btn btn-success" value="Change Password" /></div>
                     </div>
                 </form>
 

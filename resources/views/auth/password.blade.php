@@ -37,15 +37,15 @@
                 <h3>Password Reset</h3>
             </div>
             <center>
-            @if(Session::has('global'))
-            <p>{!!Session::get('global')!!}</p>
-            @endif 
-            @if($errors->has('email'))
-            <div class="alert alert-warning" align="center">{{$errors->first('email')}}</div>
-            @endif
-            @if($errors->has('password'))
-            <div class="alert alert-warning" align="center">{{$errors->first('password')}}</div>
-            @endif
+                @if(Session::has('global'))
+                <p>{!!Session::get('global')!!}</p>
+                @endif 
+                @if($errors->has('email'))
+                <div class="alert alert-warning" align="center">{{$errors->first('email')}}</div>
+                @endif
+                @if($errors->has('password'))
+                <div class="alert alert-warning" align="center">{{$errors->first('password')}}</div>
+                @endif
             </center>
             <div id="loginbox">            
                 <form method="post" action="/password/email" accept-charset="utf-8" class="form login-form" id="loginform" >                    
@@ -57,7 +57,7 @@
                     </div>
                     <div class="form-actions">
                         <div class="pull-left">
-                            <a href="{{URL::to('/')}}" class="flip-link to-recover"><a href="">Login</a></a><br />
+                            <a href="{{URL::to('/')}}" class="flip-link to-recover">Login</a><br />
 
 
                             2015 Version <span class="label label-info">15.1

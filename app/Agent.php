@@ -13,5 +13,8 @@ class Agent extends Model {
     public function invoice() {
         return $this->hasMany('App\Invoice');
     }
+    public function regions() {
+        return $this->belongsTo('App\Region');
+    }
 
 }
