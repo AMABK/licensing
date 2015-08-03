@@ -176,7 +176,7 @@ class InvoiceController extends Controller {
         $invoices = \App\Invoice::with('status_manager', 'status_finance')->get();
         //dd($invoices);
         $i = 0;
-        $status[0]=null;
+        $status[0] = null;
         foreach ($invoices as $invoice) {
             if (isset($invoice->status_finance->status)) {
                 $status[$i]['finance'] = $invoice->status_finance->status;
@@ -427,6 +427,11 @@ class InvoiceController extends Controller {
         $check = \App\User_role::where('user_id', \Auth::user()->id)
                 ->where('role_id', 3)
                 ->count();
+        // Grant everyone right to view
+        $cert = \App\Invoice::with('group', 'vehicle')->find($id[0]);
+//dd($certs);
+        return view('invoice.view-cert', array('cert' => $cert));
+        //End of granting all rights
         if ($check) {
             $cert = \App\Invoice::with('group', 'vehicle')->find($id[0]);
 //dd($certs);
@@ -449,9 +454,10 @@ class InvoiceController extends Controller {
         $authorised = \App\Status_manager::where('invoice_id', $id[0])
                 ->where('status', 'Approved')
                 ->count();
-        if($authorised < 1){
+        if ($authorised < 1) {
             return redirect('/invoice/view-invoices')
-                            ->with('global', '<div class="alert alert-warning">This invoice has not been approved by CEO, please request approval before trying again</div>');        }
+                            ->with('global', '<div class="alert alert-warning">This invoice has not been approved by CEO, please request approval before trying again</div>');
+        }
         if ($check) {
             $printer_approval = \App\Status_printed::where('invoice_id', $id[0])->count();
             if ($printer_approval < 1) {
