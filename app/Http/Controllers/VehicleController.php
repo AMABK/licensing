@@ -56,13 +56,14 @@ class VehicleController extends Controller {
         } else {
             $group_id = \DB::table('groups')
                             ->where('reg_id', \Request::get('reg_id'))->first();
+           // dd($group_id->id);
             //dd(\Request::all());
             if (\Request::get('reg_id') != '') {
                 $vehicle = \App\Vehicle::create(array(
                             'reg_no' => \Request::get('reg_no'),
                             'vehicle_make' => \Request::get('vehicle_make'),
                             'type_id' => \Request::get('type_id'),
-                            'group_id' => \Request::get('group_id'),
+                            'group_id' => $group_id->id,
                             'tlb_no' => \Request::get('tlb_no'),
                             'no_of_seat' => \Request::get('no_of_seat'),
                             'user_id' => \Auth::user()->id
@@ -113,18 +114,18 @@ class VehicleController extends Controller {
         $i = 0;
         $group = [];
         //This foreach is not in use, for use incase of system modifications in the view-vehicles view
-        foreach ($vehicles as $vehicle) {
-            if ($vehicle->type_id == 1) {
-                $group[$i]['group_id'] = "";
-                $group[$i]['group_name'] = 'No Group';
-            } else {
-                //echo ($vehicle->group->id);
-                $group[$i]['group_id'] = $vehicle->group->id;
-                $group[$i]['group_name'] = $vehicle->group->name;
-                //dd($vehicle->group->id);
-            }
-            $i++;
-        }
+//        foreach ($vehicles as $vehicle) {
+//            if ($vehicle->type_id == 1) {
+//                $group[$i]['group_id'] = "";
+//                $group[$i]['group_name'] = 'No Group';
+//            } else {
+//                //echo ($vehicle->group->id);
+//                $group[$i]['group_id'] = $vehicle->group->id;
+//                $group[$i]['group_name'] = $vehicle->group->name;
+//                //dd($vehicle->group->id);
+//            }
+//            $i++;
+//        }
         return view('vehicle.view-vehicles', array('vehicle' => $vehicles, 'group' => $group));
     }
 

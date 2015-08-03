@@ -29,12 +29,12 @@ View Vehicles
             <!-- Left col -->
             <h3>Registered vehicles under {{$group[0]->name}} Sacco [Reg No: {{$group[0]->reg_id}}]</h3>
             <table id="myTable" width="100%">
-                <thead><tr><th>Reg No</th><th>Vehicle make</th><th>TLB NUmber</th><th>Number of seats</th><th>Remove from group</th></tr></thead>
+                <thead><tr><th>Reg No</th><th>Vehicle make</th><th>TLB Number</th><th>Number of seats</th><th>Remove from group</th></tr></thead>
 
                 @foreach ($group as $groups)
                 <tbody>
                     <tr>
-                        <td><a href="{{URL::to('vehicle/edit-vehicle/'.\Hashids::encode($groups->id))}}"> {{strtoupper($groups->reg_no)}}</a></td><td>{{ $groups->vehicle_make }}</td><td>{{ strtoupper($groups->tlb_no) }}</td><td>{{ $groups->no_of_seat }}</td><td><a href="{{URL::to('/vehicle/remove-group/'.\Hashids::encode($groups->group_id).'/'.$groups->reg_no)}}">Remove</a></td>
+                        <td><a href="{{URL::to('vehicle/edit-vehicle/'.\Hashids::encode($groups->id))}}"> {{strtoupper($groups->reg_no)}}</a></td><td>{{ $groups->vehicle_make }}</td><td>{{ strtoupper($groups->tlb_no) }}</td><td>{{ $groups->no_of_seat }}</td><td><a href="{{URL::to('/vehicle/remove-group/'.\Hashids::encode($groups->group_id,$groups->id))}}">Remove</a></td>
                     </tr>
                 </tbody>
                 @endforeach
