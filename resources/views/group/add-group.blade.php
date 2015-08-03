@@ -67,7 +67,7 @@ Add Group
                 </div>
                 <div class="form-group">
                     <label for="address">Postal Address</label>
-                    <input type="text" name="postal_address" class="form-control" value="{{ old('postal_address') }}" placeholder="Address">
+                    <input type="text" name="postal_address" class="form-control" value="P.O Box" placeholder="Address">
                 </div>
                 <div class="form-group">
                     <label for="address">Physical Address</label>

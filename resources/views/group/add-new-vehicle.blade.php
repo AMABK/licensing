@@ -54,7 +54,7 @@ Add Vehicle
                 </div>
                 <div class="form-group">
                     <label for="tlb_no">TLB Number</label>
-                    <input type="text" style="text-transform:uppercase" name="tlb_no" class="form-control" value="{{ old('tlb_no') }}" required=""  placeholder="TLB No.">
+                    <input type="text" style="text-transform:uppercase" name="tlb_no" class="form-control" value="{{ old('tlb_no') }}"  placeholder="TLB No.">
                 </div>
                 <div class="form-group">
                     <label for="no_of_seat">Number of seats</label>

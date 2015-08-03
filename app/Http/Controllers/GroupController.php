@@ -57,10 +57,10 @@ class GroupController extends Controller {
         } else {
             $group = \App\Group::create(\Request::all());
             if ($group) {
-                return redirect('/group/add-group' . \Hashids::encode(\Request::input('reg_id')))
+                return redirect('/group/view-groups')
                                 ->with('global', '<div class="alert alert-success">Group successfullly saved in the database</div>');
             } else {
-                return redirect('/group/add-group')
+                return redirect('/group/view-groups')
                                 ->with('global', '<div class="alert alert-danger">Whoooops, your input could not be saved. Please contact administrator!</div>');
             }
         }
