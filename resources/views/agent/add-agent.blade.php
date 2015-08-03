@@ -56,11 +56,6 @@ Add agent
                         <option value="{{$region->id}}" >{{$region->name}}</option>
                         @endforeach
                     </select>
-                </div>
-                <div class="form-group">
-                    <label for="address">Address</label>
-                    <input type="text" name="postal_address" class="form-control" value="{{ old('postal_address') }}" required="" placeholder="Address">
-                </div>
                     <button type="submit">Register</button>
                 </div>
             </form>

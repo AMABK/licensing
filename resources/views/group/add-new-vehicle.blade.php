@@ -43,11 +43,7 @@ Add Vehicle
                     <input type="text" name="reg_no" style="text-transform:uppercase" class="form-control" value="{{ old('reg_no') }}" required="" placeholder="Registration Number">
                 </div>
                 <div class="form-group">
-                    <label for="vehicle_make">Vehicle Make</label>
-                    <input type="text" class="form-control" name="vehicle_make" class="form-control" value="{{ old('vehicle_make') }}" placeholder="Vehicle make">
                     <input type="text" name="reg_id" value="{{$group->reg_id}}" hidden="">
-                </div>
-                <div class="form-group">
                     <input name="type_id" value="{{$group->type_id}}" hidden="" readonly=""/>
                 </div>
                 <div class="form-group">

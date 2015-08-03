@@ -53,7 +53,10 @@ Add Group
                     <label for="type">Group Type</label>
                     <select type="text" name="type_id" id="category" class="form-control" required="">
                         @foreach($group as $groups)
-                        <option  value="{{$groups->id}}" class="no_sacco" >{{$groups->group}}</option>
+                        @if($groups->group == null)
+                        @else
+                         <option  value="{{$groups->id}}" class="no_sacco" >{{$groups->group}}</option>
+                        @endif
                         @endforeach
                     </select>
                 </div>

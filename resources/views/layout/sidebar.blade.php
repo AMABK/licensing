@@ -112,7 +112,6 @@
                 <ul class="treeview-menu">
                     <li><a href="{{URL::to('/agent')}}"><i class="fa fa-home"></i> Agent home</a></li>
                     <li><a href="{{URL::to('/agent/add-agent')}}"><i class="fa fa-plus-circle"></i> Add agent</a></li>
-                    <li><a href="{{URL::to('/agent/edit-agent')}}"><i class="fa fa-eye"></i> Edit agent</a></li>
                 </ul>
             </li>
             <li class="treeview">

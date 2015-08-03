@@ -57,10 +57,6 @@ Add agent
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="address">Address</label>
-                    <input type="text" name="postal_address" class="form-control" value="{{ $agent->postal_address }}" required="" placeholder="Address">
-                </div>
                     <button type="submit">Update</button>
                 </div>
             </form>

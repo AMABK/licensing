@@ -44,7 +44,6 @@ class VehicleController extends Controller {
                     'reg_no' => 'required|max:10|unique:vehicles',
                     'type_id' => 'required|max:255',
                     'group_id' => 'sometimes|integer',
-                    'vehicle_make' => 'required',
                     'no_of_seat' => 'integer'
                         )
         );
@@ -61,7 +60,6 @@ class VehicleController extends Controller {
             if (\Request::get('reg_id') != '') {
                 $vehicle = \App\Vehicle::create(array(
                             'reg_no' => \Request::get('reg_no'),
-                            'vehicle_make' => \Request::get('vehicle_make'),
                             'type_id' => \Request::get('type_id'),
                             'group_id' => $group_id->id,
                             'tlb_no' => \Request::get('tlb_no'),
@@ -73,7 +71,6 @@ class VehicleController extends Controller {
 
                 $vehicle = \App\Vehicle::create(array(
                             'reg_no' => \Request::get('reg_no'),
-                            'vehicle_make' => \Request::get('vehicle_make'),
                             'type_id' => \Request::get('type_id'),
                             'group_id' => null,
                             'tlb_no' => \Request::get('tlb_no'),
@@ -155,7 +152,6 @@ class VehicleController extends Controller {
         }
         $validator = \Validator::make(\Request::all(), array(
                     'group_id' => 'sometimes|integer',
-                    'vehicle_make' => 'required',
                     'no_of_seat' => 'required|integer'
                         )
         );

@@ -45,10 +45,6 @@ Update Vehicle
                     <input type="text" name="reg_no" style="text-transform:uppercase" class="form-control" value="{{$vehicles->reg_no }}" required="" readonly="" placeholder="Registration Number">
                 </div>
                 <div class="form-group">
-                    <label for="vehicle_make">Vehicle Make</label>
-                    <input type="text" class="form-control" name="vehicle_make" class="form-control" value="{{ $vehicles->vehicle_make }}" placeholder="Vehicle make">
-                </div>
-                <div class="form-group">
                     <label for="tlb_no">TLB Number</label>
                     <input type="text" style="text-transform:uppercase" name="tlb_no" class="form-control" value="{{ $vehicles->tlb_no }}" required=""  placeholder="TLB No.">
                 </div>

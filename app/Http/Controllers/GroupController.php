@@ -126,10 +126,10 @@ class GroupController extends Controller {
                     )
             );
             if ($group) {
-                return redirect('group/view-groups')
+                return redirect('/group/view-groups')
                                 ->with('global', '<div class="alert alert-success">Group successfullly updated in the database</div>');
             } else {
-                return redirect('group/view-groups')
+                return redirect('/group/view-groups')
                                 ->with('global', '<div class="alert alert-warning">Whoooops, no changes have been made to the group details!</div>');
             }
         }
@@ -184,6 +184,33 @@ class GroupController extends Controller {
 //		array_push($data, $row['name']);	
 //	}	
             echo json_encode($data);
+        }
+    }
+        public function generateGroupId() {
+        $check = \App\Group::all()->count();
+        if ($check < 1) {
+            return 'AB1';
+        }
+        $pick_latest = \DB::select('SELECT * FROM groups ORDER BY id DESC LIMIT 1');
+        $sn_array = explode("-", $pick_latest[0]->reg_id);
+        if ($sn_array[2] == 'Z' && intval($sn_array[3]) > 900000) {
+            $remainder = 999999 - intval($sn_array[3]);
+            $request->session()->flash('status', '<div class="alert alert-warning">There are ONLY ' . $remainder . ' group system generated ids remaining. Please contact the product owner to add new parameters.</div>');
+            if (intval($sn_array[3]) > 999998) {
+                return redirect('/')
+                                ->with('global', '<div class="alert alert-danger">You exhausted the existing group system generated ids. Please contact the product owner!</div>');
+            }
+        }
+        if (intval($sn_array[3]) < 999999) {
+            $digit = intval($sn_array[3]) + 1;
+            $new_num = str_pad($digit, 6, '0', STR_PAD_LEFT);
+            $new_sn = 'KP-PSV-' . $sn_array[2] . '-' . $new_num;
+            return $new_sn;
+        } else {
+            $new_alp = chr(ord($sn_array[2]) + 1);
+            $new_num = str_pad(1, 6, '0', STR_PAD_LEFT);
+            $new_sn = 'KP-PSV-' . $new_alp . '-' . $new_num;
+            return $new_sn;
         }
     }
 

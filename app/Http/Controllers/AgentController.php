@@ -108,7 +108,6 @@ class AgentController extends Controller {
             'phone_no' => \Request::get('phone_no'),
             'region_id' => \Request::get('region_id'),
             'user_id' => \Auth::user()->id,
-            'postal_address' => \Request::get('postal_address')
         ));
         if ($update) {
             return redirect('/agent')
