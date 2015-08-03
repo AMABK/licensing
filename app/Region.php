@@ -12,7 +12,7 @@ class Region extends Model {
     public function invoice() {
         return $this->hasMany('App\Invoice');
     }
-    public function agent() {
+    public function agents() {
         return $this->hasMany('App\Agent');
     }
 

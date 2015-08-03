@@ -37,15 +37,15 @@ View agents
             <!-- Left col -->
             <h3>Registered agents</h3>
             <table id="myTable" width="100%">
-                <thead><tr><th>Name</th><th>Phone</th><th>Region</th><th>Address</th></tr></thead>
+                <thead><tr><th>Name</th><th>Phone</th><th>Region</th><th>Address</th><th></th></tr></thead>
                 <tbody>
                     @foreach ($agent as $agents)
                     <tr>
-                        <td><a href="{{URL::to('admin/edit-agent/'.\Hashids::encode($agents->id))}}"> {{strtoupper($agents->name)}}</a></td><td>{{ $agents->phone_no }}</td><td>{{ $agents->region }}</td><td>{{ $agents->postal_address }}</td></td>
+                        <td><a href="{{URL::to('agent/edit-agent/'.\Hashids::encode($agents->id))}}"> {{strtoupper($agents->name)}}</a></td><td>{{ $agents->phone_no }}</td><td>{{ $agents->region->name }}</td><td>{{ $agents->postal_address }}</td><td><a href="{{URL::to('agent/delete-agent/'.\Hashids::encode($agents->id))}}">delete</a></td>
                     </tr>
                     @endforeach
                 </tbody>
-                <tfoot><tr><th>Name</th><th>Phone</th><th>Region</th><th>Address</th></tr></thead>
+                <tfoot><tr><th>Name</th><th>Phone</th><th>Region</th><th>Address</th><th></th></tr></thead>
             </table>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
 

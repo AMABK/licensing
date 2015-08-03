@@ -21,10 +21,8 @@ Route::get('password/email', 'Auth\PasswordController@getEmail');
 Route::post('password/email', 'Auth\PasswordController@postEmail');
 
 // Password reset routes...
-Route::get('password/reset/{token}', 
-        'Auth\PasswordController@getReset');
-Route::post('password/reset', 
-        'Auth\PasswordController@postReset');
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+Route::post('password/reset', 'Auth\PasswordController@postReset');
 Route::get('/account-activate/{code}', array(
     'as' => 'account-activate',
     'uses' => 'Auth\AuthController@getActivate'
@@ -289,8 +287,28 @@ Route::group(['middleware' => 'auth'], function() {
         'uses' => 'ReportController@show'
     ));
     //Agents controller
-       Route::get('/agent', array(
+    Route::get('/agent', array(
         'as' => 'agent',
         'uses' => 'AgentController@index'
-    )); 
+    ));
+    Route::get('/agent/add-agent', array(
+        'as' => 'add-agent',
+        'uses' => 'AgentController@create'
+    ));
+    Route::get('/agent/edit-agent/{id}', array(
+        'as' => 'edit-agent',
+        'uses' => 'AgentController@edit'
+    ));
+    Route::get('/agent/delete-agent/{id}', array(
+        'as' => 'delete-agent',
+        'uses' => 'AgentController@delete'
+    ));
+    Route::post('/post/add-agent', array(
+        'as' => 'add-agent',
+        'uses' => 'AgentController@store'
+    ));
+    Route::post('/post/edit-agent', array(
+        'as' => 'edit-agent',
+        'uses' => 'AgentController@update'
+    ));
 });
