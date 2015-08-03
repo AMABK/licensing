@@ -183,6 +183,7 @@ class GroupController extends Controller {
 //	while ($row = mysql_fetch_array($result)) {
 //		array_push($data, $row['name']);	
 //	}	
+            
             echo json_encode($data);
         }
     }
