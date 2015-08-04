@@ -279,8 +279,8 @@ class InvoiceController extends Controller {
     }
 
     public function getGroupDetails() {
-        //$reg_id = trim(strip_tags($_GET['term']));
-$reg_id = '56';
+        $reg_id = trim(strip_tags($_GET['term']));
+//$reg_id = '56';
         $group_data = \App\Group::with('vehicle_type')
                 ->where('reg_id', 'like', '%' . $reg_id . '%')
                 ->get(['id', 'reg_id', 'name', 'type_id']);
