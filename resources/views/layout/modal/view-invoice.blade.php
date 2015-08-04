@@ -8,7 +8,6 @@
             <form METHOD="post" ACTION="">
                 <div class="modal-body">
                     <table class="table table-striped table-condensed table-bordered">
-                        <thead><tr><td></td><td></td></tr></thead>
                         <tr><td>Invoice Number</td><td><input style='text-transform:uppercase' id="noInvoice" readonly=""></td>
                         </tr>
                         <tr><td>Paid By</td><td><input id="payerInvoice" readonly=""></td>

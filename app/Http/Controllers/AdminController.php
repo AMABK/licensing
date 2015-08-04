@@ -252,7 +252,7 @@ class AdminController extends Controller {
             // Validate the new password length...
 
             $user->fill([
-                'password' => \Hash::make($current)
+                'password' => \Hash::make(\Request::get('password'))
             ])->save();
             if ($user) {
                 return redirect('/home')
