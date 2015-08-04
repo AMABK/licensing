@@ -29,14 +29,14 @@ View Vehicles
             <!-- Left col -->
             <h3>Registered vehicles</h3>
             <table id="myTable" width="100%">
-                <thead><tr><th>Reg No</th><th>Vehicle make</th><th>Group</th><th>TLB NUmber</th><th>Number of seats</th><th></th></tr></thead>
+                <thead><tr><th>Reg No</th><th>Group</th><th>TLB NUmber</th><th>Number of seats</th><th></th></tr></thead>
                 <tbody>
                     <?php 
                     $i=0;
                     ?>
                     @foreach ($vehicle as $vehicles)
                     <tr>
-                        <td><a href="{{URL::to('vehicle/edit-vehicle/'.\Hashids::encode($vehicles->id))}}"> {{strtoupper($vehicles->reg_no)}}</a></td><td>{{ $vehicles->vehicle_make }}</td><td><?php
+                        <td><a href="{{URL::to('vehicle/edit-vehicle/'.\Hashids::encode($vehicles->id))}}"> {{strtoupper($vehicles->reg_no)}}</a></td><td><?php
                             if ($vehicles->group_id == null) {
                                 echo 'No Group';
                             } else {
@@ -48,7 +48,7 @@ View Vehicles
                     ?>
                     @endforeach
                 </tbody>
-                <tfoot><tr><th>Reg No</th><th>Vehicle make</th><th>Sacco</th><th>TLB Number</th><th>Number of seats</th><th></th></tr></thead>
+                <tfoot><tr><th>Reg No</th><th>Sacco</th><th>TLB Number</th><th>Number of seats</th><th></th></tr></thead>
             </table>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
 

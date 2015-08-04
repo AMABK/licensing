@@ -279,8 +279,8 @@ class InvoiceController extends Controller {
     }
 
     public function getGroupDetails() {
-        $reg_id = trim(strip_tags($_GET['term']));
-//$reg_id = 'KEs';
+        //$reg_id = trim(strip_tags($_GET['term']));
+$reg_id = '56';
         $group_data = \App\Group::with('vehicle_type')
                 ->where('reg_id', 'like', '%' . $reg_id . '%')
                 ->get(['id', 'reg_id', 'name', 'type_id']);
@@ -308,12 +308,26 @@ class InvoiceController extends Controller {
                     break;
                 case 3:
                     /*
-                     * Company vehicles
-                     * Each vehicle pays an annual fee of amount z
+                     * Matatu charges
+                     * Each matatu pays annual fee of amount y
                      */
                     $fee = $vehicle_fee->standard_fee * $vehicles->count();
                     break;
                 case 4:
+                    /*
+                     * Taxi vehicles
+                     * Each vehicle pays an annual fee of amount z
+                     */
+                    $fee = $vehicle_fee->standard_fee * $vehicles->count();
+                    break;
+                case 5:
+                    /*
+                     * Company vehicle
+                     * Each vehicle pays an annual fee of amount z
+                     */
+                    $fee = $vehicle_fee->standard_fee * $vehicles->count();
+                    break;
+                case 6:
                     /*
                      * Tour firms
                      * Tour vans(14 seater) pay annual fee of amount k and amount h for every extra seat

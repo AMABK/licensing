@@ -108,22 +108,23 @@ class VehicleController extends Controller {
      */
     public function show() {
         $vehicles = \App\Vehicle::with('group')->get();
-        $i = 0;
-        $group = [];
-        //This foreach is not in use, for use incase of system modifications in the view-vehicles view
-//        foreach ($vehicles as $vehicle) {
-//            if ($vehicle->type_id == 1) {
-//                $group[$i]['group_id'] = "";
-//                $group[$i]['group_name'] = 'No Group';
-//            } else {
-//                //echo ($vehicle->group->id);
-//                $group[$i]['group_id'] = $vehicle->group->id;
-//                $group[$i]['group_name'] = $vehicle->group->name;
-//                //dd($vehicle->group->id);
-//            }
-//            $i++;
-//        }
-        return view('vehicle.view-vehicles', array('vehicle' => $vehicles, 'group' => $group));
+        //dd($vehicles);
+      //  $i = 0;
+       // $group = [];
+ /*   //    This foreach is not in use, for use incase of system modifications in the view-vehicles view
+        foreach ($vehicles as $vehicle) {
+            if ($vehicle->type_id == 1) {
+                $group[$i]['group_id'] = "";
+                $group[$i]['group_name'] = 'No Group';
+            } else {
+                //echo ($vehicle->group->id);
+                $group[$i]['group_id'] = $vehicle->group->id;
+                $group[$i]['group_name'] = $vehicle->group->name;
+                //dd($vehicle->group->id);
+            }
+            $i++;
+        }*/
+        return view('vehicle.view-vehicles', array('vehicle' => $vehicles));
     }
 
     /**

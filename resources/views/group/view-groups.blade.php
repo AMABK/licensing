@@ -28,15 +28,15 @@ Group
             <!-- Left col -->
             <h3>Registered groups</h3>
             <table id="myTable" width="100%">
-                <thead><tr><th>Name</th><th>Reg No</th><th>Group Type</th><th>Phone</th><th>Email</th><th>Postal Address</th><th>Physical Address</th><th>Add Vehicles</th></tr></thead>
+                <thead><tr><th>Name</th><th>RegNo(Auto)</th><th>GoK RegNo</th><th>Group Type</th><th>Phone</th><th>Email</th><th>Postal Address</th><th>Physical Address</th><th>Add Vehicles</th></tr></thead>
                 <tbody>
                     @foreach ($group as $groups)
                     <tr>
-                        <td><a href="{{URL::to('group/edit-group/'.\Hashids::encode($groups->id))}}"> {{$groups->name}}</a></td><td>{{ $groups->reg_id }}</td><td>{{ $groups->vehicle_type->group }}</td><td>{{ $groups->phone_no }}</td><td>{{ $groups->email }}</td><td>{{ $groups->postal_address }}</td><td>{{ $groups->physical_address }}</td><td><a href="{{URL::to('group/add-new-vehicle/'.\Hashids::encode($groups->id))}}">Add</a></td>
+                        <td><a href="{{URL::to('group/edit-group/'.\Hashids::encode($groups->id))}}"> {{$groups->name}}</a></td><td>{{ $groups->reg_id }}</td><td>{{ $groups->group_code }}</td><td>{{ $groups->vehicle_type->group }}</td><td>{{ $groups->phone_no }}</td><td>{{ $groups->email }}</td><td>{{ $groups->postal_address }}</td><td>{{ $groups->physical_address }}</td><td><a href="{{URL::to('group/add-new-vehicle/'.\Hashids::encode($groups->id))}}">Add</a></td>
                     </tr>
                     @endforeach
                 </tbody>
-                <tfoot><tr><th>Name</th><th>Reg No</th><th>Group Type</th><th>Phone</th><th>Email</th><th>Postal Address</th><th>Physical Address</th><th>Add Vehicles</th></tr></thead>
+                <tfoot><tr><th>Name</th><th>RegNo(Auto)</th><th>GoK RegNo</th><th>Group Type</th><th>Phone</th><th>Email</th><th>Postal Address</th><th>Physical Address</th><th>Add Vehicles</th></tr></thead>
             </table>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
 

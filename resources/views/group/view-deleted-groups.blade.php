@@ -1,10 +1,9 @@
 @extends('layout.main')
 @section('title')
-View Vehicles
+Group
 @stop
 @section('content')
 <link rel="stylesheet" type="text/css" href="/datatables/custom.dataTables.css" title="yellow" media="screen" />
-
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -20,6 +19,7 @@ View Vehicles
 
     <!-- Main content -->
     <section class="content">
+        <center><p><div class="alert alert-warning">Once these groups are deleted, all related data and vehicles will also be deleted(This process is not reversible)</div></p></center>
 
         @if(Session::has('global'))
         <center><p>{!!Session::get('global')!!}</p></center>
@@ -27,23 +27,21 @@ View Vehicles
         <!-- Main row -->
         <div class="row" style="margin: 3px">
             <!-- Left col -->
-            <h3>Registered vehicles under {{$group[0]->name}} Sacco [Reg No: {{$group[0]->reg_id}}]</h3>
+            <h3>Deleted groups</h3>
             <table id="myTable" width="100%">
-                <thead><tr><th>Reg No</th><th>TLB Number</th><th>Number of seats</th><th>Remove from group</th></tr></thead>
-
-                @foreach ($group as $groups)
+                <thead><tr><th>Name</th><th>RegNo(Auto)</th><th>GoK RegNo</th><th>Group Type</th><th>Phone</th><th>Email</th><th>Postal Address</th><th>Physical Address</th><th>Restore</th></tr></thead>
                 <tbody>
+                    @foreach ($group as $groups)
                     <tr>
-                        <td><a href="{{URL::to('vehicle/edit-vehicle/'.\Hashids::encode($groups->id))}}"> {{strtoupper($groups->reg_no)}}</a></td><td>{{ strtoupper($groups->tlb_no) }}</td><td>{{ $groups->no_of_seat }}</td><td><a href="{{URL::to('/vehicle/remove-group/'.\Hashids::encode($groups->group_id,$groups->id))}}">Remove</a></td>
+                        <td><a href="{{URL::to('group/edit-group/'.\Hashids::encode($groups->id))}}"> {{$groups->name}}</a></td><td>{{ $groups->reg_id }}</td><td>{{ $groups->group_code }}</td><td>{{ $groups->vehicle_type->group }}</td><td>{{ $groups->phone_no }}</td><td>{{ $groups->email }}</td><td>{{ $groups->postal_address }}</td><td>{{ $groups->physical_address }}</td><td><a href="{{URL::to('group/restore-group/'.\Hashids::encode($groups->id))}}">Restore</a></td>
                     </tr>
+                    @endforeach
                 </tbody>
-                @endforeach
-                <tfoot><tr><th>Reg No</th><th>TLB Number</th><th>Number of seats</th><th>Remove from group</th></tr></thead>
+                <tfoot><tr><th>Name</th><th>RegNo(Auto)</th><th>GoK RegNo</th><th>Group Type</th><th>Phone</th><th>Email</th><th>Postal Address</th><th>Physical Address</th><th>Restore</th></tr></thead>
             </table>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
 
         </div><!-- /.row (main row) -->
-
     </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
 
@@ -51,9 +49,10 @@ View Vehicles
 @section('scripts')
 @parent
 <script src="/datatables/jquery.dataTables.min.js" type="text/javascript" ></script>
+
 <script>
 $(document).ready(function () {
-    $('#myTable').DataTable();
+    $('#myTable').dataTable();
 });
 </script>   
 @stop

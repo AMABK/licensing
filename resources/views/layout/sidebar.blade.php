@@ -75,6 +75,7 @@
                     <li><a href="{{URL::to('/group')}}"><i class="fa fa-home"></i> Group home</a></li>
                     <li><a href="{{URL::to('/group/add-group')}}"><i class="fa fa-plus-circle"></i> Add new group</a></li>
                     <li><a href="{{URL::to('/group/view-groups')}}"><i class="fa fa-eye"></i> View groups</a></li>
+                    <li><a href="{{URL::to('/group/deleted-groups')}}"><i class="fa fa-eye"></i> View deleted groups</a></li>
                 </ul>
             </li>
             <li class="treeview">

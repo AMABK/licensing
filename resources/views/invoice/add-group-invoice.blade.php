@@ -97,7 +97,7 @@ Add Group Invoice
                     <input type="text" style="text-transform:uppercase" name="invoice_no" class="form-control txt-auto" required="" placeholder="Invoice Number">
                 </div>
                 <div class="form-group">
-                    <label for="reg_id">Group Registration Number</label>
+                    <label for="reg_id">Group Registration Number(Auto  Generated)</label>
                     <input type="text" style="text-transform:uppercase" class="form-control txt-auto" id="reg_id" required="" placeholder="Registration Number">
                     <input type="text" hidden="" name="id" id="id">
                 </div>
@@ -142,7 +142,7 @@ Add Group Invoice
                 <div class="form-group">
                     <label for="agent">Agent</label>
                     <select name="agent_id" required="" class="form-control">
-                        <option type="text" value="" >Please select an agent</option>
+                        <option type="text" value="">Please select an agent</option>
                         @foreach($agent as $agents)
                         <option type="text" value="{{$agents->id}}" >{{$agents->name}}</option>
                         @endforeach
@@ -185,8 +185,9 @@ Add Group Invoice
 
 
             },
-            minLength: 1
+            minLength: 2
         };
+        console.log(sacco_details);
         $("#reg_id").autocomplete(sacco_details);
 
     });

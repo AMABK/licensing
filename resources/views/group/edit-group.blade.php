@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title')
-Edit Sacco
+Edit/Delete Sacco
 @stop
 @section('content')
 
@@ -25,7 +25,7 @@ Edit Sacco
         <!-- Main row -->
         <div class="row" style="width: 70%; margin-left: 10%">
             <!-- Left col -->
-            <h3>Edit group details</h3>
+            <h3>Edit/Delete group details</h3>
             <form method="POST" action="/post/edit-group">
                 {!! csrf_field() !!}
                 @if (count($errors) > 0)
@@ -43,8 +43,12 @@ Edit Sacco
                     <input type="text" name="name" class="form-control" value="{{ $group->name }}" required="" placeholder="Name">
                 </div>
                 <div class="form-group">
+                    <label for="name">GoK Reg No</label>
+                    <input type="text" name="group_code" class="form-control" value="{{ $group->group_code }}" placeholder="Reg No">
+                </div>
+                <div class="form-group">
                     <input type="text" name="id" value="{{ $group->id }}" hidden="">
-                    <label for="reg_id">Registration Number</label>
+                    <label for="reg_id">Registration Number(Auto generated)</label>
                     <input type="text" style="text-transform:uppercase" class="form-control" value="{{ $group->reg_id }}" readonly="" placeholder="Registration Number">
                 </div>
                 <div class="form-group">

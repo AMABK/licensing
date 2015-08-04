@@ -93,6 +93,14 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'edit-group',
         'uses' => 'GroupController@edit'
     ));
+    Route::get('/group/deleted-groups', array(
+        'as' => 'deleted-groups',
+        'uses' => 'GroupController@deleted'
+    ));
+    Route::get('/group/restore-group/{id}', array(
+        'as' => 'restore-group',
+        'uses' => 'GroupController@restore'
+    ));
     Route::post('/post/edit-group', array(
         'as' => 'edit-group',
         'uses' => 'GroupController@update'

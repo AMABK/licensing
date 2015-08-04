@@ -46,8 +46,8 @@ Add Group
                     <input type="text" name="name" class="form-control" value="{{ old('name') }}" required="" placeholder="Name">
                 </div>
                 <div class="form-group">
-                    <label for="reg_id">Registration Number</label>
-                    <input type="text" style="text-transform:uppercase" name="reg_id" class="form-control" value="{{ old('reg_id') }}" required="" placeholder="Registration Number">
+                    <label for="name">GoK Reg No</label>
+                    <input type="text" name="group_code" class="form-control" value="{{ old('group_code') }}" placeholder="Group Code">
                 </div>
                 <div class="form-group">
                     <label for="type">Group Type</label>
@@ -67,7 +67,7 @@ Add Group
                 </div>
                 <div class="form-group">
                     <label for="address">Postal Address</label>
-                    <input type="text" name="postal_address" class="form-control" value="P.O Box" placeholder="Address">
+                    <input type="text" name="postal_address" class="form-control" value="P.O Box " placeholder="Address">
                 </div>
                 <div class="form-group">
                     <label for="address">Physical Address</label>

@@ -49,8 +49,8 @@ Add agent
                     <input type="text" name="phone_no" class="form-control" value="{{ old('phone') }}" placeholder="Phone Number">
                 </div>
                 <div class="form-group">
-                    <label for="region">Designation</label>
-                    <select type="text" name="region_id" class="form-control" >
+                    <label for="region">Region</label>
+                    <select type="text" name="region_id" required="" class="form-control" >
                         <option value="" >Please select agent region</option>
                         @foreach($regions as $region)
                         <option value="{{$region->id}}" >{{$region->name}}</option>

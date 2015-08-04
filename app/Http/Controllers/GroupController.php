@@ -15,13 +15,13 @@ class GroupController extends Controller {
      */
     public function index() {
         $count['groups'] = \App\Group::all()->count();
-        $count['taxi'] = \App\Group::where('type_id',4)->count();
-        $count['matatu'] = \App\Group::where('type_id',2)->count();
-        $count['bus'] = \App\Group::where('type_id',3)->count();
-        $count['tour'] = \App\Group::where('type_id',6)->count();
-        $count['company'] = \App\Group::where('type_id',5)->count();
-        
-        return view('group.index',array('counts' => $count));
+        $count['taxi'] = \App\Group::where('type_id', 4)->count();
+        $count['matatu'] = \App\Group::where('type_id', 2)->count();
+        $count['bus'] = \App\Group::where('type_id', 3)->count();
+        $count['tour'] = \App\Group::where('type_id', 6)->count();
+        $count['company'] = \App\Group::where('type_id', 5)->count();
+
+        return view('group.index', array('counts' => $count));
     }
 
     /**
@@ -31,7 +31,7 @@ class GroupController extends Controller {
      */
     public function create() {
         $groups = \App\Vehicle_type::all();
-        return view('group.add-group',array('group' => $groups));
+        return view('group.add-group', array('group' => $groups));
     }
 
     /**
@@ -42,7 +42,7 @@ class GroupController extends Controller {
     public function store() {
 
         $validator = \Validator::make(\Request::all(), array(
-                    'reg_id' => 'required|max:10|unique:groups',
+                    'group_code' => 'sometimes|max:10|unique:groups',
                     'name' => 'required|max:255|unique:groups',
                     'type_id' => 'required|max:255',
                     'phone_no' => 'sometimes|digits_between:10,15',
@@ -56,6 +56,8 @@ class GroupController extends Controller {
                             ->withInput();
         } else {
             $group = \App\Group::create(\Request::all());
+            $auto_reg_id = $this->generateGroupId(\Request::get('type_id'), $group->id);
+            $group->update(['reg_id' => $auto_reg_id]);
             if ($group) {
                 return redirect('/group/view-groups')
                                 ->with('global', '<div class="alert alert-success">Group successfullly saved in the database</div>');
@@ -73,7 +75,7 @@ class GroupController extends Controller {
      * @return Response
      */
     public function show() {
-        $groups = \App\Group::all();
+        $groups = \App\Group::where('status', 0)->get();
         return view('group.view-groups', array('group' => $groups));
     }
 
@@ -96,8 +98,38 @@ class GroupController extends Controller {
      */
     public function update() {
         if (isset($_POST['delete'])) {
-            return redirect('group/view-groups')
-                            ->with('global', '<div class="alert alert-warning">Whoooops, this functionality is not yet available!</div>');
+            $check = \App\User_role::where('user_id', \Auth::user()->id)
+                    ->where('role_id', 1)
+                    ->count();
+            $find = \App\Group::find(\Request::get('id'));
+
+            if ($find->status == 0) {
+                $group = \DB::table('groups')
+                        ->where('id', \Request::input('id'))
+                        ->update(array(
+                    'status' => 1
+                ));
+                if ($group) {
+                    return redirect('group/view-groups')
+                                    ->with('global', '<div class="alert alert-success">Group successfully deleted by officer<div>');
+                } else {
+                    return redirect('group/view-groups')
+                                    ->with('global', '<div class="alert alert-warning">Whoooops, this group could not be deleted!</div>');
+                }
+            } elseif (($check > 0) && ($find->status == 1)) {
+                \App\Vehicle::where('group_id', \Request::get('id'))->delete();
+                $delete = $find->delete();
+                if ($delete) {
+                    return redirect('group/view-groups')
+                                    ->with('global', '<div class="alert alert-success">Group successfully permanently deleted<div>');
+                } else {
+                    return redirect('group/view-groups')
+                                    ->with('global', '<div class="alert alert-warning">Whoooops, this group could not be permanently deleted!</div>');
+                }
+            } else {
+                return redirect('group/view-groups')
+                                ->with('global', '<div class="alert alert-warning">You do not have privileges to permanently delete this record</div>');
+            }
         }
         $validator = \Validator::make(\Request::all(), array(
                     'name' => 'required|max:255',
@@ -117,6 +149,7 @@ class GroupController extends Controller {
                     ->where('id', \Request::input('id'))
                     ->update(array(
                 'name' => \Request::input('name'),
+                'group_code' => \Request::input('group_code'),
                 'type_id' => \Request::input('type_id'),
                 'physical_address' => \Request::input('physical_address'),
                 'postal_address' => \Request::input('postal_address'),
@@ -136,13 +169,35 @@ class GroupController extends Controller {
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function deleted() {
+        $groups = \App\Group::where('status', 1)->get();
+        return view('group.view-deleted-groups', array('group' => $groups));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id) {
-        //
+    public function restore($id) {
+        $restore = \DB::table('groups')
+                ->where('id', \Hashids::decode($id)[0])
+                ->update(array(
+            'status' => 0
+        ));
+        if ($restore) {
+            return redirect()->back()
+                            ->with('global', '<div class="alert alert-success">The group successfully restored</div>');
+        } else {
+            return redirect()->back()
+                            ->with('global', '<div class="alert alert-warning">The group could not be restored, please contact system admin</div>');
+        }
     }
 
     /*
@@ -177,42 +232,20 @@ class GroupController extends Controller {
             $reg_id = $_GET['name_has'];
             //$data = mysql_query("SELECT name FROM country where name LIKE '".strtoupper($_GET['name_startsWith'])."%'");	
             $data = \DB::table('groups')
-                    ->where('reg_id', 'like', '%'. $reg_id . '%')
+                    ->where('reg_id', 'like', '%' . $reg_id . '%')
                     ->get();
             // $data = array();
 //	while ($row = mysql_fetch_array($result)) {
 //		array_push($data, $row['name']);	
 //	}	
-            
+
             echo json_encode($data);
         }
     }
-        public function generateGroupId() {
-        $check = \App\Group::all()->count();
-        if ($check < 1) {
-            return 'AB1';
-        }
-        $pick_latest = \DB::select('SELECT * FROM groups ORDER BY id DESC LIMIT 1');
-        $sn_array = explode("-", $pick_latest[0]->reg_id);
-        if ($sn_array[2] == 'Z' && intval($sn_array[3]) > 900000) {
-            $remainder = 999999 - intval($sn_array[3]);
-            $request->session()->flash('status', '<div class="alert alert-warning">There are ONLY ' . $remainder . ' group system generated ids remaining. Please contact the product owner to add new parameters.</div>');
-            if (intval($sn_array[3]) > 999998) {
-                return redirect('/')
-                                ->with('global', '<div class="alert alert-danger">You exhausted the existing group system generated ids. Please contact the product owner!</div>');
-            }
-        }
-        if (intval($sn_array[3]) < 999999) {
-            $digit = intval($sn_array[3]) + 1;
-            $new_num = str_pad($digit, 6, '0', STR_PAD_LEFT);
-            $new_sn = 'KP-PSV-' . $sn_array[2] . '-' . $new_num;
-            return $new_sn;
-        } else {
-            $new_alp = chr(ord($sn_array[2]) + 1);
-            $new_num = str_pad(1, 6, '0', STR_PAD_LEFT);
-            $new_sn = 'KP-PSV-' . $new_alp . '-' . $new_num;
-            return $new_sn;
-        }
+
+    public function generateGroupId($type_id, $group_id) {
+        $type = \App\Vehicle_type::find($type_id);
+        return $reg_no = '' . $type->code . '-' . $group_id;
     }
 
 }
