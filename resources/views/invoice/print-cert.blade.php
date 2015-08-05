@@ -15,8 +15,8 @@ ob_start();
     }
     barcode{
         position:absolute;
-        margin-left: -27%;
-        padding-top: 55px;
+        margin-left: -29%;
+        padding-top: 52px;
     }
     img{
         position:absolute;

@@ -250,6 +250,7 @@ class InvoiceController extends Controller {
         if ($check > 0) {
             $destroy = \App\Invoice::onlyTrashed()->find(\Hashids::decode($id)[0])->forceDelete();
             if (!$destroy) {
+                //cleane this
                 \App\Serial_number::where('invoice_id', \Hashids::decode($id)[0])->delete();
                 \App\Status_manager::where('invoice_id', \Hashids::decode($id)[0])->deleted();
                 \App\Status_finance::where('invoice_id', \Hashids::decode($id)[0])->deleted();
