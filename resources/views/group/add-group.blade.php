@@ -43,7 +43,7 @@ Add Group
                 @endif
                 <div class="form-group">
                     <label for="name">Group Name</label>
-                    <input type="text" name="name" class="form-control" value="{{ old('name') }}" required="" placeholder="Name">
+                    <input type="text" name="name" max="14"class="form-control" value="{{ old('name') }}" required="" placeholder="Name">
                 </div>
                 <div class="form-group">
                     <label for="name">GoK Reg No</label>
