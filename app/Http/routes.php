@@ -171,6 +171,10 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'add-vehicle-invoice',
         'uses' => 'InvoiceController@storeVehicleInvoice'
     ));
+    Route::post('/post/print-invoice', array(
+        'as' => '/print-invoice',
+        'uses' => 'InvoiceController@printInvoice'
+    ));
     Route::get('/invoice/get-group-invoice/{id}', array(
         'as' => 'get-invoice',
         'uses' => 'InvoiceController@getInvoice'

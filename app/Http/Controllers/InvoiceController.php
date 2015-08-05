@@ -463,7 +463,7 @@ class InvoiceController extends Controller {
     public function printCert($iId) {
         $id = \Hashids::decode($iId);
         $check = \App\User_role::where('user_id', \Auth::user()->id)
-                ->where('role_id', 3)
+                ->where('role_id', 5)
                 ->count();
         $authorised = \App\Status_manager::where('invoice_id', $id[0])
                 ->where('status', 'Approved')
@@ -881,6 +881,79 @@ class InvoiceController extends Controller {
             $new_num = str_pad(1, 5, '0', STR_PAD_LEFT);
             $new_sn = 'KP-PSV-' . $new_alp . '-' . $new_num;
             return $new_sn;
+        }
+    }
+
+    public function printInvoice() {
+        // dd(\Request::all());
+        $input = \Request::all();
+        // dd($input['print']);
+        $i = 0;
+        $k = 0;
+        if (sizeof($input) > 2) {
+            foreach ($input['print'] as $key => $value) {
+                $arr[$i] = $key;
+                $i++;
+            }
+            foreach ($arr as $key => $value) {
+                //Check whether all are approved
+                $id = $value;
+                $check = \App\User_role::where('user_id', \Auth::user()->id)
+                        ->where('role_id', 5)
+                        ->count();
+                $authorised = \App\Status_manager::where('invoice_id', $id)
+                        ->where('status', 'Approved')
+                        ->count();
+                if ($authorised < 1) {
+                    return redirect('/invoice/view-invoices')
+                                    ->with('global', '<div class="alert alert-warning">One of the invoice you selected has not been approved by CEO, please request approval before trying again</div>');
+                }
+                if ($check < 1) {
+                    return redirect('/invoice/view-invoices')
+                                    ->with('global', '<div class="alert alert-warning">One of the invoice you selected has not been approved by CEO, please request approval before trying again</div>');
+                }
+                $printer_approval = \App\Status_printed::where('invoice_id', $value)->count();
+                if ($printer_approval < 1) {
+                    $print = \App\Status_printed::create(array(
+                                'invoice_id' => $value,
+                                'status' => 'Printed',
+                                'user_id' => \Auth::user()->id
+                                    )
+                    );
+                    if (!$print) {
+                        return redirect('/invoice/view-invoices')
+                                        ->with('global', '<div class="alert alert-warning">License cound not be printed, system unable to update printing status</div>');
+                    }
+                }
+                //echo "Key: $key; Value: $value<br />\n";
+                $cert[$key] = \App\Invoice::with('group', 'vehicle')->find($value);
+                $licensed_vehicle = explode(",", $cert[$key]->licensed_vehicles);
+                for ($i = 0; $i < sizeof($licensed_vehicle); $i++) {
+                    $get_sn = \App\Serial_number::where('invoice_id', $cert[$key]->id)
+                            ->where('reg_no', $licensed_vehicle[$i])
+                            ->get()
+                            ->toArray();
+
+                    $seats = \App\Vehicle::where("reg_no", $licensed_vehicle[$i])->get(["no_of_seat"])->first();
+                    if ($cert[$key]->invoice_type == "Group Invoice") {
+                        $sacco = $cert[$key]->group->name;
+                    } else {
+                        $sacco = "N/A";
+                    }
+                    $license[$k]['sn'] = $get_sn[0]['sn'];
+                    $license[$k]['sacco'] = $sacco;
+                    $license[$k]['reg_no'] = strtoupper($licensed_vehicle[$i]);
+                    $license[$k]['no_of_seat'] = $seats->no_of_seat;
+                    $license[$k]['expiry_date'] = $cert[$key]->expiry_date;
+
+                    $k++;
+                }
+            }
+            //dd($license);
+            return view('invoice.mass-print-cert', array('licenses' => $license));
+        } else {
+            return redirect('/invoice/view-invoices')
+                            ->with('global', '<div class="alert alert-warning">You have not slected any invoices for mass printing</div>');
         }
     }
 

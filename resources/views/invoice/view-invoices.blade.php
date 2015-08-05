@@ -27,29 +27,35 @@ Invoices
         <div class="row" style="margin: 3px">
             <!-- Left col -->
             <h3>Registered invoices</h3>
-            <table id="myTable" width="100%">
-                <thead><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Licensing</th><th>Finance</th><th>CEO</th><th>License</th><th>Delete</th></tr></thead>
-                <tbody>
-                    <?php
-                    $i= 0;
-                    ?>
-                    @foreach ($invoice as $invoices)
-                    <tr>
-                        <td><?php if ($invoices->invoice_type == 'Group Invoice') { ?><a href="#" class="viewGroupInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } else { ?><a href="#" class="viewIndividualInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } ?></td><td><?php
-                            if ($invoices->invoice_type == 'Group Invoice') {
-                                echo $invoices->group['reg_id'];
-                            } else {
-                                echo $invoices->vehicle['reg_no'];
-                            }
-                            ?></td><td>{{$invoices->invoice_type }}</td><td>{{ $invoices->no_vehicle }}</td><td>{{ $invoices->total_fee }}</td><td>{{ $invoices->discount }}</td><td>{{ $invoices->total_fee-$invoices->discount }}</td><td>{{ $invoices->expiry_date }}</td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}">{{$status[$i]['licensing']}}</a></td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}">{{$status[$i]['finance']}}</a></td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}">{{$status[$i]['manager']}}</a></td><td><a href="{{URL::to('/invoice/view-cert/'.Hashids::encode($invoices->id))}}" target="_blank">View</a></td><td><a href="{{URL::to('/invoice/delete-invoice/'.\Hashids::encode($invoices->id))}}"> Delete</a></td>
-                    </tr>
-                    <?php
-                    $i++;
-                    ?>
-                    @endforeach
-                </tbody>
-                <tfoot><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Licensing</th><th>Finance</th><th>CEO</th><th>License</th><th>Delete</tr></thead>
-            </table>
+            <form method="POST" action="/post/print-invoice">
+                {!! csrf_field() !!}
+                <div>
+                    <button type="submit">Print Selected in invoices</button>
+                </div>
+                <table id="myTable" width="100%">
+                    <thead><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Licensing</th><th>Finance</th><th>CEO</th><th>License</th><th>Delete</th><th>Print</th></tr></thead>
+                    <tbody>
+                        <?php
+                        $i = 0;
+                        ?>
+                        @foreach ($invoice as $invoices)
+                        <tr>
+                            <td><?php if ($invoices->invoice_type == 'Group Invoice') { ?><a href="#" class="viewGroupInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } else { ?><a href="#" class="viewIndividualInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } ?></td><td><?php
+                                if ($invoices->invoice_type == 'Group Invoice') {
+                                    echo $invoices->group['reg_id'];
+                                } else {
+                                    echo $invoices->vehicle['reg_no'];
+                                }
+                                ?></td><td>{{$invoices->invoice_type }}</td><td>{{ $invoices->no_vehicle }}</td><td>{{ $invoices->total_fee+$invoices->discount }}</td><td>{{ $invoices->discount }}</td><td>{{ $invoices->total_fee }}</td><td>{{ $invoices->expiry_date }}</td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}">{{$status[$i]['licensing']}}</a></td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}">{{$status[$i]['finance']}}</a></td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}">{{$status[$i]['manager']}}</a></td><td><a href="{{URL::to('/invoice/view-cert/'.Hashids::encode($invoices->id))}}" target="_blank">View</a></td><td><a href="{{URL::to('/invoice/delete-invoice/'.\Hashids::encode($invoices->id))}}"> Delete</a></td><td><input type="checkbox" name="print[{{$invoices->id}}]" value="1"></td>
+                        </tr>
+                        <?php
+                        $i++;
+                        ?>
+                        @endforeach
+                    </tbody>
+                    <tfoot><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Licensing</th><th>Finance</th><th>CEO</th><th>License</th><th>Delete</th><th>Print</th></tr></thead>
+                </table>
+            </form>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
 
         </div><!-- /.row (main row) -->

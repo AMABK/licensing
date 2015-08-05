@@ -45,7 +45,7 @@ ob_start();
                         ->toArray();
                 //dd($get_sn);
                 $seats = \App\Vehicle::where("reg_no", $licensed_vehicle[$i])->get(["no_of_seat"])->first();
-                if ($cert->invoice_type == "Group") {
+                if ($cert->invoice_type == "Group Invoice") {
                     $sacco = $cert->group->name;
                 } else {
                     $sacco = "N/A";
