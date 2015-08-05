@@ -34,7 +34,7 @@ ob_start();
         $rows = 0;
         $licensed_vehicle = explode(",", $cert->licensed_vehicles);
         ?>
-        <table style="width: auto; padding-top: -8%">
+        <table style="width: auto; padding-top: -7.3%">
             <tbody>
                 @for($i=0;$i< sizeof($licensed_vehicle); $i++)
                 <?php
