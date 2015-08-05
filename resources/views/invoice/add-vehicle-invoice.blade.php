@@ -1,6 +1,6 @@
 @extends('layout.main')
 @section('title')
-Add Group Invoice
+Add Vehicle Invoice
 @stop
 @section('content')
 <link href="/dist/css/jquery-ui.css" rel="stylesheet" type="text/css" />

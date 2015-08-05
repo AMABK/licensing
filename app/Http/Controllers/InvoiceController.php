@@ -333,11 +333,7 @@ class InvoiceController extends Controller {
                      * Tour vans(14 seater) pay annual fee of amount k and amount h for every extra seat
                      */
                     $fee = 0;
-                    foreach ($vehicles as $vehicle) {
-                        if ($vehicle->no_of_seat > 14) {
-                            $fee += ($vehicle_fee->standard_fee * $vehicles->count()) + ($vehicle->no_of_seat - 14) * ($vehicle_fee->extra_fee);
-                        }
-                    }
+                    $fee = $vehicle_fee->standard_fee * $vehicles->count();
                     break;
                 default :
                     return redirect('invoice')
@@ -413,7 +409,7 @@ class InvoiceController extends Controller {
                 case 6:
                     $vehicle_fee = \App\Charge::find($data->type_id);
                     $fee = $vehicle_fee->standard_fee;
-                    $det['group_type'] = $$data->vehicle_type->name;
+                    $det['group_type'] = $data->vehicle_type->name;
                     break;
                 default :
                     break;
