@@ -15,8 +15,8 @@ ob_start();
     }
     barcode{
         position:absolute;
-        margin-left: -29%;
-        padding-top: 52px;
+        margin-left: -29.5%;
+        padding-top: 49px;
     }
     img{
         position:absolute;
@@ -34,7 +34,7 @@ ob_start();
         $rows = 0;
         $licensed_vehicle = explode(",", $cert->licensed_vehicles);
         ?>
-        <table style="width: auto; padding-top: -7%">
+        <table style="width: auto; padding-top: -8%">
             <tbody>
                 @for($i=0;$i< sizeof($licensed_vehicle); $i++)
                 <?php
