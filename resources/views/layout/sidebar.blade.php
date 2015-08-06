@@ -102,6 +102,7 @@
                     <li><a href="{{URL::to('/invoice/add-vehicle-invoice')}}"><i class="fa fa-plus-circle"></i> Add vehicle invoice</a></li>
                     <li><a href="{{URL::to('/invoice/view-invoices')}}"><i class="fa fa-eye"></i> View invoices</a></li>
                     <li><a href="{{URL::to('/invoice/view-deleted-invoices')}}"><i class="fa fa-eye"></i> View deleted invoices</a></li>
+                    <li><a href="{{URL::to('/invoice/print-view')}}"><i class="fa fa-eye"></i> Print View</a></li>
                 </ul>
             </li>
             <li class="treeview">
