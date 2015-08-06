@@ -882,7 +882,7 @@ class InvoiceController extends Controller {
     }
 
     public function printInvoice() {
-        // dd(\Request::all());
+
         $input = \Request::all();
         // dd($input['print']);
         $i = 0;
@@ -894,68 +894,72 @@ class InvoiceController extends Controller {
             }
             foreach ($arr as $key => $value) {
                 //Check whether all are approved
-                $id = $value;
-                $check = \App\User_role::where('user_id', \Auth::user()->id)
-                        ->where('role_id', 5)
-                        ->count();
-                $authorised = \App\Status_manager::where('invoice_id', $id)
-                        ->where('status', 'Approved')
-                        ->count();
-                if ($authorised < 1) {
-                    return redirect('/invoice/view-invoices')
-                                    ->with('global', '<div class="alert alert-warning">One of the invoice you selected has not been approved by CEO, please request approval before trying again</div>');
-                }
+                $check = \App\License::where('invoice_id', $value)->count();
                 if ($check < 1) {
-                    return redirect('/invoice/view-invoices')
-                                    ->with('global', '<div class="alert alert-warning">One of the invoice you selected has not been approved by CEO, please request approval before trying again</div>');
-                }
-                $printer_approval = \App\Status_printed::where('invoice_id', $value)->count();
-                if ($printer_approval < 1) {
-                    $print = \App\Status_printed::create(array(
-                                'invoice_id' => $value,
-                                'status' => 'Printed',
-                                'user_id' => \Auth::user()->id
-                                    )
-                    );
-                    if (!$print) {
+                    $id = $value;
+                    $check = \App\User_role::where('user_id', \Auth::user()->id)
+                            ->where('role_id', 5)
+                            ->count();
+                    $authorised = \App\Status_manager::where('invoice_id', $id)
+                            ->where('status', 'Approved')
+                            ->count();
+                    if ($authorised < 1) {
                         return redirect('/invoice/view-invoices')
-                                        ->with('global', '<div class="alert alert-warning">License cound not be printed, system unable to update printing status</div>');
+                                        ->with('global', '<div class="alert alert-warning">One of the invoice you selected has not been approved by CEO, please request approval before trying again</div>');
                     }
-                }
-                //echo "Key: $key; Value: $value<br />\n";
-                $cert[$key] = \App\Invoice::with('group', 'vehicle')->find($value);
-                $licensed_vehicle = explode(",", $cert[$key]->licensed_vehicles);
-                for ($i = 0; $i < sizeof($licensed_vehicle); $i++) {
-                    $get_sn = \App\Serial_number::where('invoice_id', $cert[$key]->id)
-                            ->where('reg_no', $licensed_vehicle[$i])
-                            ->get()
-                            ->toArray();
-
-                    $seats = \App\Vehicle::where("reg_no", $licensed_vehicle[$i])->get(["no_of_seat"])->first();
-                    if ($cert[$key]->invoice_type == "Group Invoice") {
-                        $sacco = $cert[$key]->group->name;
-                    } else {
-                        $sacco = "N/A";
+                    if ($check < 1) {
+                        return redirect('/invoice/view-invoices')
+                                        ->with('global', '<div class="alert alert-warning">One of the invoice you selected has not been approved by CEO, please request approval before trying again</div>');
                     }
-                    $license[$k]['sn'] = $get_sn[0]['sn'];
-                    $license[$k]['sacco'] = $sacco;
-                    $license[$k]['reg_no'] = strtoupper($licensed_vehicle[$i]);
-                    $license[$k]['no_of_seat'] = $seats->no_of_seat;
-                    $license[$k]['expiry_date'] = $cert[$key]->expiry_date;
+                    $printer_approval = \App\Status_printed::where('invoice_id', $value)->count();
+                    if ($printer_approval < 1) {
+                        $print = \App\Status_printed::create(array(
+                                    'invoice_id' => $value,
+                                    'status' => 'Printed',
+                                    'user_id' => \Auth::user()->id
+                                        )
+                        );
+                        if (!$print) {
+                            return redirect('/invoice/view-invoices')
+                                            ->with('global', '<div class="alert alert-warning">License cound not be printed, system unable to update printing status</div>');
+                        }
+                    }
+                    //echo "Key: $key; Value: $value<br />\n";
+                    $cert[$key] = \App\Invoice::with('group', 'vehicle')->find($value);
+                    $licensed_vehicle = explode(",", $cert[$key]->licensed_vehicles);
+                    for ($i = 0; $i < sizeof($licensed_vehicle); $i++) {
+                        $get_sn = \App\Serial_number::where('invoice_id', $cert[$key]->id)
+                                ->where('reg_no', $licensed_vehicle[$i])
+                                ->get()
+                                ->toArray();
 
-                    $k++;
+                        $seats = \App\Vehicle::where("reg_no", $licensed_vehicle[$i])->get(["no_of_seat"])->first();
+                        if ($cert[$key]->invoice_type == "Group Invoice") {
+                            $sacco = $cert[$key]->group->name;
+                        } else {
+                            $sacco = "N/A";
+                        }
+                        $license[$k]['sn'] = $get_sn[0]['sn'];
+                        $license[$k]['sacco'] = $sacco;
+                        $license[$k]['reg_no'] = strtoupper($licensed_vehicle[$i]);
+                        $license[$k]['no_of_seat'] = $seats->no_of_seat;
+                        $license[$k]['expiry_date'] = $cert[$key]->expiry_date;
 
-                    \App\License::create(array(
-                        'invoice_id' => $value,
-                        'sn' => $get_sn[0]['sn'],
-                        'sacco' => $sacco,
-                        'reg_no' => strtoupper($licensed_vehicle[$i]),
-                        'seats' => $seats->no_of_seat,
-                        'expiry_date' => $cert[$key]->expiry_date,
-                        'status' => 'ready'
-                    ));
+                        $k++;
+
+                        \App\License::create(array(
+                            'invoice_id' => $value,
+                            'sn' => $get_sn[0]['sn'],
+                            'sacco' => $sacco,
+                            'reg_no' => strtoupper($licensed_vehicle[$i]),
+                            'seats' => $seats->no_of_seat,
+                            'expiry_date' => $cert[$key]->expiry_date,
+                            'status' => 'ready'
+                        ));
+                    }
                 }
             }
+
             $license = \DB::table('licenses')
                     ->orderBy('id', 'asc')
                     ->take(4)
@@ -969,11 +973,11 @@ class InvoiceController extends Controller {
                             ->with('global', '<div class="alert alert-warning">You have not slected any invoices for mass printing</div>');
         }
     }
-    
+
     public function readyPrint() {
-        $print = \App\License::where('status','ready')->get();
-        
-        return view('invoice.ready',array('print' => $print));
+        $print = \App\License::where('status', 'ready')->get();
+
+        return view('invoice.ready', array('print' => $print));
     }
 
     public function printLimit() {
