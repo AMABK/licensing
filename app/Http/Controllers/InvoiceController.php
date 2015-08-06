@@ -944,14 +944,56 @@ class InvoiceController extends Controller {
                     $license[$k]['expiry_date'] = $cert[$key]->expiry_date;
 
                     $k++;
+
+                    \App\License::create(array(
+                        'invoice_id' => $value,
+                        'sn' => $get_sn[0]['sn'],
+                        'sacco' => $sacco,
+                        'reg_no' => strtoupper($licensed_vehicle[$i]),
+                        'seats' => $seats->no_of_seat,
+                        'expiry_date' => $cert[$key]->expiry_date,
+                        'status' => 'ready'
+                    ));
                 }
             }
-            //dd($license);
-            return view('invoice.mass-print-cert', array('licenses' => $license));
+            $license = \DB::table('licenses')
+                    ->orderBy('id', 'asc')
+                    ->take(4)
+                    ->get();
+
+            return redirect('/invoice/view-invoices')
+                            ->with('global', '<div class="alert alert-success">You can now print selected invoices</div>');
+            //return view('invoice.mass-print-cert', array('licenses' => $license));
         } else {
             return redirect('/invoice/view-invoices')
                             ->with('global', '<div class="alert alert-warning">You have not slected any invoices for mass printing</div>');
         }
+    }
+    
+    public function readyPrint() {
+        $print = \App\License::where('status','ready')->get();
+        
+        return view('invoice.ready',array('print' => $print));
+    }
+
+    public function printLimit() {
+        $license = \DB::table('licenses')
+                ->where('status', 'ready')
+                ->orderBy('id', 'asc')
+                ->take(4)
+                ->get();
+
+        if ($license) {
+            foreach ($license as $update) {
+                \App\License::where('id', $update->id)
+                        ->update(array(
+                            'status' => 'printed'
+                                )
+                );
+            }
+        }
+        //dd($license->toArray());
+        return view('invoice.mass-print-cert', array('licenses' => $license));
     }
 
 }

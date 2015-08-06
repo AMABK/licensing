@@ -41,11 +41,11 @@ ob_start();
                     @endif
                     <td style="width: 283.1px;height: 283.1px ">
                         <ul>
-                            <li style="padding-top: 4%;padding-left: 18%">{{$license->sn}}</li>
-                            <li style="padding-left: 44%; height: 15px;padding-bottom: 10px">{{substr($license->sacco, 0, 20)}}</li>
-                            <li style="padding-left: 47%; height: 26px">{{$license->reg_no}}</li>              
-                            <li style="padding-left: 35%;height: 32px; padding-top: 0px;">{{$license->seats}}</li> <barcode>{!!\DNS2D::getBarcodeHTML($license->sn, "QRCODE",3.4,3.4)!!}</barcode>
-                            <li style="padding-left: 25%; padding-bottom: 25px">{{$license->expiry_date}}</li>
+                            <li style="padding-top: 4%;padding-left: 18%">{{$license['sn']}}</li>
+                            <li style="padding-left: 44%; height: 15px;padding-bottom: 10px">{{substr($license['sacco'], 0, 20)}}</li>
+                            <li style="padding-left: 47%; height: 26px">{{$license['reg_no']}}</li>              
+                            <li style="padding-left: 35%;height: 32px; padding-top: 0px;">{{$license['no_of_seat']}}</li> <barcode>{!!\DNS2D::getBarcodeHTML($license['sn'], "QRCODE",3.4,3.4)!!}</barcode>
+                            <li style="padding-left: 25%; padding-bottom: 25px">{{$license['expiry_date']}}</li>
                         </ul>
                     </td>
                     <?php
@@ -71,5 +71,3 @@ $dompdf->render();
 date_default_timezone_set('Africa/Nairobi');
 $filename = date('m/d/Y h:i:s a', time());
 $dompdf->stream($filename . ".pdf");
-
-return redirect('/invoice/print');

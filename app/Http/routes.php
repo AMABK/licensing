@@ -196,6 +196,10 @@ Route::group(['middleware' => 'auth'], function() {
             'as' => 'print-cert',
             'uses' => 'InvoiceController@printCert'
         ));
+        Route::get('/invoice/print', array(
+            'as' => 'print',
+            'uses' => 'InvoiceController@printLimit'
+        ));
     });
     Route::get('/invoice/view-cert/{id}', array(
         'as' => 'view-cert',
@@ -229,6 +233,11 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'vehicle-autocomplete',
         'uses' => 'InvoiceController@getVehicleDetails'
     ));
+    Route::get('/invoice/print-view', array(
+        'as' => 'print-view',
+        'uses' => 'InvoiceController@readyPrint'
+    ));
+
     //Invoice approval routes
     Route::get('/invoice/approve/{id}', array(
         'as' => 'approval',
