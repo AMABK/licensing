@@ -17,7 +17,7 @@ ob_start();
         barcode{
             position:absolute;
             margin-left: -29.2%;
-            padding-top: 49px;
+            padding-top: 50px;
         }
         img{
             position:absolute;
@@ -30,7 +30,7 @@ ob_start();
         <?php
         $rows = 0;
         ?>
-        <table style="width: auto; padding-top: -7.3%">
+        <table style="width: auto; padding-top: -7.8%">
             <tbody>
                 @foreach($licenses as $license)
                 <?php
