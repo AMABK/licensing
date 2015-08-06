@@ -21,7 +21,7 @@ ob_start();
         }
         img{
             position:absolute;
-            margin-left: -80%;
+            margin-left: -90%;
             padding-top: 38px;
 
         }
@@ -30,7 +30,7 @@ ob_start();
         <?php
         $rows = 0;
         ?>
-        <table style="width: auto; padding-top: -7.8%">
+        <table style="width: auto; padding-top: -6.5%">
             <tbody>
                 @foreach($licenses as $license)
                 <?php
