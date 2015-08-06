@@ -975,8 +975,12 @@ class InvoiceController extends Controller {
     }
 
     public function readyPrint() {
-        $print = \App\License::where('status', 'ready')->get();
 
+        $print = \App\License::where('status', 'ready')->get();
+        if ($print->count() < 1) {
+            return redirect('invoice/view-invoices')
+                            ->with('global', '<div class="alert alert-warning">You have no licenses ready to print</div>');
+        }
         return view('invoice.ready', array('print' => $print));
     }
 
