@@ -16,7 +16,7 @@ ob_start();
         }
         barcode{
             position:absolute;
-            margin-left: -39.2%;
+            margin-left: -39.4%;
             padding-top: 50px;
         }
         img{
@@ -44,7 +44,7 @@ ob_start();
                             <li style="padding-top: 3.8%;padding-left: 0%">{{$license->sn}}</li>
                             <li style="padding-left: 24%; height: 15px;padding-bottom: 10px">{{substr($license->sacco, 0, 20)}}</li>
                             <li style="padding-left: 27%; height: 26px">{{$license->reg_no}}</li>              
-                            <li style="padding-left: 15%;height: 32px; padding-top: 0px;">{{$license->seats}}</li> <barcode>{!!\DNS2D::getBarcodeHTML($license->sn, "QRCODE",3.4,3.4)!!}</barcode>
+                            <li style="padding-left: 35%;height: 32px; padding-top: 0px;">{{$license->seats}}</li> <barcode>{!!\DNS2D::getBarcodeHTML($license->sn, "QRCODE",3.4,3.4)!!}</barcode>
                             <li style="padding-left: 10%; padding-bottom: 25px">{{$license->expiry_date}}</li>
                         </ul>
                     </td>
