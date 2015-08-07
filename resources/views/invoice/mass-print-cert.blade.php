@@ -39,7 +39,7 @@ ob_start();
                 @if($rows%4 == 0)
                 <tr>
                     @endif
-                    <td style="width: 282.1px;height: 283.1px ">
+                    <td style="width: 281.2px;height: 283.1px ">
                         <ul>
                             <li style="padding-top: 3.8%;padding-left: 0%">{{$license->sn}}</li>
                             <li style="padding-left: 24%; height: 15px;padding-bottom: 10px">{{substr($license->sacco, 0, 20)}}</li>
