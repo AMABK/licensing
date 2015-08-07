@@ -63,7 +63,7 @@ ob_start();
 <?php
 $html = ob_get_clean();
 $dompdf = new DOMPDF();
-//default size =863.89
+//default size = 863.89
 $customPaper = array(0, 0, 933, $size);
 $dompdf->set_paper($customPaper);
 $dompdf->load_html($html);
