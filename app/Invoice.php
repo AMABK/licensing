@@ -10,7 +10,7 @@ class Invoice extends Model {
 
     protected $table = 'invoices';
     
-    protected $fillable = ['invoice_no', 'no_vehicle', 'discount', 'total_fee', 'payer_id', 'invoice_type', 'expiry_date', 'licensed_vehicles', 'region_id', 'agent_id', 'description', 'user_id'];
+    protected $fillable = ['invoice_no', 'no_vehicle', 'discount', 'total_fee', 'payer_id', 'invoice_type', 'expiry_date', 'licensed_vehicles', 'region_id', 'agent_id', 'description', 'user_id', 'group_name'];
     
     public function group() {
         return $this->belongsTo('App\Group','payer_id');

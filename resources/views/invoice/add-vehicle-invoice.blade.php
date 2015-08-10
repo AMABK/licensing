@@ -103,7 +103,7 @@ Add Vehicle Invoice
                 </div>
                 <div class="form-group">
                     <label for="name">Group Name</label>
-                    <input type="text" class="form-control" id="group_name" value="" readonly=""  placeholder="Vehicle does not belong to any group">
+                    <input type="text" name="group_name" class="form-control" id="group_name" value="" readonly=""  placeholder="Vehicle does not belong to any group">
                     <input type="text" name="reg_id" id="reg_id" readonly="" hidden="">
                     <input type="text" name="group_id" id="group_id" readonly="" hidden="">
                 </div>

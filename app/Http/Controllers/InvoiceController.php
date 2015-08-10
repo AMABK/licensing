@@ -132,6 +132,7 @@ class InvoiceController extends Controller {
                         'invoice_type' => 'Individual Invoice',
                         'group_type' => \Request::get('group_type'),
                         'discount' => \Request::get('discount'),
+                        'group_name' => \Request::get('group_name'),
                         'reg_no' => strtoupper(\Request::get('reg_no')),
                         'total_fee' => \Request::get('total_fee'),
                         'no_vehicle' => 1,
@@ -937,7 +938,11 @@ class InvoiceController extends Controller {
                         if ($cert[$key]->invoice_type == "Group Invoice") {
                             $sacco = $cert[$key]->group->name;
                         } else {
-                            $sacco = "N/A";
+                            if (($cert[$key]->group_name == null)) {
+                                $sacco = "N/A";
+                            } else {
+                                $sacco = $cert[$key]->group_name;
+                            }
                         }
                         $license[$k]['sn'] = $get_sn[0]['sn'];
                         $license[$k]['sacco'] = $sacco;

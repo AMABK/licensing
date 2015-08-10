@@ -26,7 +26,7 @@ Invoices
         <!-- Main row -->
         <div class="row" style="margin: 3px">
             <!-- Left col -->
-            <h3>Registered invoices</h3>
+            <h3>All license approved for printing</h3>
             <form method="POST" action="/post/print-invoice">
                 {!! csrf_field() !!}
                 <div>
@@ -147,56 +147,14 @@ $(document).ready(function () {
                 $("#discountInvoice").val(invoiceArray.discount);
                 $("#noVehicleInvoice").val(invoiceArray.no_vehicle);
                 $("#expiryInvoice").val(invoiceArray.expiry_date);
-                //console.log(projectArray);
-                //$("#subCountyValue").val(projectArray['sub-county']);
-                //$("#viewFarmerModalContent").append(contentString);
+
                 $("#viewInvoiceModal").modal("show");
             }
         });
-        //Load data into modal:
-        // var content = 
+
 
     });
 });
-//Edit farmer
-//$(document).ready(function () {
-//    $(".editFarmerLink").click(function () {
-//        var prop = $(this).attr("data-prop");
-//        console.log(prop);
-//        $.ajax({
-//            type: "GET",
-//            url: "/farmer/get/" + prop,
-//            success: function (data) {
-//
-//                var projectArray = data;
-//                //console.log(projectArray);
-//                //Inserting into modal:
-////                    var contentString = ""
-////                    for (var i = 0; i < projectArray.length; i++) {
-////                        contentString += "<input type='digit' name='id' value=" + projectArray[i].id + " >"
-////                    }
-//                //console.log(contentString);
-//                $("#idProjectE").val(projectArray.projects.id);
-//                $("#idFarmerE").val(projectArray.id);
-//                $("#fNameValueE").val(projectArray.first_name);
-//                $("#mNameValueE").val(projectArray.middle_name);
-//                $("#sNameValueE").val(projectArray.surname);
-//                $("#dobValueE").val(projectArray.dob);
-//                $("#idNoValueE").val(projectArray.id_number);
-//                $("#phoneValueE").val(projectArray.phone);
-//                $("#addressValueE").val(projectArray.address);
-//                $("#genderValueE").val(projectArray.gender);
-//                $("#countryValueE").val(projectArray.country);
-//                $("#countyValueE").val(projectArray.county);
-//                $("#subCountyValueE").val(projectArray['sub-county']);
-//                console.log(projectArray);
-//                $("#editFarmerModal").modal("show");
-//            }
-//        });
-//        //Load data into modal:
-//        // var content = 
-//
-//    });
-//});
+
 </script>   
 @stop
