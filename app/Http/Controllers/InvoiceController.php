@@ -313,10 +313,14 @@ class InvoiceController extends Controller {
                     break;
                 case 3:
                     /*
-                     * Matatu charges
+                     * bus charges
                      * Each matatu pays annual fee of amount y
                      */
-                    $fee = $vehicle_fee->standard_fee * $vehicles->count();
+                    if ($vehicles->count() < 11) {
+                        $fee = $vehicle_fee->standard_fee * $vehicles->count()*$vehicles->no_of_seat;
+                    } else {
+                        $fee = $vehicle_fee->extra_fee * $vehicles->count()*$vehicles->no_of_seat;
+                    }
                     break;
                 case 4:
                     /*
@@ -412,6 +416,7 @@ class InvoiceController extends Controller {
                     $det['group_type'] = $data->vehicle_type->name;
                     break;
                 case 6:
+
                     $vehicle_fee = \App\Charge::find($data->type_id);
                     $fee = $vehicle_fee->standard_fee;
                     $det['group_type'] = $data->vehicle_type->name;
