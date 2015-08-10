@@ -124,7 +124,10 @@ class InvoiceController extends Controller {
             return redirect()->back()
                             ->withErrors($validator);
         } else {
-
+            if (\Request::get('group_name') == '') {
+                return redirect()->back()
+                                ->with('global', '<div class="alert alert-warning">Group name not captured</div>');
+            }
 
             $invoice = \App\Invoice::create(array(
                         'invoice_no' => strtoupper(\Request::get('invoice_no')),
@@ -938,7 +941,7 @@ class InvoiceController extends Controller {
                         if ($cert[$key]->invoice_type == "Group Invoice") {
                             $sacco = $cert[$key]->group->name;
                         } else {
-                            if (($cert[$key]->group_name == null)) {
+                            if (($cert[$key]->group_name == NULL)) {
                                 $sacco = "N/A";
                             } else {
                                 $sacco = $cert[$key]->group_name;
