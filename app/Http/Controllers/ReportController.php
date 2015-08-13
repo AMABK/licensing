@@ -138,5 +138,8 @@ class ReportController extends Controller {
         $matches[] = $det;
         print json_encode($matches);
     }
+    public function financeReports() {
+        
+    }
 
 }
