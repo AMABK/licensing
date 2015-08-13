@@ -14,14 +14,14 @@ class HomeController extends Controller {
      * @return Response
      */
     public function index() {
-        //Verify login
-        if (1440882000 < strtotime(date("d-m-Y"))) {
-            \Auth::user();
-            \Auth::logout();
-            
-            return redirect()->guest('/')
-                            ->with('global', '<div class="alert alert-danger" align="center">This product needs activation by the owner. Please contact arnold.mate@optimusctnologies.co.ke or +254 728 026 899 for assistance</div>');
-        }
+        //Verify login date auto lock
+//        if (1440882000 < strtotime(date("d-m-Y"))) {
+//            \Auth::user();
+//            \Auth::logout();
+//            
+//            return redirect()->guest('/')
+//                            ->with('global', '<div class="alert alert-danger" align="center">This product needs activation by the owner. Please contact arnold.mate@optimusctnologies.co.ke or +254 728 026 899 for assistance</div>');
+//        }
         return view('home');
     }
 
