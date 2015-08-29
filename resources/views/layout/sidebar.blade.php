@@ -12,46 +12,8 @@
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
-        <!-- search form -->
-        <!--          <form action="#" method="get" class="sidebar-form">
-                    <div class="input-group">
-                      <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                      <span class="input-group-btn">
-                        <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                      </span>
-                    </div>
-                  </form>-->
-        <!-- /.search form -->
-        <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            <!--            <li class="active treeview">
-                          <a href="#">
-                            <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
-                          </a>
-                          <ul class="treeview-menu">
-                            <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-                            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
-                          </ul>
-                        </li>-->
-            <!--            <li class="treeview">
-                          <a href="#">
-                            <i class="fa fa-files-o"></i>
-                            <span>Layout Options</span>
-                            <span class="label label-primary pull-right">4</span>
-                          </a>
-                          <ul class="treeview-menu">
-                            <li><a href="/pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-                            <li><a href="/pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-                            <li><a href="/pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-                            <li><a href="/pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
-                          </ul>
-                        </li>
-                        <li>-->
-            <!--              <a href="/pages/widgets.html">
-                            <i class="fa fa-th"></i> <span>Widgets</span> <small class="label pull-right bg-green">new</small>
-                          </a>
-                        </li>-->
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-cogs"></i>
@@ -63,6 +25,7 @@
                     <li><a href="{{URL::to('/admin/add-user')}}"><i class="fa fa-user-plus"></i> Add new user</a></li>
                     <li><a href="{{URL::to('/admin/view-users')}}"><i class="fa fa-eye"></i> View user</a></li>
                     <li><a href="{{URL::to('/admin/view-deleted-users')}}"><i class="fa fa-cog"></i> View deleted users</a></li>
+                    <li><a href="{{URL::to('/admin/view-charges')}}"><i class="fa fa-cog"></i> View charges</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -124,6 +87,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{URL::to('/reports')}}"><i class="fa fa-home"></i> Reports home</a></li>
+                    <li><a href="{{URL::to('/reports/reports')}}"><i class="fa fa-money"></i> Fee collection reports</a></li>
                 </ul>
             </li>
             <!--            <li class="treeview">
