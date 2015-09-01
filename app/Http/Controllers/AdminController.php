@@ -266,4 +266,43 @@ class AdminController extends Controller {
                         ->with('global', '<div class="alert alert-warning" align="center">Your current password is not correct.</div>');
     }
 
+    public function viewCharges() {
+        $charges = \App\Vehicle_type::with('charge')->get();
+        return view('admin.view-charges', array('charge' => $charges));
+    }
+
+    public function editCharges() {
+        $charges = \App\Vehicle_type::with('charge')->get();
+        return view('admin.update-charges', array('charge' => $charges));
+    }
+
+    public function updateCharges() {
+        if (isset($_POST['update'])) {
+            // dd(\Request::all());
+            $seat = \Request::get('seat');
+            $std_fee = \Request::get('std_fee');
+            $extra_fee = \Request::get('extra_fee');
+            foreach ($seat as $key => $num) {
+                $update = \App\Charge::where('type_id', $key)
+                        ->update(array(
+                    'standard_fee' => $std_fee[$key],
+                    'extra_fee' => $extra_fee[$key],
+                    'standard_seats' => $num,
+                        )
+                );
+            }
+            $charges = \App\Vehicle_type::with('charge')->get();
+            if ($update) {
+                return view('admin.view-charges', array('charge' => $charges))
+                                ->with('global', '<div class="alert alert-success" align="center">Charges successfully update</div>');
+            } else {
+                return redirect('edit-charges', array('charge' => $charges))
+                                ->with('global', '<div class="alert alert-warning" align="center">Charges cound not be update successfully</div>');
+            }
+        }
+        if (isset($_POST['close'])) {
+            return redirect('admin');
+        }
+    }
+
 }

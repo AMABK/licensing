@@ -34,6 +34,21 @@ class ReportController extends Controller {
         return view('reports.index', array('data' => $det));
     }
 
+    public function reports() {
+        $payer_id = 0;
+        //Collections per region per tariff
+        $price[1] = \DB::select('SELECT SUM(discount) as discount,SUM(total_fee) as total FROM invoices WHERE invoice_type ="Individual Invoice" AND payer_id = 1 AND region_id = 1');
+        //Total collections per tariff
+        $price[2] = \DB::select('SELECT SUM(discount) as discount,SUM(total_fee) as total FROM invoices WHERE invoice_type ="Individual Invoice" AND payer_id = 1');
+        //Consolidated collections per Licensing Agent
+        $price[3] = \DB::select('SELECT SUM(discount) as discount,SUM(total_fee) as total FROM invoices WHERE agent_id = 1');
+        //Consolidated figure for all tariffs.
+        $price[4] = \DB::select('SELECT SUM(discount) as discount,SUM(total_fee) as total FROM invoices ');
+        //dd($price[0]->discount);
+        //dd($price);
+        return view('reports.reports', array('price' => $price));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -61,7 +76,7 @@ class ReportController extends Controller {
      */
     public function show() {
         $date = \Request::get('set_date');
-        
+
         $det['set_date'] = $date;
         // Registered groups
         $det['total_groups'] = \App\Group::all()->count();
@@ -138,6 +153,7 @@ class ReportController extends Controller {
         $matches[] = $det;
         print json_encode($matches);
     }
+
     public function financeReports() {
         
     }

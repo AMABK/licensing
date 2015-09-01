@@ -87,7 +87,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{URL::to('/reports')}}"><i class="fa fa-home"></i> Reports home</a></li>
-                    <li><a href="{{URL::to('/reports/reports')}}"><i class="fa fa-money"></i> Fee collection reports</a></li>
+<!--                    <li><a href="{{URL::to('/reports/reports')}}"><i class="fa fa-money"></i> Fee collection reports</a></li>-->
                 </ul>
             </li>
             <!--            <li class="treeview">

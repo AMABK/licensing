@@ -268,6 +268,10 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => '/manage-user',
         'uses' => 'AdminController@viewPrivileges'
     ));
+    Route::get('/admin/view-charges', array(
+        'as' => '/view-charges',
+        'uses' => 'AdminController@viewCharges'
+    ));
     Route::group(['middleware' => 'admin'], function() {
         Route::get('/admin/edit-user/{id}', array(
             'as' => '/edit-user',
@@ -285,6 +289,14 @@ Route::group(['middleware' => 'auth'], function() {
             'as' => '/restore-user',
             'uses' => 'AdminController@restoreDeletedUser'
         ));
+        Route::get('/admin/view-charges', array(
+            'as' => '/view-charges',
+            'uses' => 'AdminController@viewCharges'
+        ));
+        Route::get('/admin/edit-charges', array(
+            'as' => '/update-charges',
+            'uses' => 'AdminController@editCharges'
+        ));
         Route::post('/post/add-user', array(
             'as' => 'add-user',
             'uses' => 'AdminController@store'
@@ -292,6 +304,10 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/post/edit-privileges', array(
             'as' => 'edit-privileges',
             'uses' => 'AdminController@postPrivileges'
+        ));
+        Route::post('/admin/view-charges', array(
+            'as' => 'update-charges',
+            'uses' => 'AdminController@updateCharges'
         ));
     });
     //Reports controller
@@ -302,6 +318,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/reports/details', array(
         'as' => 'details',
         'uses' => 'ReportController@details'
+    ));
+    Route::get('/reports/reports', array(
+        'as' => 'reports',
+        'uses' => 'ReportController@reports'
     ));
     Route::post('/reports', array(
         'as' => 'get-report',

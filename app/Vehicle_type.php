@@ -13,7 +13,7 @@ class Vehicle_type extends Model {
     }
     public function charge()
     {
-        return $this->hasOne('App\Charge');
+        return $this->hasOne('App\Charge','type_id');
     }
     public function vehicles()
     {
