@@ -11,7 +11,6 @@
         "laravelcollective/html": "5.1.*",
         "barryvdh/laravel-dompdf": "0.6.*",
         "vinkla/hashids": "^1.1@dev",
-        "dinesh/barcode": "5.*@dev",
         "guzzlehttp/guzzle": "6.*",
         "maatwebsite/excel": "~2.0.0"
     },
