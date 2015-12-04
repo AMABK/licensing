@@ -22,7 +22,14 @@ class HomeController extends Controller {
 //            return redirect()->guest('/')
 //                            ->with('global', '<div class="alert alert-danger" align="center">This product needs activation by the owner. Please contact arnold.mate@optimusctnologies.co.ke or +254 728 026 899 for assistance</div>');
 //        }
-        return view('home');
+        $count['groups'] = \App\Group::all()->count();
+        $count['taxi'] = \App\Group::where('type_id', 4)->count();
+        $count['matatu'] = \App\Group::where('type_id', 2)->count();
+        $count['bus'] = \App\Group::where('type_id', 3)->count();
+        $count['tour'] = \App\Group::where('type_id', 6)->count();
+        $count['company'] = \App\Group::where('type_id', 5)->count();
+
+        return view('home', array('counts' => $count));
     }
 
     /**
