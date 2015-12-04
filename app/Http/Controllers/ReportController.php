@@ -14,23 +14,64 @@ class ReportController extends Controller {
      * @return Response
      */
     public function index() {
-        $date = date('2015-1-1');
-        $f_date = date_create('01-01-2015');
-        $det['set_date'] = date_format($f_date, 'd-m-Y');
-        $det['total_groups'] = \App\Group::all()->count();
-        $det['company_groups'] = \App\Group::where('type_id', 5)->where('created_at', '>=', $date)->count();
-        $det['taxi_groups'] = \App\Group::where('type_id', 4)->where('created_at', '>=', $date)->count();
-        $det['bus_groups'] = \App\Group::where('type_id', 3)->where('created_at', '>=', $date)->count();
-        $det['sacco_groups'] = \App\Group::where('type_id', 2)->where('created_at', '>=', $date)->count();
-        $det['tour_groups'] = \App\Group::where('type_id', 6)->where('created_at', '>=', $date)->count();
+        $det['from_date'] = date('2015-1-1');
+        $det['to_date'] = date('Y-m-d');
+
+        //$f_date = date_create('01-01-2015');
+        //$det['from_date'] = date_format($f_date, 'd-m-Y');
+        $det['total_groups'] = \App\Group::
+                where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['company_groups'] = \App\Group::where('type_id', 5)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['taxi_groups'] = \App\Group::where('type_id', 4)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['bus_groups'] = \App\Group::where('type_id', 3)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['sacco_groups'] = \App\Group::where('type_id', 2)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['tour_groups'] = \App\Group::where('type_id', 6)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
         // Registered groups
-        $det['total_vehicles'] = \App\Vehicle::all()->count();
-        $det['company_vehicles'] = \App\Vehicle::where('type_id', 5)->where('created_at', '>=', $date)->count();
-        $det['taxi_vehicles'] = \App\Vehicle::where('type_id', 4)->where('created_at', '>=', $date)->count();
-        $det['bus_vehicles'] = \App\Vehicle::where('type_id', 3)->where('created_at', '>=', $date)->count();
-        $det['sacco_vehicles'] = \App\Vehicle::where('type_id', 2)->where('created_at', '>=', $date)->count();
-        $det['tour_vehicles'] = \App\Vehicle::where('type_id', 6)->where('created_at', '>=', $date)->count();
-        $det['taxis'] = \App\Vehicle::where('type_id', 1)->where('created_at', '>=', $date)->count();
+        $det['total_vehicles'] = \App\Vehicle::
+                where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['company_vehicles'] = \App\Vehicle::where('type_id', 5)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['taxi_vehicles'] = \App\Vehicle::where('type_id', 4)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['bus_vehicles'] = \App\Vehicle::where('type_id', 3)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['sacco_vehicles'] = \App\Vehicle::where('type_id', 2)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['tour_vehicles'] = \App\Vehicle::where('type_id', 6)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['taxis'] = \App\Vehicle::where('type_id', 1)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
         return view('reports.index', array('data' => $det));
     }
 
@@ -75,26 +116,66 @@ class ReportController extends Controller {
      * @return Response
      */
     public function show() {
-        $date = \Request::get('set_date');
-
-        $det['set_date'] = $date;
+        $det['from_date'] = \Request::get('from_date');
+        $det['to_date'] = \Request::get('to_date');
+        if ($det['from_date'] > $det['to_date']) {
+            return redirect('/reports')
+            ->with('global', '<div class="alert alert-warning">Invalid dates selected. From Date can not be later than To Date</div>');
+        }
         // Registered groups
-        $det['total_groups'] = \App\Group::all()->count();
-        $det['company_groups'] = \App\Group::where('type_id', 5)->where('created_at', '>=', $date)->count();
-        $det['taxi_groups'] = \App\Group::where('type_id', 4)->where('created_at', '>=', $date)->count();
-        $det['bus_groups'] = \App\Group::where('type_id', 3)->where('created_at', '>=', $date)->count();
-        $det['sacco_groups'] = \App\Group::where('type_id', 2)->where('created_at', '>=', $date)->count();
-        $det['tour_groups'] = \App\Group::where('type_id', 6)->where('created_at', '>=', $date)->count();
+        $det['total_groups'] = \App\Group::
+                where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['company_groups'] = \App\Group::where('type_id', 5)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['taxi_groups'] = \App\Group::where('type_id', 4)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['bus_groups'] = \App\Group::where('type_id', 3)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['sacco_groups'] = \App\Group::where('type_id', 2)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['tour_groups'] = \App\Group::where('type_id', 6)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
         // Registered groups
-        $det['total_vehicles'] = \App\Vehicle::all()->count();
-        $det['company_vehicles'] = \App\Vehicle::where('type_id', 5)->where('created_at', '>=', $date)->count();
-        $det['taxi_vehicles'] = \App\Vehicle::where('type_id', 4)->where('created_at', '>=', $date)->count();
-        $det['bus_vehicles'] = \App\Vehicle::where('type_id', 3)->where('created_at', '>=', $date)->count();
-        $det['sacco_vehicles'] = \App\Vehicle::where('type_id', 2)->where('created_at', '>=', $date)->count();
-        $det['tour_vehicles'] = \App\Vehicle::where('type_id', 6)->where('created_at', '>=', $date)->count();
-        $det['taxis'] = \App\Vehicle::where('type_id', 1)->where('created_at', '>=', $date)->count();
-
-        //dd($det['total_groups']);
+        $det['total_vehicles'] = \App\Vehicle::
+                where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['company_vehicles'] = \App\Vehicle::where('type_id', 5)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['taxi_vehicles'] = \App\Vehicle::where('type_id', 4)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['bus_vehicles'] = \App\Vehicle::where('type_id', 3)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['sacco_vehicles'] = \App\Vehicle::where('type_id', 2)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['tour_vehicles'] = \App\Vehicle::where('type_id', 6)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
+        $det['taxis'] = \App\Vehicle::where('type_id', 1)
+                ->where('created_at', '>=', $det['from_date'])
+                ->where('created_at', '<=', $det['to_date'])
+                ->count();
         return view('reports.index', array('data' => $det));
     }
 

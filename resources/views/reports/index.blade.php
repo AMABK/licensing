@@ -27,14 +27,18 @@ Reports | Home
 
     <!-- Main content -->
     <section class="content">
+        @if(Session::has('global'))
+        <center><p>{!!Session::get('global')!!}</p></center>
+        @endif
         <!-- Small boxes (Stat box) -->
         <div class="row">
             <form id="report_form" action="/reports" method="POST">
                 {!! csrf_field() !!}
-                <input type="date" class="form-control txt-auto" name="set_date" id="set_date" required="" placeholder="Please select a valid date">
+                From: <input type="date" class="form-control txt-auto" name="from_date" required="" placeholder="Please select a valid from date">
+                To:<input type="date" class="form-control txt-auto" name="to_date" id="from_date" required="" placeholder="Please select a valid to date">
             </form>
             <div class="col col-xs-12">
-            Report from : <h8>{{$data['set_date']}} </h8> To<h8>{{date('d-m-Y')}}</h8>
+                Report from : <h8>{{$data['from_date']}} </h8> To<h8>{{$data['to_date']}}</h8>
             </div>
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
@@ -141,7 +145,7 @@ Reports | Home
 @section('scripts')
 @parent
 <script>
-    document.getElementById("set_date").onchange = function () {
+    document.getElementById("from_date").onchange = function () {
         document.getElementById("report_form").submit();
     }
 //    $(document).ready(function () {
@@ -172,7 +176,7 @@ Reports | Home
 //            },
 //            minLength: 0
 //        };
-//        $("#set_date").autocomplete(vehicle_details);
+//        $("#from_date").autocomplete(vehicle_details);
 //
 //
 //    });
