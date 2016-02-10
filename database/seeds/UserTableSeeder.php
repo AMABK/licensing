@@ -16,7 +16,7 @@ class UserTableSeeder extends Seeder {
             'designation_id' => 1,
             'national_id' => '0000000',
             'phone_no' => '254700000000',
-            'email' => 'admin@prisk.or.ke',
+            'email' => 'arnold.mate@optimuse-solutions.com',
             'job_id' => 'Admin',
             'status' => 1,
             'password' => Hash::make('secret@prisk'),

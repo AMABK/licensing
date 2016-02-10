@@ -70,7 +70,7 @@
             </li>
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-book"></i>
+                    <i class="fa fa-location-arrow"></i>
                     <span>Agents</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
@@ -81,7 +81,7 @@
             </li>
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-cogs"></i>
+                    <i class="fa fa-reorder"></i>
                     <span>Reports</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
