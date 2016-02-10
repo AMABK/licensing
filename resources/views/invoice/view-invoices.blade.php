@@ -31,16 +31,27 @@ Invoices
                 {!! csrf_field() !!}
                 <div>
                     <button type="submit">Print Selected in invoices</button>
+                    <?php
+                    echo "<select style='height:26px'  name='year'>n";
+
+                    //echo each year as an option     
+                    for ($i = date('Y'); $i >= 2015; $i--) {
+                        echo "<option value=" . $i . ">" . $i . "</option>n";
+                    }
+                    echo "<option value='all'>All</option>n";
+                    //close the select tag 
+                    echo "</select>";
+                    ?>
                 </div>
                 <table id="myTable" width="100%">
-                    <thead><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Licensing</th><th>Finance</th><th>CEO</th><th>License</th><th>Delete</th><th>Print</th></tr></thead>
+                    <thead><tr><th>#</th><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Licensing</th><th>Finance</th><th>CEO</th><th>License</th><th>Delete</th><th>Print</th></tr></thead>
                     <tbody>
                         <?php
                         $i = 0;
                         ?>
                         @foreach ($invoice as $invoices)
                         <tr>
-                            <td><?php if ($invoices->invoice_type == 'Group Invoice') { ?><a href="#" class="viewGroupInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } else { ?><a href="#" class="viewIndividualInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } ?></td><td><?php
+                            <td>{{$i+1}}</td><td><?php if ($invoices->invoice_type == 'Group Invoice') { ?><a href="#" class="viewGroupInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } else { ?><a href="#" class="viewIndividualInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } ?></td><td><?php
                                 if ($invoices->invoice_type == 'Group Invoice') {
                                     echo $invoices->group['reg_id'];
                                 } else {
@@ -53,7 +64,7 @@ Invoices
                         ?>
                         @endforeach
                     </tbody>
-                    <tfoot><tr><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Licensing</th><th>Finance</th><th>CEO</th><th>License</th><th>Delete</th><th>Print</th></tr></thead>
+                    <tfoot><tr><th>#</th><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Licensing</th><th>Finance</th><th>CEO</th><th>License</th><th>Delete</th><th>Print</th></tr></thead>
                 </table>
             </form>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->

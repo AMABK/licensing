@@ -177,7 +177,9 @@ class InvoiceController extends Controller {
      * @return Response
      */
     public function show() {
-        $invoices = \App\Invoice::with('status_manager', 'status_finance')->get();
+        $invoices = \App\Invoice::with('status_manager', 'status_finance')
+                ->orderBy('created_at','DESC')
+                ->get();
         //dd($invoices);
         $i = 0;
         $status[0] = null;
@@ -902,8 +904,9 @@ class InvoiceController extends Controller {
                 $i++;
             }
             foreach ($arr as $key => $value) {
-                //Check whether all are approved
-                $check = \App\License::where('invoice_id', $value)->count();
+                //Check whether all are approved for printing
+                $check = \App\License::where('invoice_id', $value)
+                        ->count();
                 if ($check < 1) {
                     $id = $value;
                     $check = \App\User_role::where('user_id', \Auth::user()->id)

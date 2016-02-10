@@ -19,63 +19,8 @@ Invoice
 
     <!-- Main content -->
     <section class="content">
-        <!-- Small boxes (Stat box) -->
-<!--        <div class="row">
-            <div class="col-lg-3 col-xs-6">
-                 small box 
-                <div class="small-box bg-red">
-                    <div class="inner">
-                        <h3>150</h3>
-                        <p>Groups</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-plus"></i>
-                    </div>
-                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div> ./col 
-            <div class="col-lg-3 col-xs-6">
-                 small box 
-                <div class="small-box bg-yellow">
-                    <div class="inner">
-                        <h3>53</h3>
-                        <p>Total Vehicles</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-bus"></i>
-                    </div>
-                    <a href="{{URL::to('/vehicle/add-vehicle')}}" class="small-box-footer">Add a vehicle <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div> ./col 
-            <div class="col-lg-3 col-xs-6">
-                 small box 
-                <div class="small-box bg-yellow">
-                    <div class="inner">
-                        <h3>57<sup style="font-size: 20px">%</sup></h3>
-                        <p>Belong to groups</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-group"></i>
-                    </div>
-                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add group <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div> ./col 
-            <div class="col-lg-3 col-xs-6">
-                 small box 
-                <div class="small-box bg-red">
-                    <div class="inner">
-                        <h3>65<sup style="font-size: 20px">%</sup></h3>
-                        <p>Are company vehicles</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-car"></i>
-                    </div>
-                    <a href="{{URL::to('/group/add-group')}}" class="small-box-footer">Add group <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div> ./col 
-        </div> /.row -->
         @if(Session::has('global'))
-        <center><p>{!!Session::get('global')!!}</p></center>
+        <center><p>{!!Session::get('global')!!}</p>11111</center>
         @endif
         <!-- Main row -->
         <div class="row" style="width: 70%; margin-left: 15%;margin-top: 5%">

@@ -107,6 +107,10 @@ Admin | Add user
                     <input type="text" name="job_id" class="form-control" value="{{ old('job_id') }}" required="" placeholder="Job Id">
                 </div>
                 <div class="form-group">
+                    <label for="national_id">National Id</label>
+                    <input type="text" name="national_id" class="form-control" value="{{ old('national_id') }}" required="" placeholder="National Id">
+                </div>
+                <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Email">
                 </div>
