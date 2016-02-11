@@ -40,7 +40,7 @@ Route::post('/auth/login', array(
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/home', array(
         'as' => 'home',
-        'uses' => 'HomeController@index'
+        'uses' => 'VehicleController@index'
     ));
 // Registration routes...
     Route::get('/auth/register', array(
