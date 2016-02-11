@@ -36,6 +36,13 @@
 
                 <h3>Password Reset</h3>
             </div>
+            @if (count($errors) > 0)
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            @endif
             <center>
                 @if(Session::has('global'))
                 <p>{!!Session::get('global')!!}</p>
