@@ -35,7 +35,7 @@
             <div id="loginbox">            
                 <form method="post" action="/auth/login" accept-charset="utf-8" class="form login-form" id="loginform" >                    
                     {!! csrf_field() !!}
-                    <p>Welcome to the FleetMan.<br> To continue, please login.</p>
+                    <p>Welcome to the PLS.<br> To continue, please login.</p>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                         <input type="email" name="email" value="{{ old('email') }}" id="username" class="form-control" placeholder="Username" size="20" required="" />                       
