@@ -81,7 +81,7 @@
             <div id="loginbox" style="height: 280px">            
                 <form method="post" action="/password/reset" accept-charset="utf-8" class="form login-form" id="loginform" >                    
                     {!! csrf_field() !!}
-                    <p>Welcome to the FleetMan.<br>Enter your new password.</p>
+                    <p>Welcome to the PLS.<br>Enter your new password.</p>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                         <input type="hidden" name="token" value="{{ $token }}">
