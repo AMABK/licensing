@@ -9,8 +9,8 @@
         <link rel="stylesheet" rev="stylesheet" href="/dist/css/unicorn-login.css" />
         <link rel="stylesheet" rev="stylesheet" href="/dist/css/unicorn-login-custom.css" />
 
-        <script src="/dist/js/jquery-1.11.0.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
-        <script src="/dist/js/bootstrap.min.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
+<!--        <script src="/dist/js/jquery-1.11.0.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
+        <script src="/dist/js/bootstrap.min.js" type="text/javascript" language="javascript" charset="UTF-8"></script>-->
     </head>
     <body>
         <style>
