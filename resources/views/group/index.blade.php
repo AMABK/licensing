@@ -159,8 +159,6 @@ Groups home
 @section('scripts')
 @parent
 <script>
-    $(document).ready(function () {
-        $('#myTable').dataTable();
-    });
+
 </script>   
 @stop

@@ -159,8 +159,6 @@ Home
 @section('scripts')
 @parent
 <script>
-    $(document).ready(function () {
-        $('#myTable').DataTable();
-    });
+
 </script>   
 @stop
