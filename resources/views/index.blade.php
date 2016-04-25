@@ -51,20 +51,12 @@
                             <a href="{{URL::to('/password/email')}}" >Reset password?</a><br />
 
 
-                            2015 Version <span class="label label-info">15.1
+                            2015 Version <span class="label label-info">15.8
                         </div>
                         <div class="pull-right"><input type="submit" class="btn btn-success" value="Login" /></div>
                     </div>
                 </form>
-
             </div>
-
-
-
-
-
-
         </div>
-
     </body>
 </html>

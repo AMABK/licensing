@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'home',
         'uses' => 'VehicleController@index'
     ));
+    
 // Registration routes...
     Route::get('/auth/register', array(
         'as' => 'register',

@@ -76,8 +76,6 @@ Invoices
 @stop
 @section('scripts')
 @parent
-<script src="/datatables/jquery.dataTables.min.js" type="text/javascript" ></script>
-
 <script>
 $(document).ready(function () {
     $('#myTable').dataTable();
