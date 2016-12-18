@@ -226,7 +226,6 @@ class GroupController extends Controller {
     }
 
     public function getGroups() {
-        //$group = \App\Group::all();
         //dd($groups);
         if ($_GET['type'] == 'reg_id') {
             $reg_id = $_GET['name_has'];
