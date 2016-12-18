@@ -10,7 +10,7 @@
         "barryvdh/laravel-ide-helper": "~2.0",
         "laravelcollective/html": "5.1.*",
         "barryvdh/laravel-dompdf": "0.6.*",
-        "dinesh/barcode": "5.0.*@dev",
+        "milon/barcode": "^5.1",
         "vinkla/hashids": "^1.1@dev",
         "guzzlehttp/guzzle": "6.*",
         "maatwebsite/excel": "~2.0.0"

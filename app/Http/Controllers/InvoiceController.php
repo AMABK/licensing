@@ -24,6 +24,15 @@ class InvoiceController extends Controller {
      *
      * @return Response
      */
+    public function selectGroupToInvoice($id) {
+        $group = \App\Group::where('status', 0)->get();
+        return view('invoice.select-group-invoice', array('groups' => $group));
+    }
+
+    public function createGroupInvoice1() {
+        return view('invoice.add-group-invoice', array('region' => $regions, 'agent' => $agents));
+    }
+
     public function createGroupInvoice() {
         $regions = \App\Region::all();
         $agents = \App\Agent::all();
@@ -62,6 +71,13 @@ class InvoiceController extends Controller {
             return redirect()->back()
                             ->withErrors($validator);
         } else {
+            if (\Request::get('submit') == 'modify') {
+                //Modify invoice vehicles
+                $group = \App\Group::with('vehicles')
+                        ->find(\Request::get('id'))
+                        ->get();
+                return view('invoice.modify-group-invoice');
+            }
 //dd(strtotime(\Request::get('expiry_date')));
             $invoice = \App\Invoice::create(array(
                         'invoice_no' => strtoupper(\Request::get('invoice_no')),
@@ -178,7 +194,7 @@ class InvoiceController extends Controller {
      */
     public function show() {
         $invoices = \App\Invoice::with('status_manager', 'status_finance')
-                ->orderBy('created_at','DESC')
+                ->orderBy('created_at', 'DESC')
                 ->get();
         //dd($invoices);
         $i = 0;
@@ -211,32 +227,6 @@ class InvoiceController extends Controller {
         return view('invoice.view-deleted-invoices', array('invoice' => $invoices));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id) {
-//
-    }
-
-    /**
-     * Update the specified resource in storage.
-      App\Http\Controllers\Auth  *
-     * @param  int  $id
-     * @return Response
-     */
-    public function update($id) {
-//
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function delete($id) {
         $select = \App\Invoice::find(\Hashids::decode($id))->first();
         $delete = $select->delete();
@@ -290,6 +280,7 @@ class InvoiceController extends Controller {
 //$reg_id = '56';
         $group_data = \App\Group::with('vehicle_type')
                 ->where('reg_id', 'like', '%' . $reg_id . '%')
+                ->orWhere('name', 'like', '%' . $reg_id . '%')
                 ->get(['id', 'reg_id', 'name', 'type_id']);
 //dd($data[0]->email);
 //print json_encode($data);
@@ -319,9 +310,9 @@ class InvoiceController extends Controller {
                      * Each matatu pays annual fee of amount y
                      */
                     if ($vehicles->count() < 11) {
-                        $fee = $vehicle_fee->standard_fee * $vehicles->count()*$vehicles->no_of_seat;
+                        $fee = $vehicle_fee->standard_fee * $vehicles->count() * $vehicles->no_of_seat;
                     } else {
-                        $fee = $vehicle_fee->extra_fee * $vehicles->count()*$vehicles->no_of_seat;
+                        $fee = $vehicle_fee->extra_fee * $vehicles->count() * $vehicles->no_of_seat;
                     }
                     break;
                 case 4:
@@ -354,7 +345,7 @@ class InvoiceController extends Controller {
             $i = 0;
             foreach ($vehicles as $vehicle) {
                 $allVehicles[$i] = $vehicle->reg_no;
-                $i+=1;
+                $i += 1;
             }
 // dd($allVehicles);
             $det['reg_id'] = $data->reg_id;

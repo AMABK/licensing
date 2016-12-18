@@ -233,6 +233,7 @@ class GroupController extends Controller {
             //$data = mysql_query("SELECT name FROM country where name LIKE '".strtoupper($_GET['name_startsWith'])."%'");	
             $data = \DB::table('groups')
                     ->where('reg_id', 'like', '%' . $reg_id . '%')
+                    ->orWhere('name','like', '%' . $reg_id . '%')
                     ->get();
             // $data = array();
 //	while ($row = mysql_fetch_array($result)) {

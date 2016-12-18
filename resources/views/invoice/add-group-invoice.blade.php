@@ -99,7 +99,8 @@ Add Group Invoice
                     <textarea type="text" name="description" required="" class="form-control" placeholder="Description"></textarea>
                 </div>
                 <div>
-                    <button type="submit">Register</button>
+                    <button class="btn btn-info pull-left" name="submit" value="modify" type="submit"><i class="fa fa-edit"></i> Modify Invoice Vehicles</button>
+                    <button class="btn btn-success pull-right" name="submit" value="register" type="submit"><i class="fa fa-save"></i> Register Invoice</button>
                 </div>
             </form>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
@@ -133,7 +134,7 @@ Add Group Invoice
             },
             minLength: 2
         };
-        console.log(sacco_details);
+        //console.log(sacco_details);
         $("#reg_id").autocomplete(sacco_details);
 
     });
