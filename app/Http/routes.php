@@ -160,9 +160,9 @@ Route::group(['middleware' => 'auth'], function() {
         'as' => 'add-group-invoice',
         'uses' => 'InvoiceController@createGroupInvoice'
     ));
-    Route::get('/invoice/select-group-invoice', array(
-        'as' => 'select-group-invoice',
-        'uses' => 'InvoiceController@selectGroupToInvoice'
+    Route::get('/invoice/modify-group-invoice/{id}', array(
+        'as' => 'modify-group-invoice',
+        'uses' => 'InvoiceController@modifyGroupToInvoice'
     ));
     Route::post('/post/add-group-invoice', array(
         'as' => 'add-group-invoice',

@@ -22,7 +22,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{URL::to('/admin')}}"><i class="fa fa-home"></i> Admin home</a></li>
-                    <li><a href="{{URL::to('/admin/add-user')}}"><i class="fa fa-user-plus"></i> Add new user</a></li>
+                    <li><a href="{{URL::to('/admin/add-user')}}"><i class="fa fa-plus"></i> Add new user</a></li>
                     <li><a href="{{URL::to('/admin/view-users')}}"><i class="fa fa-eye"></i> View user</a></li>
                     <li><a href="{{URL::to('/admin/view-deleted-users')}}"><i class="fa fa-cog"></i> View deleted users</a></li>
                     <li><a href="{{URL::to('/admin/view-charges')}}"><i class="fa fa-cog"></i> View charges</a></li>

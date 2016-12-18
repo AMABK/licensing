@@ -43,18 +43,27 @@ class GroupController extends Controller {
 
         $validator = \Validator::make(\Request::all(), array(
                     'group_code' => 'sometimes|max:10|unique:groups',
-                    'name' => 'required|max:255|unique:groups',
+                    'name' => 'required|max:255',
                     'type_id' => 'required|max:255',
                     'phone_no' => 'sometimes|digits_between:10,15',
                     'email' => 'sometimes|email',
                         )
         );
-        //dd(\Request::all());
+
         if ($validator->fails()) {
             return redirect('/group/add-group')
                             ->withErrors($validator)
                             ->withInput();
         } else {
+            $check = \App\Group::where('name', \Request::get('name'))
+                    ->where('status', '!=', 2)
+                    ->count();
+            if ($check) {
+                return redirect('/group/add-group')
+                                ->withErrors($validator)
+                                ->withInput()
+                                ->with('global', '<div class="alert alert-warning">Please ensure that no other group has the same name</div>');
+            }
             $group = \App\Group::create(\Request::all());
             $auto_reg_id = $this->generateGroupId(\Request::get('type_id'), $group->id);
             $group->update(['reg_id' => $auto_reg_id]);
@@ -117,9 +126,16 @@ class GroupController extends Controller {
                                     ->with('global', '<div class="alert alert-warning">Whoooops, this group could not be deleted!</div>');
                 }
             } elseif (($check > 0) && ($find->status == 1)) {
-                \App\Vehicle::where('group_id', \Request::get('id'))->delete();
-                $delete = $find->delete();
+
+                $delete = \DB::table('groups')
+                        ->where('id', \Request::input('id'))
+                        ->update(array(
+                    'status' => 2
+                ));
                 if ($delete) {
+                    //Update all vehicles with the group id to null
+                    \App\Vehicle::where('group_id', \Request::input('id'))
+                            ->update(['group_id' => null]);
                     return redirect('group/view-groups')
                                     ->with('global', '<div class="alert alert-success">Group successfully permanently deleted<div>');
                 } else {
@@ -232,7 +248,7 @@ class GroupController extends Controller {
             //$data = mysql_query("SELECT name FROM country where name LIKE '".strtoupper($_GET['name_startsWith'])."%'");	
             $data = \DB::table('groups')
                     ->where('reg_id', 'like', '%' . $reg_id . '%')
-                    ->orWhere('name','like', '%' . $reg_id . '%')
+                    ->orWhere('name', 'like', '%' . $reg_id . '%')
                     ->get();
             // $data = array();
 //	while ($row = mysql_fetch_array($result)) {

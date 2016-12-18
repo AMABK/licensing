@@ -44,20 +44,52 @@ Invoices
                     ?>
                 </div>
                 <table id="myTable" width="100%">
-                    <thead><tr><th>#</th><th>Invoice #</th><th>Payer</th><th>Invoice Type</th><th>Vehicle #</th><th>Fees</th><th>Discount</th><th>Net Fees</th><th>Expiry Date</th><th>Licensing</th><th>Finance</th><th>CEO</th><th>License</th><th>Delete</th><th>Print</th></tr></thead>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Invoice #</th>
+                            <th>Payer</th>
+                            <th>Invoice Type</th>
+                            <th>Vehicle #</th>
+                            <th>Fees</th>
+                            <th>Discount</th>
+                            <th>Net Fees</th>
+                            <th>Expiry Date</th>
+                            <th>Licensing</th>
+                            <th>Finance</th>
+                            <th>CEO</th>
+                            <th>License</th>
+                            <th>Delete</th>
+                            <th>Print</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         <?php
                         $i = 0;
                         ?>
                         @foreach ($invoice as $invoices)
                         <tr>
-                            <td>{{$i+1}}</td><td><?php if ($invoices->invoice_type == 'Group Invoice') { ?><a href="#" class="viewGroupInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } else { ?><a href="#" class="viewIndividualInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } ?></td><td><?php
+                            <td>{{$i+1}}</td>
+                            <td><?php if ($invoices->invoice_type == 'Group Invoice') { ?><a href="#" class="viewGroupInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } else { ?><a href="#" class="viewIndividualInvoice" data-prop="{{$invoices->id}}" >{{strtoupper($invoices->invoice_no)}}</a><?php } ?></td>
+                            <td><?php
                                 if ($invoices->invoice_type == 'Group Invoice') {
                                     echo $invoices->group['reg_id'];
                                 } else {
                                     echo $invoices->vehicle['reg_no'];
                                 }
-                                ?></td><td>{{$invoices->invoice_type }}</td><td>{{ $invoices->no_vehicle }}</td><td>{{ $invoices->total_fee+$invoices->discount }}</td><td>{{ $invoices->discount }}</td><td>{{ $invoices->total_fee }}</td><td>{{ $invoices->expiry_date }}</td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}">{{$status[$i]['licensing']}}</a></td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}">{{$status[$i]['finance']}}</a></td><td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}">{{$status[$i]['manager']}}</a></td><td><a href="{{URL::to('/invoice/view-cert/'.Hashids::encode($invoices->id))}}" target="_blank">View</a></td><td><a href="{{URL::to('/invoice/delete-invoice/'.\Hashids::encode($invoices->id))}}"> Delete</a></td><td><input type="checkbox" name="print[{{$invoices->id}}]" value="1"></td>
+                                ?></td>
+                            <td>{{$invoices->invoice_type }}</td>
+                            <td>{{ $invoices->no_vehicle }}</td>
+                            <td>{{ $invoices->total_fee+$invoices->discount }}</td>
+                            <td>{{ $invoices->discount }}</td>
+                            <td>{{ $invoices->total_fee }}</td>
+                            <td>{{ $invoices->expiry_date }}</td>
+                            <td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}">{{$status[$i]['licensing']}}</a></td>
+                            <td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}">{{$status[$i]['finance']}}</a></td>
+                            <td><a href="{{URL::to('invoice/approve/'.\Hashids::encode($invoices->id))}}">{{$status[$i]['manager']}}</a></td>
+                            <td><a href="{{URL::to('/invoice/view-cert/'.Hashids::encode($invoices->id))}}" target="_blank">View</a></td>
+                            <td><a href="{{URL::to('/invoice/delete-invoice/'.\Hashids::encode($invoices->id))}}"> Delete</a></td>
+                            <td><input type="checkbox" name="print[{{$invoices->id}}]" value="1"></td>
                         </tr>
                         <?php
                         $i++;
@@ -77,39 +109,39 @@ Invoices
 @section('scripts')
 @parent
 <script>
-$(document).ready(function () {
-    $('#myTable').dataTable();
-});
+    $(document).ready(function () {
+        $('#myTable').dataTable();
+    });
 //view farmer
-$(document).ready(function () {
-    $(".viewGroupInvoice").click(function () {
-        var prop = $(this).attr("data-prop");
-        //console.log(prop);
-        $.ajax({
-            type: "GET",
-            url: "/invoice/get-group-invoice/" + prop,
-            success: function (data) {
+    $(document).ready(function () {
+        $(".viewGroupInvoice").click(function () {
+            var prop = $(this).attr("data-prop");
+            //console.log(prop);
+            $.ajax({
+                type: "GET",
+                url: "/invoice/get-group-invoice/" + prop,
+                success: function (data) {
 
-                var invoiceArray = data;
-                console.log(invoiceArray.statusManager);
-                //Inserting into modal:
+                    var invoiceArray = data;
+                    console.log(invoiceArray.statusManager);
+                    //Inserting into modal:
 //                    var contentString = ""
 //                    for (var i = 0; i < projectArray.length; i++) {
 //                        contentString += "<input type='digit' name='id' value=" + projectArray[i].id + " >"
 //                    }
-                //console.log(contentString);
-                //console.log(projectArray.projects[0].id);
-                $("#idInvoice").val(invoiceArray.id);
-                $("#noInvoice").val(invoiceArray.invoice_no);
-                $("#licensedInvoice").val(invoiceArray.licensed_vehicles);
-                $("#payerInvoice").val(invoiceArray.group.reg_id);
-                $("#typeInvoice").val(invoiceArray.invoice_type);
-                $("#createdInvoice").val(invoiceArray.created_at);
-                $("#updatedInvoice").val(invoiceArray.updated_at);
-                $("#feeInvoice").val(invoiceArray.total_fee);
-                $("#discountInvoice").val(invoiceArray.discount);
-                $("#noVehicleInvoice").val(invoiceArray.no_vehicle);
-                $("#expiryInvoice").val(invoiceArray.expiry_date);
+                    //console.log(contentString);
+                    //console.log(projectArray.projects[0].id);
+                    $("#idInvoice").val(invoiceArray.id);
+                    $("#noInvoice").val(invoiceArray.invoice_no);
+                    $("#licensedInvoice").val(invoiceArray.licensed_vehicles);
+                    $("#payerInvoice").val(invoiceArray.group.reg_id);
+                    $("#typeInvoice").val(invoiceArray.invoice_type);
+                    $("#createdInvoice").val(invoiceArray.created_at);
+                    $("#updatedInvoice").val(invoiceArray.updated_at);
+                    $("#feeInvoice").val(invoiceArray.total_fee);
+                    $("#discountInvoice").val(invoiceArray.discount);
+                    $("#noVehicleInvoice").val(invoiceArray.no_vehicle);
+                    $("#expiryInvoice").val(invoiceArray.expiry_date);
 //                if (invoiceArray.status_finance === null) {
 //                    document.getElementById('#statusFinance').value = 'N/A';
 //                }
@@ -122,57 +154,57 @@ $(document).ready(function () {
 //                else {
 //                    $("#statusManager").val(invoiceArray.status_finance.status);
 //                }
-                //console.log(projectArray);
-                //$("#subCountyValue").val(projectArray['sub-county']);
-                //$("#viewFarmerModalContent").append(contentString);
-                $("#viewInvoiceModal").modal("show");
-            }
+                    //console.log(projectArray);
+                    //$("#subCountyValue").val(projectArray['sub-county']);
+                    //$("#viewFarmerModalContent").append(contentString);
+                    $("#viewInvoiceModal").modal("show");
+                }
+            });
+            //Load data into modal:
+            // var content = 
+
         });
-        //Load data into modal:
-        // var content = 
-
     });
-});
-$(document).ready(function () {
-    $(".viewIndividualInvoice").click(function () {
-        var prop = $(this).attr("data-prop");
-        //console.log(prop);
-        $.ajax({
-            type: "GET",
-            url: "/invoice/get-individual-invoice/" + prop,
-            success: function (data) {
+    $(document).ready(function () {
+        $(".viewIndividualInvoice").click(function () {
+            var prop = $(this).attr("data-prop");
+            //console.log(prop);
+            $.ajax({
+                type: "GET",
+                url: "/invoice/get-individual-invoice/" + prop,
+                success: function (data) {
 
-                var invoiceArray = data;
-                console.log(invoiceArray);
-                //Inserting into modal:
+                    var invoiceArray = data;
+                    console.log(invoiceArray);
+                    //Inserting into modal:
 //                    var contentString = ""
 //                    for (var i = 0; i < projectArray.length; i++) {
 //                        contentString += "<input type='digit' name='id' value=" + projectArray[i].id + " >"
 //                    }
-                //console.log(contentString);
-                //console.log(projectArray.projects[0].id);
-                $("#idInvoice").val(invoiceArray.id);
-                $("#noInvoice").val(invoiceArray.invoice_no);
-                $("#licensedInvoice").val(invoiceArray.reg_no);
-                $("#payerInvoice").val(invoiceArray.vehicle.reg_no);
-                $("#typeInvoice").val(invoiceArray.invoice_type);
-                $("#createdInvoice").val(invoiceArray.created_at);
-                $("#updatedInvoice").val(invoiceArray.updated_at);
-                $("#feeInvoice").val(invoiceArray.total_fee);
-                $("#discountInvoice").val(invoiceArray.discount);
-                $("#noVehicleInvoice").val(invoiceArray.no_vehicle);
-                $("#expiryInvoice").val(invoiceArray.expiry_date);
-                //console.log(projectArray);
-                //$("#subCountyValue").val(projectArray['sub-county']);
-                //$("#viewFarmerModalContent").append(contentString);
-                $("#viewInvoiceModal").modal("show");
-            }
-        });
-        //Load data into modal:
-        // var content = 
+                    //console.log(contentString);
+                    //console.log(projectArray.projects[0].id);
+                    $("#idInvoice").val(invoiceArray.id);
+                    $("#noInvoice").val(invoiceArray.invoice_no);
+                    $("#licensedInvoice").val(invoiceArray.reg_no);
+                    $("#payerInvoice").val(invoiceArray.vehicle.reg_no);
+                    $("#typeInvoice").val(invoiceArray.invoice_type);
+                    $("#createdInvoice").val(invoiceArray.created_at);
+                    $("#updatedInvoice").val(invoiceArray.updated_at);
+                    $("#feeInvoice").val(invoiceArray.total_fee);
+                    $("#discountInvoice").val(invoiceArray.discount);
+                    $("#noVehicleInvoice").val(invoiceArray.no_vehicle);
+                    $("#expiryInvoice").val(invoiceArray.expiry_date);
+                    //console.log(projectArray);
+                    //$("#subCountyValue").val(projectArray['sub-county']);
+                    //$("#viewFarmerModalContent").append(contentString);
+                    $("#viewInvoiceModal").modal("show");
+                }
+            });
+            //Load data into modal:
+            // var content = 
 
+        });
     });
-});
 //Edit farmer
 //$(document).ready(function () {
 //    $(".editFarmerLink").click(function () {

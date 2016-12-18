@@ -24,10 +24,10 @@ class InvoiceController extends Controller {
      *
      * @return Response
      */
-    public function selectGroupToInvoice($id) {
-        $group = \App\Group::where('status', 0)->get();
-        return view('invoice.select-group-invoice', array('groups' => $group));
-    }
+//    public function selectGroupToInvoice($id) {
+//        $group = \App\Group::where('status', 0)->get();
+//        return view('invoice.select-group-invoice', array('groups' => $group));
+//    }
 
     public function createGroupInvoice1() {
         return view('invoice.add-group-invoice', array('region' => $regions, 'agent' => $agents));
@@ -50,6 +50,20 @@ class InvoiceController extends Controller {
      *
      * @return Response
      */
+    public function modifyGroupToInvoice($group_id) {
+        $regions = \App\Region::all();
+        $agents = \App\Agent::all();
+        $group = \App\Group::with('vehicles')
+                ->where('id', $group_id)
+                ->where('status', 0)
+                ->get();
+        if (sizeof($group) < 1) {
+            return redirect()->back()
+                            ->with('global', '<div class="alert alert-danger">Whoooops, Group could not be found. The group is either <a href="/group/deleted-groups" target="_blank">partially deleted</a> or does not exist in the system</div>');
+        }
+        return view('invoice.modify-group-invoice', array('group' => $group, 'region' => $regions, 'agent' => $agents));
+    }
+
     public function storeGroupInvoice() {
 //dd(\Request::all());
         $validator = \Validator::make(\Request::all(), array(
@@ -73,10 +87,20 @@ class InvoiceController extends Controller {
         } else {
             if (\Request::get('submit') == 'modify') {
                 //Modify invoice vehicles
-                $group = \App\Group::with('vehicles')
-                        ->find(\Request::get('id'))
-                        ->get();
-                return view('invoice.modify-group-invoice');
+                $group = \App\Group::where('id', \Request::get('id'))
+                        ->where('status', 0)
+                        ->first();
+                if ($group == null) {
+                    return redirect()->back()
+                                    ->with('global', '<div class="alert alert-danger">Whoooops, Group could not be found. The group is either <a href="/group/deleted-groups" target="_blank">partially deleted</a> or does not exist in the system</div>');
+                }
+                return redirect('/invoice/modify-group-invoice/' . $group->id . '?'
+                        . 'discount=' . \Request::get('discount')
+                        . '&invoice_no=' . \Request::get('invoice_no')
+                        . '&description=' . \Request::get('description')
+                        . '&region_id=' . \Request::get('region_id')
+                        . '&agent_id=' . \Request::get('agent_id')
+                );
             }
 //dd(strtotime(\Request::get('expiry_date')));
             $invoice = \App\Invoice::create(array(
