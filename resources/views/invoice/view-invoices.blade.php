@@ -107,41 +107,45 @@ Invoices
 
 @stop
 @section('scripts')
+<script src="/datatables/jquery.dataTables.min.js" type="text/javascript" ></script>
+
 @parent
 <script>
-    $(document).ready(function () {
-        $('#myTable').dataTable();
+$(document).ready(function () {
+    $('#myTable').dataTable({
+        "pageLength": 100
     });
+});
 //view farmer
-    $(document).ready(function () {
-        $(".viewGroupInvoice").click(function () {
-            var prop = $(this).attr("data-prop");
-            //console.log(prop);
-            $.ajax({
-                type: "GET",
-                url: "/invoice/get-group-invoice/" + prop,
-                success: function (data) {
+$(document).ready(function () {
+    $(".viewGroupInvoice").click(function () {
+        var prop = $(this).attr("data-prop");
+        //console.log(prop);
+        $.ajax({
+            type: "GET",
+            url: "/invoice/get-group-invoice/" + prop,
+            success: function (data) {
 
-                    var invoiceArray = data;
-                    console.log(invoiceArray.statusManager);
-                    //Inserting into modal:
+                var invoiceArray = data;
+                console.log(invoiceArray.statusManager);
+                //Inserting into modal:
 //                    var contentString = ""
 //                    for (var i = 0; i < projectArray.length; i++) {
 //                        contentString += "<input type='digit' name='id' value=" + projectArray[i].id + " >"
 //                    }
-                    //console.log(contentString);
-                    //console.log(projectArray.projects[0].id);
-                    $("#idInvoice").val(invoiceArray.id);
-                    $("#noInvoice").val(invoiceArray.invoice_no);
-                    $("#licensedInvoice").val(invoiceArray.licensed_vehicles);
-                    $("#payerInvoice").val(invoiceArray.group.reg_id);
-                    $("#typeInvoice").val(invoiceArray.invoice_type);
-                    $("#createdInvoice").val(invoiceArray.created_at);
-                    $("#updatedInvoice").val(invoiceArray.updated_at);
-                    $("#feeInvoice").val(invoiceArray.total_fee);
-                    $("#discountInvoice").val(invoiceArray.discount);
-                    $("#noVehicleInvoice").val(invoiceArray.no_vehicle);
-                    $("#expiryInvoice").val(invoiceArray.expiry_date);
+                //console.log(contentString);
+                //console.log(projectArray.projects[0].id);
+                $("#idInvoice").html(invoiceArray.id);
+                $("#noInvoice").html(invoiceArray.invoice_no);
+                $("#licensedInvoice").html(invoiceArray.licensed_vehicles);
+                $("#payerInvoice").html(invoiceArray.group.reg_id);
+                $("#typeInvoice").html(invoiceArray.invoice_type);
+                $("#createdInvoice").html(invoiceArray.created_at);
+                $("#updatedInvoice").html(invoiceArray.updated_at);
+                $("#feeInvoice").html(invoiceArray.total_fee);
+                $("#discountInvoice").html(invoiceArray.discount);
+                $("#noVehicleInvoice").html(invoiceArray.no_vehicle);
+                $("#expiryInvoice").html(invoiceArray.expiry_date);
 //                if (invoiceArray.status_finance === null) {
 //                    document.getElementById('#statusFinance').value = 'N/A';
 //                }
@@ -154,57 +158,57 @@ Invoices
 //                else {
 //                    $("#statusManager").val(invoiceArray.status_finance.status);
 //                }
-                    //console.log(projectArray);
-                    //$("#subCountyValue").val(projectArray['sub-county']);
-                    //$("#viewFarmerModalContent").append(contentString);
-                    $("#viewInvoiceModal").modal("show");
-                }
-            });
-            //Load data into modal:
-            // var content = 
-
+                //console.log(projectArray);
+                //$("#subCountyValue").val(projectArray['sub-county']);
+                //$("#viewFarmerModalContent").append(contentString);
+                $("#viewInvoiceModal").modal("show");
+            }
         });
-    });
-    $(document).ready(function () {
-        $(".viewIndividualInvoice").click(function () {
-            var prop = $(this).attr("data-prop");
-            //console.log(prop);
-            $.ajax({
-                type: "GET",
-                url: "/invoice/get-individual-invoice/" + prop,
-                success: function (data) {
+        //Load data into modal:
+        // var content = 
 
-                    var invoiceArray = data;
-                    console.log(invoiceArray);
-                    //Inserting into modal:
+    });
+});
+$(document).ready(function () {
+    $(".viewIndividualInvoice").click(function () {
+        var prop = $(this).attr("data-prop");
+        //console.log(prop);
+        $.ajax({
+            type: "GET",
+            url: "/invoice/get-individual-invoice/" + prop,
+            success: function (data) {
+
+                var invoiceArray = data;
+                console.log(invoiceArray);
+                //Inserting into modal:
 //                    var contentString = ""
 //                    for (var i = 0; i < projectArray.length; i++) {
 //                        contentString += "<input type='digit' name='id' value=" + projectArray[i].id + " >"
 //                    }
-                    //console.log(contentString);
-                    //console.log(projectArray.projects[0].id);
-                    $("#idInvoice").val(invoiceArray.id);
-                    $("#noInvoice").val(invoiceArray.invoice_no);
-                    $("#licensedInvoice").val(invoiceArray.reg_no);
-                    $("#payerInvoice").val(invoiceArray.vehicle.reg_no);
-                    $("#typeInvoice").val(invoiceArray.invoice_type);
-                    $("#createdInvoice").val(invoiceArray.created_at);
-                    $("#updatedInvoice").val(invoiceArray.updated_at);
-                    $("#feeInvoice").val(invoiceArray.total_fee);
-                    $("#discountInvoice").val(invoiceArray.discount);
-                    $("#noVehicleInvoice").val(invoiceArray.no_vehicle);
-                    $("#expiryInvoice").val(invoiceArray.expiry_date);
-                    //console.log(projectArray);
-                    //$("#subCountyValue").val(projectArray['sub-county']);
-                    //$("#viewFarmerModalContent").append(contentString);
-                    $("#viewInvoiceModal").modal("show");
-                }
-            });
-            //Load data into modal:
-            // var content = 
-
+                //console.log(contentString);
+                //console.log(projectArray.projects[0].id);
+                $("#idInvoice").val(invoiceArray.id);
+                $("#noInvoice").val(invoiceArray.invoice_no);
+                $("#licensedInvoice").val(invoiceArray.reg_no);
+                $("#payerInvoice").val(invoiceArray.vehicle.reg_no);
+                $("#typeInvoice").val(invoiceArray.invoice_type);
+                $("#createdInvoice").val(invoiceArray.created_at);
+                $("#updatedInvoice").val(invoiceArray.updated_at);
+                $("#feeInvoice").val(invoiceArray.total_fee);
+                $("#discountInvoice").val(invoiceArray.discount);
+                $("#noVehicleInvoice").val(invoiceArray.no_vehicle);
+                $("#expiryInvoice").val(invoiceArray.expiry_date);
+                //console.log(projectArray);
+                //$("#subCountyValue").val(projectArray['sub-county']);
+                //$("#viewFarmerModalContent").append(contentString);
+                $("#viewInvoiceModal").modal("show");
+            }
         });
+        //Load data into modal:
+        // var content = 
+
     });
+});
 //Edit farmer
 //$(document).ready(function () {
 //    $(".editFarmerLink").click(function () {

@@ -7,26 +7,31 @@
             </div>
             <form METHOD="post" ACTION="">
                 <div class="modal-body">
-                    <table class="table table-striped table-condensed table-bordered">
-                        <tr><td>Invoice Number</td><td><input style='text-transform:uppercase' id="noInvoice" readonly=""></td>
+                    <table class="table table-striped table-responsive table-bordered col-md-12">
+                        <tr>
+                        <thead>
+                        <th class="col-md-3">Title</th><th class="col-md-9">Value</th>
+                        </thead>
                         </tr>
-                        <tr><td>Paid By</td><td><input id="payerInvoice" readonly=""></td>
+                        <tr><td>Invoice Number</td><td><div id="noInvoice"></div></td>
                         </tr>
-                        <tr><td>Invoice Type</td><td><input  id="typeInvoice" readonly=""></td>
+                        <tr><td>Paid By</td><td><div id="payerInvoice"></div></td>
                         </tr>
-                        <tr><td>No. of Vehicles</td><td><input  id="noVehicleInvoice" readonly=""></td>
+                        <tr><td>Invoice Type</td><td><div  id="typeInvoice" ></div></td>
                         </tr>
-                        <tr><td>Discount</td><td><input id="discountInvoice" readonly=""></td>
+                        <tr><td>No. of Vehicles</td><td><div  id="noVehicleInvoice" ></div></td>
                         </tr>
-                        <tr><td>Net Fee</td><td><input id="feeInvoice" readonly=""></td>
+                        <tr><td>Discount</td><td><div id="discountInvoice"></div></td>
                         </tr>
-                        <tr><td>Created On</td><td><input  id="createdInvoice" readonly=""></td>
+                        <tr><td>Net Fee</td><td><div id="feeInvoice" ></div></td>
                         </tr>
-                        <tr><td>Updated On</td><td><input id="updatedInvoice" readonly=""></td>
+                        <tr><td>Created On</td><td><div  id="createdInvoice" ></div></td>
                         </tr>
-                        <tr><td>Expiry Date</td><td><input id="expiryInvoice" readonly=""></td>
+                        <tr><td>Updated On</td><td><div id="updatedInvoice" ></div></td>
                         </tr>
-                        <tr><td>Licensed Vehicles</td><td><textarea style='text-transform:uppercase;' id="licensedInvoice" readonly=""></textarea></td>
+                        <tr><td>Expiry Date</td><td><div id="expiryInvoice" ></div></td>
+                        </tr>
+                        <tr><td>Licensed Vehicles</td><td><div id="licensedInvoice" readonly=""></div></td>
                         </tr>
                     </table>
                 </div>

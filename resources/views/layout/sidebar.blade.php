@@ -24,8 +24,8 @@
                     <li><a href="{{URL::to('/admin')}}"><i class="fa fa-home"></i> Admin home</a></li>
                     <li><a href="{{URL::to('/admin/add-user')}}"><i class="fa fa-plus"></i> Add new user</a></li>
                     <li><a href="{{URL::to('/admin/view-users')}}"><i class="fa fa-eye"></i> View user</a></li>
-                    <li><a href="{{URL::to('/admin/view-deleted-users')}}"><i class="fa fa-cog"></i> View deleted users</a></li>
-                    <li><a href="{{URL::to('/admin/view-charges')}}"><i class="fa fa-cog"></i> View charges</a></li>
+                    <li><a href="{{URL::to('/admin/view-deleted-users')}}"><i class="fa fa-trash-o"></i> View deleted users</a></li>
+                    <li><a href="{{URL::to('/admin/view-charges')}}"><i class="fa fa-money"></i> View charges</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -38,7 +38,7 @@
                     <li><a href="{{URL::to('/group')}}"><i class="fa fa-home"></i> Group home</a></li>
                     <li><a href="{{URL::to('/group/add-group')}}"><i class="fa fa-plus-circle"></i> Add new group</a></li>
                     <li><a href="{{URL::to('/group/view-groups')}}"><i class="fa fa-eye"></i> View groups</a></li>
-                    <li><a href="{{URL::to('/group/deleted-groups')}}"><i class="fa fa-eye"></i> View deleted groups</a></li>
+                    <li><a href="{{URL::to('/group/deleted-groups')}}"><i class="fa fa-trash-o"></i> View deleted groups</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -64,8 +64,8 @@
                     <li><a href="{{URL::to('/invoice/add-group-invoice')}}"><i class="fa fa-plus-circle"></i> Add group invoice</a></li>
                     <li><a href="{{URL::to('/invoice/add-vehicle-invoice')}}"><i class="fa fa-plus-circle"></i> Add vehicle invoice</a></li>
                     <li><a href="{{URL::to('/invoice/view-invoices')}}"><i class="fa fa-eye"></i> View invoices</a></li>
-                    <li><a href="{{URL::to('/invoice/view-deleted-invoices')}}"><i class="fa fa-eye"></i> View deleted invoices</a></li>
-                    <li><a href="{{URL::to('/invoice/print-view')}}"><i class="fa fa-eye"></i> Print View</a></li>
+                    <li><a href="{{URL::to('/invoice/view-deleted-invoices')}}"><i class="fa fa-trash-o"></i> View deleted invoices</a></li>
+                    <li><a href="{{URL::to('/invoice/print-view')}}"><i class="fa fa-print"></i> Print View</a></li>
                 </ul>
             </li>
             <li class="treeview">

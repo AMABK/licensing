@@ -51,17 +51,17 @@ class InvoiceController extends Controller {
      * @return Response
      */
     public function modifyGroupToInvoice($group_id) {
-        $regions = \App\Region::all();
-        $agents = \App\Agent::all();
+        $region = \App\Region::all();
+        $agent = \App\Agent::all();
         $group = \App\Group::with('vehicles')
                 ->where('id', $group_id)
                 ->where('status', 0)
-                ->get();
+                ->first();
         if (sizeof($group) < 1) {
             return redirect()->back()
                             ->with('global', '<div class="alert alert-danger">Whoooops, Group could not be found. The group is either <a href="/group/deleted-groups" target="_blank">partially deleted</a> or does not exist in the system</div>');
         }
-        return view('invoice.modify-group-invoice', array('group' => $group, 'region' => $regions, 'agent' => $agents));
+        return view('invoice.modify-group-invoice', array('group' => $group, 'regions' => $region, 'agents' => $agent));
     }
 
     public function storeGroupInvoice() {
@@ -97,21 +97,47 @@ class InvoiceController extends Controller {
                 return redirect('/invoice/modify-group-invoice/' . $group->id . '?'
                         . 'discount=' . \Request::get('discount')
                         . '&invoice_no=' . \Request::get('invoice_no')
-                        . '&description=' . \Request::get('description')
                         . '&region_id=' . \Request::get('region_id')
                         . '&agent_id=' . \Request::get('agent_id')
+                        . '&description=' . \Request::get('description')
                 );
             }
-//dd(strtotime(\Request::get('expiry_date')));
+            if (\Request::get('submit') == 'register_modified') {
+                if (sizeof(\Request::get('vehicles')) < 1) {
+                    return redirect()->back()
+                                    ->with('global', '<div class="alert alert-danger">Whoooops, you must select at least one vehicle from the group</div>');
+                }
+                //Create a string of licensed vehicles
+                foreach (\Request::get('vehicles') as $key => $no_plate) {
+                    if ($key == 0) {
+                        $licensed_vehicles = $no_plate;
+                    } else {
+                        $licensed_vehicles = $licensed_vehicles . ',' . $no_plate;
+                    }
+                }
+                //Number of licensed vehicles
+                $no = sizeof(\Request::get('vehicles'));
+                //Pass group type and number of vehicles to get total  fee
+                $fee = $this->vehicleFeeCalculator(\Request::get('type_id'), $no);
+                if ($fee == 'failure') {
+                    return redirect()->back()
+                                    ->with('global', '<div class="alert alert-danger">The system could not generate invoice due to invalid data provided. Please try again and contact the system administrator if this message persists</div>');
+                }
+                $total_fee = $fee - \Request::get('discount');
+            } else {
+                $licensed_vehicles = \Request::get('licensed_vehicles');
+                $no = \Request::get('no_vehicle');
+                $total_fee = \Request::get('total_fee');
+            }
             $invoice = \App\Invoice::create(array(
                         'invoice_no' => strtoupper(\Request::get('invoice_no')),
                         'payer_id' => \Request::get('id'),
-                        'no_vehicle' => \Request::get('no_vehicle'),
+                        'no_vehicle' => $no,
                         'invoice_type' => 'Group Invoice',
                         'group_type' => \Request::get('group_type'),
                         'discount' => \Request::get('discount'),
-                        'licensed_vehicles' => strtoupper(\Request::get('licensed_vehicles')),
-                        'total_fee' => \Request::get('total_fee'),
+                        'licensed_vehicles' => strtoupper($licensed_vehicles),
+                        'total_fee' => $total_fee,
                         'expiry_date' => \Request::get('expiry_date'),
                         'agent_id' => \Request::get('agent_id'),
                         'region_id' => \Request::get('region_id'),
@@ -310,60 +336,15 @@ class InvoiceController extends Controller {
 //print json_encode($data);
 //        $matches = array();
         foreach ($group_data as $data) {
-            $vehicle_type = $data->type_id;
-            $vehicle_fee = \App\Charge::find($data->type_id);
             $vehicles = \App\Vehicle::where('group_id', $data->id)->get();
-            switch ($vehicle_type) {
-                case 1:
-                    /*
-                     * Taxi charges
-                     * Each taxi pays an annual fee of amount x
-                     */
-                    $fee = $vehicle_fee->standard_fee * $vehicles->count();
-                    break;
-                case 2:
-                    /*
-                     * Matatu charges
-                     * Each matatu pays annual fee of amount y
-                     */
-                    $fee = $vehicle_fee->standard_fee * $vehicles->count();
-                    break;
-                case 3:
-                    /*
-                     * bus charges
-                     * Each matatu pays annual fee of amount y
-                     */
-                    if ($vehicles->count() < 11) {
-                        $fee = $vehicle_fee->standard_fee * $vehicles->count() * $vehicles->no_of_seat;
-                    } else {
-                        $fee = $vehicle_fee->extra_fee * $vehicles->count() * $vehicles->no_of_seat;
-                    }
-                    break;
-                case 4:
-                    /*
-                     * Taxi vehicles
-                     * Each vehicle pays an annual fee of amount z
-                     */
-                    $fee = $vehicle_fee->standard_fee * $vehicles->count();
-                    break;
-                case 5:
-                    /*
-                     * Company vehicle
-                     * Each vehicle pays an annual fee of amount z
-                     */
-                    $fee = $vehicle_fee->standard_fee * $vehicles->count();
-                    break;
-                case 6:
-                    /*
-                     * Tour firms
-                     * Tour vans(14 seater) pay annual fee of amount k and amount h for every extra seat
-                     */
-                    $fee = 0;
-                    $fee = $vehicle_fee->standard_fee * $vehicles->count();
-                    break;
-                default :
-                    return redirect('invoice')
-                                    ->with('global', '<div class="alert alert-danger">The system could not generate invoice due to invalid data provided. Please try again and contact the system administrator if this message persists</div>');
+
+            //Gat vehicle fee. Pass type_id and number of vehicles
+            $fee = $this->vehicleFeeCalculator($data->type_id, $vehicles->count());
+
+            //If vehicle fee calculation failed
+            if ($fee == 'failure') {
+                return redirect()->back()
+                                ->with('global', '<div class="alert alert-danger">The system could not generate invoice due to invalid data provided. Please try again and contact the system administrator if this message persists</div>');
             }
             $allVehicles = [];
             $i = 0;
@@ -1033,6 +1014,63 @@ class InvoiceController extends Controller {
         }
         //dd($license->toArray());
         return view('invoice.mass-print-cert', array('licenses' => $license));
+    }
+
+    public function vehicleFeeCalculator($type_id, $no_of_vehicles) {
+        $vehicle_type = $type_id;
+        $vehicle_fee = \App\Charge::find($type_id);
+        switch ($vehicle_type) {
+            case 1:
+                /*
+                 * Taxi charges
+                 * Each taxi pays an annual fee of amount x
+                 */
+                return $vehicle_fee->standard_fee * $no_of_vehicles;
+                break;
+            case 2:
+                /*
+                 * Matatu charges
+                 * Each matatu pays annual fee of amount y
+                 */
+                return $vehicle_fee->standard_fee * $no_of_vehicles;
+                break;
+            case 3:
+                /*
+                 * bus charges
+                 * Each matatu pays annual fee of amount y
+                 */
+//                if ($no_of_vehicles < 11) {
+//                    return $vehicle_fee->standard_fee * $no_of_vehicles;
+//                } else {
+//                    return $vehicle_fee->extra_fee * $no_of_vehicles;
+//                }
+                return $vehicle_fee->standard_fee * $no_of_vehicles;
+                break;
+            case 4:
+                /*
+                 * Taxi vehicles
+                 * Each vehicle pays an annual fee of amount z
+                 */
+                return $vehicle_fee->standard_fee * $no_of_vehicles;
+                break;
+            case 5:
+                /*
+                 * Company vehicle
+                 * Each vehicle pays an annual fee of amount z
+                 */
+                return $vehicle_fee->standard_fee * $no_of_vehicles;
+                break;
+            case 6:
+                /*
+                 * Tour firms
+                 * Tour vans(14 seater) pay annual fee of amount k and amount h for every extra seat
+                 */
+                $fee = 0;
+                return $vehicle_fee->standard_fee * $no_of_vehicles;
+                break;
+            default :
+                return 'failure';
+        }
     }
 
 }
