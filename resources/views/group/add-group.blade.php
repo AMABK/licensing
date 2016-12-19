@@ -78,7 +78,7 @@ Add Group
                     <input type="text" name="phone_no" class="form-control" value="{{ old('phone_no') }}" required="" placeholder="Phone number">
                 </div>
                 <div>
-                    <button type="submit">Register</button>
+                    <button class="btn btn-success" type="submit">Register</button>
                 </div>
             </form>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->

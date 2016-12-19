@@ -53,10 +53,10 @@ Update Vehicle
                     <input type="text" name="no_of_seat" class="form-control" value="{{ $vehicles->no_of_seat }}" required="" placeholder="Number of seats">
                 </div>
                 <div style="float: left">
-                    <button type="submit" name="update">Update</button>
+                    <button class="btn btn-primary" type="submit" name="update">Update</button>
                 </div>
                 <div style="float: right">
-                    <button type="submit"  name="delete">Delete</button>
+                    <button class="btn btn-danger" type="submit"  name="delete">Delete</button>
                 </div>
         </div>
         </form>

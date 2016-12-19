@@ -150,7 +150,7 @@ Add Vehicle Invoice
                     <textarea type="text" name="description" required="" class="form-control" placeholder="Description"></textarea>
                 </div>
                 <div>
-                    <button type="submit">Register</button>
+                    <button class="btn btn-success"  type="submit">Register</button>
                 </div>
             </form>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->

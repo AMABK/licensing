@@ -30,7 +30,7 @@ Invoices
             <form method="POST" action="/post/print-invoice">
                 {!! csrf_field() !!}
                 <div>
-                    <button><a href="{{URL::to('/invoice/print')}}">Print</a></button>
+                    <button class="btn btn-info" ><a href="{{URL::to('/invoice/print')}}"><i class="fa fa-print"></i> Print</a></button>
                 </div>
                 <table id="myTable" width="100%">
                     <thead><tr><th>Serial</th><th>No of seats</th><th>Sacco</th><th>Expiry date</th><th>Reg No</th></tr></thead>

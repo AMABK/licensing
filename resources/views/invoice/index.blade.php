@@ -20,7 +20,7 @@ Invoice
     <!-- Main content -->
     <section class="content">
         @if(Session::has('global'))
-        <center><p>{!!Session::get('global')!!}</p>11111</center>
+        <center><p>{!!Session::get('global')!!}</p></center>
         @endif
         <!-- Main row -->
         <div class="row" style="width: 70%; margin-left: 15%;margin-top: 5%">

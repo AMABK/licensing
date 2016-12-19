@@ -62,7 +62,7 @@ Update Charges
                     </table>
                 </div>
                 <div>
-                    <button type="submit" name="update">Update charges</button>
+                    <button type="submit" class="btn btn-primary"  name="update">Update charges</button>
                     <button type="submit" name="close" style="float: right">Close</button>
                 </div>
             </form>

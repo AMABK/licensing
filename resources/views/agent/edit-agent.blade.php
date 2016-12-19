@@ -57,7 +57,7 @@ Add agent
                         @endforeach
                     </select>
                 </div>
-                    <button type="submit">Update</button>
+                    <button class="btn btn-primary" type="submit">Update</button>
                 </div>
             </form>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->

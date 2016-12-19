@@ -74,10 +74,10 @@ Edit/Delete Sacco
                 </div>
                 @endforeach
                 <div style="float: left">
-                    <button type="submit" name="update">Update</button>
+                    <button class="btn btn-primary" type="submit" name="update">Update</button>
                 </div>
                 <div style="float: right">
-                    <button type="submit"  name="delete">Delete</button>
+                    <button class="btn btn-danger" type="submit"  name="delete">Delete</button>
                 </div>
             </form>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->

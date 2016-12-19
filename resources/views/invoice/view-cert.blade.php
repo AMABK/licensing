@@ -29,8 +29,8 @@
         </style>
     </head>
     <body>
-        <button><a href="{{URL::to('/invoice/view-invoices/')}}">Return to invoices</a></button>
-        <button style="float: right"><a href="{{URL::to('/invoice/print-cert/'.\Hashids::encode($cert->id))}}">Print Licenses</a></button>
+        <button class="btn btn-primary" ><a href="{{URL::to('/invoice/view-invoices/')}}">Return to invoices</a></button>
+        <button class="pull-right btn btn-info"><a href="{{URL::to('/invoice/print-cert/'.\Hashids::encode($cert->id))}}"><i class="fa fa-print"></i> Print Licenses</a></button>
         <?php
         $rows = 0;
         $licensed_vehicle = explode(",", $cert->licensed_vehicles);

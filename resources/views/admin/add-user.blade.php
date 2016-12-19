@@ -19,62 +19,62 @@ Admin | Add user
     </section>
 
     <!-- Main content -->
-    <section class="content">Wat
+    <section class="content">
         <!-- Small boxes (Stat box) -->
-<!--        <div class="row">
-            <div class="col-lg-3 col-xs-6">
-                 small box 
-                <div class="small-box bg-yellow-gradient">
-                    <div class="inner">
-                        <h3>150</h3>
-                        <p>Saccos</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-plus"></i>
-                    </div>
-                    <a href="{{URL::to('/sacco/add-sacco')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div> ./col 
-            <div class="col-lg-3 col-xs-6">
-                 small box 
-                <div class="small-box bg-yellow-gradient">
-                    <div class="inner">
-                        <h3>53</h3>
-                        <p>Total Vehicles</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-bus"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">Add a vehicle <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div> ./col 
-            <div class="col-lg-3 col-xs-6">
-                 small box 
-                <div class="small-box bg-yellow-gradient">
-                    <div class="inner">
-                        <h3>57<sup style="font-size: 20px">%</sup></h3>
-                        <p>Belong to saccos</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-group"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div> ./col 
-            <div class="col-lg-3 col-xs-6">
-                 small box 
-                <div class="small-box bg-yellow-gradient">
-                    <div class="inner">
-                        <h3>65<sup style="font-size: 20px">%</sup></h3>
-                        <p>Are company vehicles</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fa fa-car"></i>
-                    </div>
-                    <a href="{{URL::to('/sacco/add-sacco')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
-                </div>
-            </div> ./col 
-        </div> /.row -->
+        <!--        <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                         small box 
+                        <div class="small-box bg-yellow-gradient">
+                            <div class="inner">
+                                <h3>150</h3>
+                                <p>Saccos</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-plus"></i>
+                            </div>
+                            <a href="{{URL::to('/sacco/add-sacco')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div> ./col 
+                    <div class="col-lg-3 col-xs-6">
+                         small box 
+                        <div class="small-box bg-yellow-gradient">
+                            <div class="inner">
+                                <h3>53</h3>
+                                <p>Total Vehicles</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-bus"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">Add a vehicle <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div> ./col 
+                    <div class="col-lg-3 col-xs-6">
+                         small box 
+                        <div class="small-box bg-yellow-gradient">
+                            <div class="inner">
+                                <h3>57<sup style="font-size: 20px">%</sup></h3>
+                                <p>Belong to saccos</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-group"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div> ./col 
+                    <div class="col-lg-3 col-xs-6">
+                         small box 
+                        <div class="small-box bg-yellow-gradient">
+                            <div class="inner">
+                                <h3>65<sup style="font-size: 20px">%</sup></h3>
+                                <p>Are company vehicles</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-car"></i>
+                            </div>
+                            <a href="{{URL::to('/sacco/add-sacco')}}" class="small-box-footer">Add sacco <i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div> ./col 
+                </div> /.row -->
         @if(Session::has('global'))
         <center><p>{!!Session::get('global')!!}</p></center>
         @endif
@@ -83,7 +83,7 @@ Admin | Add user
             <!-- Left col -->
             <h3>Register a new user</h3>
             <form method="POST" action="/post/add-user">
-                                {!! csrf_field() !!}
+                {!! csrf_field() !!}
                 @if (count($errors) > 0)
                 <div class="alert alert-danger">
                     <ul>
@@ -135,14 +135,13 @@ Admin | Add user
                     <label for="phone_no">Phone No</label>
                     <input type="text" name="phone_no" class="form-control" value="{{ old('phone_no') }}" required="" placeholder="Phone number">
                 </div>
-                    <button type="submit">Register</button>
-                </div>
+                <button class="btn btn-success" type="submit">Register</button>
             </form>
-            <!-- right col (We are only adding the ID to make the widgets sortable)-->
-
-        </div><!-- /.row (main row) -->
-
+        </div>
     </section><!-- /.content -->
+    <!-- right col (We are only adding the ID to make the widgets sortable)-->
+</div><!-- /.row (main row) -->
+
 </div><!-- /.content-wrapper -->
 
 @stop

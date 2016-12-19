@@ -56,7 +56,7 @@ Add agent
                         <option value="{{$region->id}}" >{{$region->name}}</option>
                         @endforeach
                     </select>
-                    <button type="submit">Register</button>
+                    <button class="btn btn-success" type="submit">Register</button>
                 </div>
             </form>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->

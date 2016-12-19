@@ -60,7 +60,7 @@ Add Vehicle
                     <label for="no_of_seat">Number of seats</label>
                     <input type="text" name="no_of_seat" class="form-control" value="{{ old('no_of_seat') }}" required="" placeholder="Number of seats">
                 </div>
-                <button type="submit" >Register</button>
+                <button class="btn btn-success" type="submit" >Register</button>
 
             </form>
         </div>

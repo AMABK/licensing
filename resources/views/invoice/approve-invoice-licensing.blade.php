@@ -86,9 +86,9 @@ Approve Invoice | Finance
                 </div>
                 @endforeach
                 <div>
-                    <button type="submit" name="approve" value="approve">Approve</button>
-                    <button type="submit" name="reject" value="reject">Reject</button>
-                    <button type="submit" name="delete" value="delete" style="float: right">Delete</button>
+                    <button type="submit" class="btn btn-success"  name="approve" value="approve">Approve</button>
+                    <button type="submit" class="btn btn-warning" name="reject" value="reject">Reject</button>
+                    <button type="submit" class="btn btn-danger"  name="delete" value="delete" style="float: right">Delete</button>
                 </div>
             </form>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->

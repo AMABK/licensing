@@ -72,8 +72,8 @@ Admin | Add user
                 </div>
                 @endforeach
                 <div> 
-                    <button type="submit" name="update">Update</button>
-                    <button type="submit" name="delete">Delete</button>
+                    <button type="submit" class="btn btn-primary"  name="update">Update</button>
+                    <button type="submit" class="btn btn-danger"  name="delete">Delete</button>
                 </div>
             </form>
             <!-- right col (We are only adding the ID to make the widgets sortable)-->
