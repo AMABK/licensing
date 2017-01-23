@@ -30,7 +30,7 @@ Admin | Add user
             <!-- Left col -->
             <h3>Edit user</h3>
             <form method="POST" action="/post/edit-user">
-                                {!! csrf_field() !!}
+                {!! csrf_field() !!}
                 @if (count($errors) > 0)
                 <div class="alert alert-danger">
                     <ul>
@@ -41,6 +41,7 @@ Admin | Add user
                 </div>
                 @endif
                 @foreach($users as $user)
+                <input type="hidden" name="id" value="{{$user->id}}">
                 <div class="form-group">
                     <label for="name">First Name</label>
                     <input type="text" name="first_name" class="form-control" value="{{ $user->first_name }}" required="" placeholder="First Name">

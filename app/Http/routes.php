@@ -306,6 +306,10 @@ Route::group(['middleware' => 'auth'], function() {
             'as' => 'add-user',
             'uses' => 'AdminController@store'
         ));
+        Route::post('/post/edit-user', array(
+            'as' => 'edit-user',
+            'uses' => 'AdminController@editUser'
+        ));
         Route::post('/post/edit-privileges', array(
             'as' => 'edit-privileges',
             'uses' => 'AdminController@postPrivileges'

@@ -42,7 +42,6 @@ class AdminController extends Controller {
                     'first_name' => 'required',
                     'last_name' => 'required',
                     'job_id' => 'required|unique:users',
-                    'national_id' => 'required|unique:users',
                     'email' => 'required|unique:users',
                     'designation_id' => 'required|integer',
                     'password' => 'required|confirmed|min:6',
@@ -59,8 +58,8 @@ class AdminController extends Controller {
                         'first_name' => $data['first_name'],
                         'last_name' => $data['last_name'],
                         'job_id' => $data['job_id'],
-                        'designation_id' => $data['designation_id'],
                         'national_id' => $data['national_id'],
+                        'designation_id' => $data['designation_id'],
                         'code' => $code,
                         'status' => 0,
                         'phone_no' => $data['phone_no'],
@@ -84,6 +83,54 @@ class AdminController extends Controller {
                 } else {
                     return redirect('/admin/add-user')
                                     ->with('global', '<div class="alert alert-warning" align="center">Activation link could not be sent to the user email. Please resend the activation link</div>');
+                }
+            }
+        }
+    }
+
+    protected function editUser() {
+        //dd(\Request::all());
+        /*
+         * Activation code
+         */ $validator = \Validator::make(\Request::all(), array(
+                    'first_name' => 'required',
+                    'last_name' => 'required',
+                    'email' => 'required',
+                    'phone_no' => 'required',
+                    'id' => 'required',
+                    'designation_id' => 'required|integer',
+                        )
+        );
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                            ->withErrors($validator);
+        } else {
+            $data = \Request::all();
+            $user = User::find($data['id'])
+                    ->update([
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'job_id' => $data['job_id'],
+                'designation_id' => $data['designation_id'],
+                'phone_no' => $data['phone_no'],
+            ]);
+
+            if ($user) {
+                $user = $user = User::find($data['id']);
+                //Send activation link
+                //$mail = Mail::pretend();
+                $mail = Mail::send('auth.update', array(
+                            'name' => $data['first_name'],
+                            'email' => $data['email']), function($message) use ($user) {
+                            $message->to($user->email, $user->first_name)->subject('PLS Account Update');
+                        });
+                if ($mail) {
+                    return redirect()->back()
+                                    ->with('global', '<div class="alert alert-success" align="center">User account updated successfully.</div>');
+                } else {
+                    return redirect()->back()
+                                    ->with('global', '<div class="alert alert-warning" align="center">User account update failed. Please try again</div>');
                 }
             }
         }
