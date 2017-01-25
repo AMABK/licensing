@@ -298,18 +298,18 @@ class InvoiceController extends Controller {
             if (!$destroy) {
                 //cleane this
                 \App\Serial_number::where('invoice_id', \Hashids::decode($id)[0])->delete();
-                \App\Status_manager::where('invoice_id', \Hashids::decode($id)[0])->deleted();
-                \App\Status_finance::where('invoice_id', \Hashids::decode($id)[0])->deleted();
-                \App\Status_licensing::where('invoice_id', \Hashids::decode($id)[0])->deleted();
-                \App\Status_printed::where('invoice_id', \Hashids::decode($id)[0])->deleted();
-                return redirect('/invoice/view-invoices')
+                \App\Status_manager::where('invoice_id', \Hashids::decode($id)[0])->delete();
+                \App\Status_finance::where('invoice_id', \Hashids::decode($id)[0])->delete();
+                \App\Status_licensing::where('invoice_id', \Hashids::decode($id)[0])->delete();
+                \App\Status_printed::where('invoice_id', \Hashids::decode($id)[0])->delete();
+                return redirect('/invoice/view-deleted-invoices')
                                 ->with('global', '<div class="alert alert-success">Invoice permanently deleted</div>');
             } else {
-                return redirect('/invoice/view-invoices')
+                return redirect('/invoice/view-deleted-invoices')
                                 ->with('global', '<div class="alert alert-warning">Invoice could not be permanently deleted</div>');
             }
         } else {
-            return redirect('/invoice/view-invoices')
+            return redirect('/invoice/view-deleted-invoices')
                             ->with('global', '<div class="alert alert-warning">You do not have privileges to permanently delete invoices. Please contact system administator</div>');
         }
     }
